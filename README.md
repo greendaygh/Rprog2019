@@ -17,6 +17,7 @@
   - Second edition
     - https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731
 - Bioinformatics Data Skills by Vince Buffalo
+- https://resources.rstudio.com/
 - 일반통계학 (영지문화사, 김우철 외)
 
 ## 평가 세부 항목
