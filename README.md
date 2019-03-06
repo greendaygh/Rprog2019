@@ -35,4 +35,4 @@
 - Clustering and significance testing with genomic data 
 
 ## 강의 자료 
-- 1 (2019.03.06) - 강의자료01[https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf] 
+- 1 (2019.03.06) - [https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf, 강의자료01]
