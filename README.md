@@ -15,7 +15,7 @@
     - http://cbb.sjtu.edu.cn/~mywu/bi217/usingR.pdf
   - Second edition
     - https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731
-- R for Data Science (https://r4ds.had.co.nz)
+- R for Data Science (https://r4ds.had.co.nz, https://github.com/hadley)
 - Bioinformatics Data Skills by Vince Buffalo
 - 일반통계학 (영지문화사, 김우철 외)
 
