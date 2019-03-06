@@ -35,4 +35,4 @@
 - Clustering and significance testing with genomic data 
 
 ## 강의 자료 
-- 1 (2019.03.06) - [Introduction and installation of R/Rstudio, Basics of variables and functions](https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf), [R code](https://github.com/greendaygh/2019-R-programming/blob/master/01_code.R)
+- 1 (2019.03.06) - [Introduction and installation of R/Rstudio, Basics of variables and functions](https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf), -- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/01_code.R) --
