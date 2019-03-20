@@ -15,6 +15,7 @@ summary(cars)
 ## Including Plots
 
 You can also embed plots, for example:
+그리고 3번째 강의 
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
