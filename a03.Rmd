@@ -19,6 +19,8 @@ You can also embed plots, for example:
 
 다시 한글
 
+df
+
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
