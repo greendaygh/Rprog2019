@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="-ust-r---" class="section level1">
+<h1>2019<ed>븰湲<b0> UST R <ed>봽濡쒓렇<eb>옒諛띻낵 <eb>뜲<ec>씠<ed>꽣 遺꾩꽍</h1>
+<ul>
+<li><ec>옣<ec>냼: <ed>븳援<ad><ec>깮紐낃났<ed>븰<ec>뿰援ъ썝 <ec>뿰援щ룞 <ec>꽭誘몃굹<ec>떎 1213<ed>샇 (留ㅼ＜<ec>닔<ec>슂<ec>씪 13:00~16:00)</li>
+<li>媛뺤궗: <ed>븳援<ad><ec>깮紐낃났<ed>븰<ec>뿰援ъ썝 諛붿씠<ec>삤<ed>빀<ec>꽦<ec>뿰援ъ꽱<ed>꽣 源<ed>븯<ec>꽦</li>
+<li><ec>뿰<eb>씫泥&lt;98&gt;: 042-860-4372, <a href="mailto:haseong@kribb.re.kr">haseong@kribb.re.kr</a> (<ec>깮紐낆뿰 <ec>뿰援щ룞 1143)</li>
+</ul>
+<div id="-" class="section level2">
+<h2>媛뺤쓽 紐⑺몴</h2>
+<ul>
+<li><ec>씠怨듦퀎<ec>뿴 <eb>&lt;8c&gt;<ed>븰<ec>썝<ec>깮<ec>씠 <ed>넻怨&lt;84&gt; 遺꾩꽍<ec>슜 踰붿슜 <ed>봽濡쒓렇<eb>옩 <ec>뼵<ec>뼱<ec>씤 R<ec>쓽 <ec>궗<ec>슜踰뺤쓣 <ec>씡<ed>엳怨<a0> <ec>씠瑜<bc> <ec>씠<ec>슜<ed>븳 <ed>봽濡쒓렇<eb>옒諛&lt;8d&gt; 湲곗닠<ec>쓽 <ec>뒿<eb>뱷<ec>쓣 二쇱슂 紐⑹쟻<ec>쑝濡&lt;9c&gt; <ed>븿. <ec>깮臾<bc> <eb>뜲<ec>씠<ed>꽣 <ec>쐞二쇱쓽 遺꾩꽍 <ec>삁<ec>젣瑜<bc> <ed>넻<ed>빐 R<ec>쓽 <ed>솢<ec>슜 湲곗닠<ec>쓣 諛곗&lt;9b&gt;.</li>
+<li><ec>씠 媛뺤쥖<eb>뒗 <ec>삤<ed>봽<eb>씪<ec>씤 媛뺤쓽瑜<bc> 湲곕낯<ec>쑝濡&lt;9c&gt; <ed>븿. R <ec>궗<ec>슜<ec>뿉 <eb>&lt;8c&gt;<ed>븳 湲곕낯 媛쒕뀗怨<bc> <ed>봽濡쒓렇<eb>옒諛띿쓣 以묒떖<ec>쑝濡&lt;9c&gt; <ed>븘<ec>슂<ec>떆 湲곗큹 <ed>넻怨꾩<a7><ec>떇 媛뺤쓽. <ec>떎<ec>뒿 <eb>뜲<ec>씠<ed>꽣濡쒕뒗 二쇰줈 <ec>깮臾쇰뜲<ec>씠<ed>꽣瑜<bc> <ec>궗<ec>슜<ed>븿. 紐⑤뱺 媛뺤쓽 <ec>떆媛&lt;84&gt; <ec>떎<ec>뒿<ec>쓣 <ec>쐞<ed>븳 媛쒖씤 <eb>끂<ed>듃遺&lt;81&gt; 吏李<b8> <ed>븘<ec>닔. 媛뺤쓽 <ec>옄猷뚮뒗 pdf濡&lt;9c&gt; <ec>젣<ec>옉<ed>븯<ec>뿬 <ec>닔<ec>뾽 吏꾪뻾怨<bc> 愿<eb>젴<eb>맂 <ec>젙蹂댁&lt;99&gt; <ed>븿猿&lt;98&gt; <ec>쎒<ec>궗<ec>씠<ed>듃瑜<bc> <ed>넻<ed>빐 諛고룷<eb>맖. <ec>긽<ed>솴<ec>뿉 <eb>뵲<eb>씪 媛뺤쓽 <ec>씪<ec>젙<ec>씠 議곗젙<eb>맆 <ec>닔 <ec>엳<ec>쓬.</li>
+</ul>
+</div>
+<div id="-8c" class="section level2">
+<h2>李멸퀬 <ec>옄猷&lt;8c&gt;</h2>
+<ul>
+<li>R for Data Science (<a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>, <a href="https://github.com/hadley" class="uri">https://github.com/hadley</a>)</li>
+<li>Using R for Introductory Statistics by John Verzani</li>
+<li>Free version of 1st Edition
+<ul>
+<li><a href="https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf" class="uri">https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf</a></li>
+<li><a href="http://cbb.sjtu.edu.cn/~mywu/bi217/usingR.pdf" class="uri">http://cbb.sjtu.edu.cn/~mywu/bi217/usingR.pdf</a></li>
+</ul></li>
+<li>Second edition
+<ul>
+<li><a href="https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731" class="uri">https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731</a></li>
+</ul></li>
+<li>Bioinformatics Data Skills by Vince Buffalo</li>
+<li><a href="https://resources.rstudio.com/" class="uri">https://resources.rstudio.com/</a></li>
+<li><ec>씪諛섑넻怨꾪븰 (<ec>쁺吏臾명솕<ec>궗, 源<ec>슦泥<a0> <ec>쇅)</li>
+</ul>
+</div>
+<div id="--" class="section level2">
+<h2><ed>룊媛 <ec>꽭遺 <ed>빆紐<a9></h2>
+<ul>
+<li>異쒖꽍 50% / 怨쇱젣 50% / <ec>닔<ec>뾽李몄뿬 +alpha</li>
+</ul>
+</div>
+<div id="-" class="section level2">
+<h2>媛뺤쓽 怨꾪쉷<ec>꽌</h2>
+<ul>
+<li>Introduction and installation of R/Rstudio</li>
+<li>R language basics</li>
+<li>Data manipulation</li>
+<li>Visualizing data in R</li>
+<li>Shiny for interactive applications in R</li>
+<li>Workflows with R scripts</li>
+<li>Working with Range Data</li>
+<li>Sequence analysis</li>
+<li>Clustering and significance testing with genomic data</li>
+</ul>
+</div>
+<div id="-8c" class="section level2">
+<h2>媛뺤쓽 <ec>옄猷&lt;8c&gt;</h2>
+<ul>
+<li>1 (2019.03.06) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf">Introduction and installation of R/Rstudio, Basics of variables and functions</a>, – <a href="https://github.com/greendaygh/2019-R-programming/blob/master/01_code.R">R code</a> –</li>
+<li>2 (2019.03.13) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/02-Rprog.pdf">R Basics - Object (vector, factor, matrix) and functions</a>, – <a href="https://github.com/greendaygh/2019-R-programming/blob/master/02.R">R code</a> – <eb>떎<ec>쓬 <ec>떆媛&lt;84&gt; readxl, Biostrings <eb>몢 <ed>뙣<ed>궎吏 誘몃━ <ec>꽕移섑븳 <ed>썑 媛뺤쓽 李몄꽍</li>
+<li>3 (2019.03.20) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf">R Basics II</a> – <a href="https://github.com/greendaygh/2019-R-programming/blob/master/03.R">R code</a> – 媛뺤쓽媛 醫 鍮좊Ⅴ寃&lt;8c&gt; 吏꾪뻾<eb>맂 <eb>벏 <ed>빀<eb>땲<eb>떎. 湲곕낯<ec>쑝濡&lt;9c&gt; <ec>젣怨듬릺<eb>뒗 R 湲곕뒫<ec>쓣 <ec>궗<ec>슜<ed>븯湲<b0> 蹂대떎<eb>뒗 <ed>븿<ec>닔<eb>굹 <ed>봽濡쒓렇<eb>옒諛&lt;8d&gt; 肄붾뵫 <ec>썝由щ<a5><bc> <ec>씠<ed>빐<ed>븯湲<b0> <ec>쐞<ed>빐 吏곸젒 <ed>븿<ec>닔瑜<bc> 留뚮뱾<ec>뼱蹂대뒗 <ec>뿰<ec>뒿<ec>쓣 <ed>븯怨<a0> <ec>엳<ec>쑝<eb>땲 李멸퀬 <ed>븯<ec>떆怨<a0> <eb>떎<ec>쓬 <ec>떆媛&lt;84&gt; <ec>쟾<ec>뿉 <ec>씠踰&lt;88&gt; <ec>떆媛&lt;84&gt; 肄붾뱶 蹂듭뒿<ed>븯<ec>떆怨<a0> <ec>삤<ec>떆硫<b4> <eb>룄<ec>&lt;9b&gt;<ec>씠 <eb>벏 <ed>빀<eb>땲<eb>떎.</li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
