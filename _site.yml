@@ -5,3 +5,5 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "lecture 03"
+      href: a03.html
