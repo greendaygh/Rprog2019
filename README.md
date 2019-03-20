@@ -38,3 +38,4 @@
 - 1 (2019.03.06) - [Introduction and installation of R/Rstudio, Basics of variables and functions](https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf), -- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/01_code.R) --
 - 2 (2019.03.13) - [R Basics - Object (vector, factor, matrix) and functions](https://github.com/greendaygh/2019-R-programming/blob/master/02-Rprog.pdf), -- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/02.R) --
 다음 시간 readxl, Biostrings 두 패키지 미리 설치한 후 강의 참석 
+- 3 (2019.03.20) - [R Basics II ](https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf)
