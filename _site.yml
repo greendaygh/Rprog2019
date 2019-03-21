@@ -4,6 +4,6 @@ navbar:
   title: "R programming 2019"
   left:
     - text: "Home"
-      href: index.html
+      href: README.html
     - text: "lecture 03"
       href: a03.html
