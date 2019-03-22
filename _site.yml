@@ -9,6 +9,5 @@ navbar:
       href: a03.html
 output:
   rmarkdown::html_document:
-    
-    
+
     
