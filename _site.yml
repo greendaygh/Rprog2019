@@ -5,8 +5,15 @@ navbar:
   left:
     - text: "Home"
       href: README.html
-    - text: "lecture 03"
+    - text: "lecture 01"
       href: a03.html
+    - text: "lecture 02"
+    - text: "lecture 03"
+    - text: "lecture 04"
+    - text: "lecture 05"
+    - text: "lecture 06"
+    - text: "lecture 07"
+    - text: "lecture 08"
 output:
   rmarkdown::html_document:
 
