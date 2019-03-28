@@ -1,4 +1,4 @@
-name: "my-website"
+name: "my-website test"
 output_dir: "docs"
 navbar:
   title: "R programming 2019"
