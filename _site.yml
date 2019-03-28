@@ -8,13 +8,19 @@ navbar:
     - text: "lecture 01"
       href: a03.html
     - text: "lecture 02"
+      href: a03.html
     - text: "lecture 03"
+      href: a03.html
     - text: "lecture 04"
+      href: a03.html
     - text: "lecture 05"
+      href: a03.html
     - text: "lecture 06"
+      href: a03.html
     - text: "lecture 07"
+      href: a03.html
     - text: "lecture 08"
+      href: a03.html
 output:
-  rmarkdown::html_document:
-
-    
+  bookdown::gitbook: default
+documentclass: book
