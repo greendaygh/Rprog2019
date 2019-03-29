@@ -9,7 +9,7 @@ output: html_document
 
 ## Parameter/Argument, Global/Local  
 
-이번 시간에는 함수와 메트릭스의 사용법을 익히기 위해서 간단한 프로그램을 만들어 보겠습니다. 정사각형 격자 안에서 랜덤하게 한 칸씩 움직이며 시작 점부터 끝 점까지 가는 로봇을 구현하고 그림으로 보는 프로그램 코드가 되겠습니다. 
+이번 시간에는 함수와 메트릭스의 사용법을 익히기 위해서 재미있는(?) 간단한 프로그램을 만들어 보겠습니다. 정사각형 격자 안에서 랜덤하게 한 칸씩 움직이며 시작 점부터 끝 점까지 가는 로봇을 구현하고 이를 시각화하는 프로그램이 되겠습니다. 
 
 
 먼저 프로그래밍에서 함수는 중요한 개념입니다. 이를 이해하기 위해서 parameter (매개변수) 와 argument (전달인자), 그리고 global (전역) 변수와 local (지역) 변수의 개념을 확실히 이해해야 합니다. 아래 parameter와 argument를 구분하고 myfunc 안에 있는 a 변수의 값과 밖에 있는 a의 값을 구분해봅시다. 
@@ -35,6 +35,82 @@ cat(a)
 
 ```
 
+## Exercise 4-1: Matrix indexing
+
+0으로 채워진 3 x 3 메트릭스를 만들고 가장자리 값들을 1로 채우는 연습을 해봅니다.
+
+```{r}
+M <- matrix(0, nrow=3, ncol=3)
+M[,1] <- 1
+M[,3] <- 1
+M[1,] <- 1
+M[3,] <- 1
+```
+
+
+## Top-down design 
+
+탑다운 방식의 프로그래밍 디자인방법은 간략히 다음과 같은 순서로 진행합니다. 1) Divide a big problem into smaller problems, 2) keep dividing until the small problem can be solved easily, 3) Solve the small problems, 4) Merge the solutions to solve the big problem
+
+이 방법으로 길찾기 로봇을 구현하기 위해서는 다음과 같이 문제를 세분화 하겠습니다. 먼저 구성물은 지도와 로봇이 있고 지도에는 시작점, 끝점, 막힌곳, 로봇은 현재 위치, 이동함수 (규칙) 등이 있으면 될 것 같습니다. 그리고 이러한 상황을 보여주기 위한 그리기 기능도 필요해 보입니다. 참고로 강사 생각이며 각자 다르게 생각할 수 있습니다. 좀 더 자세한 내용은 [강의노트](https://github.com/greendaygh/Rprog2019/blob/master/04-Rprog.pdf)를 참고하세요. 
+
+
+## Exercise 4-2: Draw world 
+
+먼저 로봇이 다니는 지도를 그리기 위해서 plot 함수를 사용합니다. plot 함수는 가장 기본이 되는 그래픽 함수로 입력 값에 따른 다양한 기능을 수행하는 함수입니다. 자세한 내용은 ?plot으로 도움말을 참고 하세요. 8 x 8 크기의 지도에서 격자를 다음과 같이 그릴 수 있습니다.
+
+```{r}
+plot(0, type="n", ylim=c(1,8), xlim=c(1,8))
+lines(x=c(1,1), y=c(1,8))
+lines(x=c(2,2), y=c(1,8))
+lines(x=c(3,3), y=c(1,8))
+lines(x=c(4,4), y=c(1,8))
+
+lines(x=c(1,8), y=c(1,1))
+lines(x=c(1,8), y=c(2,2))
+lines(x=c(1,8), y=c(3,3))
+lines(x=c(1,8), y=c(4,4))
+```
+
+
+그런데 반복되는 lines 함수를 사용하는 패턴을 보실 수 있습니다. 이런 경우 다음과 같이 for 문을 이용할 수 있습니다. for 문의 i는 임의의 변수로 뒤에 오는 1:8 까지의 값을 한번씩 갖으며 { } 안의 코드를 8번 반복 실행하게 됩니다. 이 때 i에 저장된 값을 lines 파라메터 값을 사용하면 효율적으로 원하는 기능을 구현할 수 있습니다. 마지막 points 함수는 적당한 위치 (아래 예제에서는 x=3, y=3)의 위치에 pch=16 모양을 cex=3 만큼 크게 그리라는 명령입니다. ?points 또는 ?pch 등의 도움말을 참고 하세요.  
+
+
+```{r}
+##
+plot(0, type="n", ylim=c(1,8), xlim=c(1,8))
+for(i in 1:8){
+  lines(x=c(i,i), y=c(1,8))
+  lines(x=c(1,8), y=c(i,i))
+}
+
+points(3,3, pch=16, cex=3)
+```
+
+
+
+
+```{r}
+
+draw_world <- function(cur_x, cur_y){
+  n <- 8
+  plot(0, type="n", ylim=c(1,n), xlim=c(1,n))
+  for(i in 1:n){
+    lines(x=c(i,i), y=c(1,n))
+    lines(x=c(1,n), y=c(i,i))
+  }
+  points(x=cur_x, y=cur_y, pch=16, cex=3)
+  return(NULL)
+}
+
+cur_x <- 1
+cur_y <- 1
+
+draw_world(cur_x, cur_y)
+draw_world(cur_x+1, cur_y)
+draw_world(cur_x+1, cur_y+1)
+
+```
 
 
 
