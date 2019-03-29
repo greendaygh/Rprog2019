@@ -1,0 +1,40 @@
+---
+title: "Maze robot"
+author: "Haseong"
+date: "2019년 3월 29일"
+output: html_document
+---
+
+# R programming (Maze Robot)
+
+## Parameter/Argument, Global/Local  
+
+이번 시간에는 함수와 메트릭스의 사용법을 익히기 위해서 간단한 프로그램을 만들어 보겠습니다. 정사각형 격자 안에서 랜덤하게 한 칸씩 움직이며 시작 점부터 끝 점까지 가는 로봇을 구현하고 그림으로 보는 프로그램 코드가 되겠습니다. 
+
+
+먼저 프로그래밍에서 함수는 중요한 개념입니다. 이를 이해하기 위해서 parameter (매개변수) 와 argument (전달인자), 그리고 global (전역) 변수와 local (지역) 변수의 개념을 확실히 이해해야 합니다. 아래 parameter와 argument를 구분하고 myfunc 안에 있는 a 변수의 값과 밖에 있는 a의 값을 구분해봅시다. 
+
+```{r eval=FALSE}
+a <- 10
+myfunc <- function(b){
+  a <- b/2
+  return(a)
+}
+myfunc(a)
+cat(a)
+
+
+## global vs local
+a <- 10
+myfunc <- function(a){
+  a <- a/10
+  return(a)
+}
+myfunc(a)
+cat(a)
+
+```
+
+
+
+

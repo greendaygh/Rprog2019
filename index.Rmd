@@ -13,7 +13,7 @@ description: "2019년 UST 강의 R 프로그래밍 웹사이트"
 ---
 
 
-# Intro 개요 
+# Lecture intro 개요 
 - 장소: 한국생명공학연구원 연구동 세미나실 1213호 (매주수요일 13:00~16:00)
 - 강사: 한국생명공학연구원 바이오합성연구센터 김하성
 - 연락처: 042-860-4372, haseong@kribb.re.kr (생명연 연구동 1143)
@@ -52,15 +52,9 @@ description: "2019년 UST 강의 R 프로그래밍 웹사이트"
 ## Lecture note 강의 자료
 - 1 (2019.03.06) - [Introduction and installation of R/Rstudio, Basics of variables and functions](https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf)
 
- <!-- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/01_code.R) -->
-
 - 2 (2019.03.13) - [R Basics - Objects (vector, factor, matrix) and functions](https://github.com/greendaygh/2019-R-programming/blob/master/02-Rprog.pdf) 다음 시간 readxl, Biostrings 두 패키지 미리 설치한 후 강의 참석 부탁드립니다.  
 
-<!-- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/02.R) -->
-
 - 3 (2019.03.20) - [R Basics II - file I/O ](https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf)  강의가 좀 빠르게 진행된 듯 합니다. 기본으로 제공되는 R 기능을 사용하기 보다는 함수나 프로그래밍 코딩 원리를 이해하기 위해 직접 함수를 만들어보는 연습을 하고 있으니 참고 하시고 다음 시간 전에 이번 시간 코드 복습하시고 오시면 도움이 되실 것 같습니다. 
-
-<!-- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/03.R) -->
 
 - 4 (2019.03.27) - [R programming example - Maze Robot ](https://github.com/greendaygh/2019-R-programming/blob/master/04-Rprog.pdf) 
 

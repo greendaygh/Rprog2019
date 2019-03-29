@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="r-basics-i.html">
-
+<link rel="next" href="r-programming-maze-robot.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -100,14 +100,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Intro 개요</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Lecture intro 개요</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal--"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references--"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation---"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule--"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#lecture-note--"><i class="fa fa-check"></i><b>1.5</b> Lecture note 강의 자료</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="r-programming-introduction.html"><a href="r-programming-introduction.html"><i class="fa fa-check"></i><b>2</b> R programming introduction</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="r-basics-i.html"><a href="r-basics-i.html"><i class="fa fa-check"></i><b>3</b> R basics I</a></li>
 <li class="chapter" data-level="4" data-path="r-basics-ii.html"><a href="r-basics-ii.html"><i class="fa fa-check"></i><b>4</b> R Basics II</a><ul>
 <li class="chapter" data-level="4.1" data-path="r-basics-ii.html"><a href="r-basics-ii.html#matrix-"><i class="fa fa-check"></i><b>4.1</b> matrix (행렬)</a></li>
@@ -115,8 +115,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="r-basics-ii.html"><a href="r-basics-ii.html#list"><i class="fa fa-check"></i><b>4.3</b> list</a></li>
 <li class="chapter" data-level="4.4" data-path="r-basics-ii.html"><a href="r-basics-ii.html#file-"><i class="fa fa-check"></i><b>4.4</b> File 읽기/쓰기</a></li>
 <li class="chapter" data-level="4.5" data-path="r-basics-ii.html"><a href="r-basics-ii.html#excel-file-"><i class="fa fa-check"></i><b>4.5</b> Excel file 읽기/쓰기</a></li>
-<li class="chapter" data-level="4.6" data-path="r-basics-ii.html"><a href="r-basics-ii.html#exercise-3-2"><i class="fa fa-check"></i><b>4.6</b> Exercise 3-2</a></li>
-<li class="chapter" data-level="4.7" data-path="r-basics-ii.html"><a href="r-basics-ii.html#exercise-3-3"><i class="fa fa-check"></i><b>4.7</b> Exercise 3-3</a></li>
+<li class="chapter" data-level="4.6" data-path="r-basics-ii.html"><a href="r-basics-ii.html#exercise-3-2-standard-deviation"><i class="fa fa-check"></i><b>4.6</b> Exercise 3-2 standard deviation</a></li>
+<li class="chapter" data-level="4.7" data-path="r-basics-ii.html"><a href="r-basics-ii.html#exercise-3-3-barplot-with-error-bars"><i class="fa fa-check"></i><b>4.7</b> Exercise 3-3 barplot with error bars</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html"><i class="fa fa-check"></i><b>5</b> R programming (Maze Robot)</a><ul>
+<li class="chapter" data-level="5.1" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#parameterargument-globallocal"><i class="fa fa-check"></i><b>5.1</b> Parameter/Argument, Global/Local</a></li>
 </ul></li>
 </ul>
 
@@ -276,8 +279,8 @@ mean_control &lt;-<span class="st"> </span><span class="kw">colMeans</span>(myod
 <span class="kw">barplot</span>(<span class="kw">t</span>(mean_test), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">beside=</span>T)</code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
 </div>
-<div id="exercise-3-2" class="section level2">
-<h2><span class="header-section-number">4.6</span> Exercise 3-2</h2>
+<div id="exercise-3-2-standard-deviation" class="section level2">
+<h2><span class="header-section-number">4.6</span> Exercise 3-2 standard deviation</h2>
 <p>앞서 사용한 sd 함수는 표준편차를 구해주는 기본 제공 함수입니다. 아래는 같은 기능을 하는 함수를 만들어 보는 실습 예제 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## excercise 3-2 
 mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){
@@ -290,12 +293,12 @@ mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){
 
 x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>)
 <span class="kw">mysd</span>(x)</code></pre></div>
-<pre><code>## [1] 18.90591</code></pre>
+<pre><code>## [1] 28.36058</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
-<pre><code>## [1] 18.90591</code></pre>
+<pre><code>## [1] 28.36058</code></pre>
 </div>
-<div id="exercise-3-3" class="section level2">
-<h2><span class="header-section-number">4.7</span> Exercise 3-3</h2>
+<div id="exercise-3-3-barplot-with-error-bars" class="section level2">
+<h2><span class="header-section-number">4.7</span> Exercise 3-3 barplot with error bars</h2>
 <p>앞서 그려본 막대그래프에 에러바를 넣어보는 코드 입니다. 먼저 평균과 표준편차 데이터를 apply 함수를 통해 얻어내고 barplot을 수행합니다. 에러바의 경우 arrows 함수를 사용하는데 사용되는 파라메터의 입력되는 값을 바꿔서 그림을 그려보면 그 의미를 파악하는데 도움이 되겠습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Exercise 3-3) barplot with sd
 
@@ -334,8 +337,8 @@ lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st"
           </div>
         </div>
       </div>
-<a href="r-basics-i.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="r-basics-i.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-programming-maze-robot.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
