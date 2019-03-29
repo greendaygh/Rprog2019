@@ -23,7 +23,7 @@
 ### 평가 세부 항목
 - 출석 50% / 과제 50% / 수업참여 +alpha
 
-### 강의 계획서
+### 강의 계획
 - Introduction and installation of R/Rstudio
 - R language basics 
 - Data manipulation 
@@ -34,8 +34,21 @@
 - Sequence analysis 
 - Clustering and significance testing with genomic data 
 
-### 강의 자료 
-- 1 (2019.03.06) - [Introduction and installation of R/Rstudio, Basics of variables and functions](https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf), -- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/01_code.R) --
-- 2 (2019.03.13) - [R Basics - Object (vector, factor, matrix) and functions](https://github.com/greendaygh/2019-R-programming/blob/master/02-Rprog.pdf), -- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/02.R) --
+### 강의 자료
+- 1 (2019.03.06) - [Introduction and installation of R/Rstudio, Basics of variables and functions](https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf)
+
+ <!-- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/01_code.R) -->
+
+- 2 (2019.03.13) - [R Basics - Object (vector, factor, matrix) and functions](https://github.com/greendaygh/2019-R-programming/blob/master/02-Rprog.pdf)
+
+<!-- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/02.R) -->
+
 다음 시간 readxl, Biostrings 두 패키지 미리 설치한 후 강의 참석 
-- 3 (2019.03.20) - [R Basics II ](https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf) -- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/03.R) -- 강의가 좀 빠르게 진행된 듯 합니다. 기본으로 제공되는 R 기능을 사용하기 보다는 함수나 프로그래밍 코딩 원리를 이해하기 위해 직접 함수를 만들어보는 연습을 하고 있으니 참고 하시고 다음 시간 전에 이번 시간 코드 복습하시고 오시면 도움이  듯 합니다.  
+
+- 3 (2019.03.20) - [R Basics II ](https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf) 
+<!-- [R code](https://github.com/greendaygh/2019-R-programming/blob/master/03.R) -->
+ 강의가 좀 빠르게 진행된 듯 합니다. 기본으로 제공되는 R 기능을 사용하기 보다는 함수나 프로그래밍 코딩 원리를 이해하기 위해 직접 함수를 만들어보는 연습을 하고 있으니 참고 하시고 다음 시간 전에 이번 시간 코드 복습하시고 오시면 도움이  듯 합니다.  
+
+- 4 (2019.03.27) - [R Basics - Maze Robot ](https://github.com/greendaygh/2019-R-programming/blob/master/04-Rprog.pdf) 
+
+
