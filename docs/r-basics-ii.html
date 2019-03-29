@@ -139,7 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Lecture 4</span> R Basics II</h1>
 <div id="matrix-" class="section level2">
 <h2><span class="header-section-number">4.1</span> matrix (행렬)</h2>
-<p>매트릭스에 값을 저장하거나 참조할때 (빼올때) 사용하는 인덱싱 방법입니다. 콤마로 구분된 대괄호 안에 앞쪽은 row, 뒷쪽은 column 인덱스를 나타내며 row 또는 column에 해당하는 어느쪽에 아무 값도 넣지 않을 경우 그 row 또는 column 전체를 참조하게 됩니다.</p>
+<p>매트릭스는 2차원 행렬로 같은 형식의 데이터 값 (numberic, character, logical) 으로만 채워진 행렬을 말합니다. 메트릭스를 만드는 방법은 아래와 같으며 nrow와 ncol 파라메터에 행과 열의 수를 넣고 각 셀에 들어갈 값은 가장 앞에 위치한 data 파라메터에 넣어 줍니다 (?matrix로 파라메터 이름 확인). 메트릭스 인덱싱은 메트릭스 안의 값을 저장하거나 참조할때 (빼올때) 사용하는 방법입니다. 메트릭스 변수이름 바로 뒤에 대괄호를 이용해서 제어를 하며 대괄호 안에 콤마로 구분된 앞쪽은 row, 뒷쪽은 column 인덱스를 나타냅니다. row 또는 column에 해당하는 어느쪽에도 값을 넣지 않을 경우 그 row 또는 column 전체를 참조하게 됩니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mymat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">nrow=</span><span class="dv">100</span>, <span class="dt">ncol=</span><span class="dv">3</span>) <span class="co"># 1</span>
 mymat[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span> <span class="co"># 2</span>
 mymat[,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">200</span>,<span class="dv">2</span>) <span class="co"># 3</span>
@@ -290,13 +290,13 @@ mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){
 
 x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>)
 <span class="kw">mysd</span>(x)</code></pre></div>
-<pre><code>## [1] 28.85308</code></pre>
+<pre><code>## [1] 18.90591</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
-<pre><code>## [1] 28.85308</code></pre>
+<pre><code>## [1] 18.90591</code></pre>
 </div>
 <div id="exercise-3-3" class="section level2">
 <h2><span class="header-section-number">4.7</span> Exercise 3-3</h2>
-<p>앞서 그려본 막대그래프에 에러바를 넣어보는 코드 입니다. 먼저 평균과 표준편차 데이터를 apply 함수를 통해 얻어내고 barplot을 수행합니다. 에러바의 경우 arrows 함수를 사용하는데 사용되는 파라메터의 의미를 파악하고 입력되는 값을 바꿔서 그림을 그리는 실습 코드 입니다.</p>
+<p>앞서 그려본 막대그래프에 에러바를 넣어보는 코드 입니다. 먼저 평균과 표준편차 데이터를 apply 함수를 통해 얻어내고 barplot을 수행합니다. 에러바의 경우 arrows 함수를 사용하는데 사용되는 파라메터의 입력되는 값을 바꿔서 그림을 그려보면 그 의미를 파악하는데 도움이 되겠습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Exercise 3-3) barplot with sd
 
 control_mean &lt;-<span class="st"> </span><span class="kw">apply</span>(myod_control, <span class="dv">2</span>, <span class="cf">function</span>(x){<span class="kw">mean</span>(x)})
@@ -314,6 +314,18 @@ lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st"
 lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;SD:&quot;</span>, <span class="kw">round</span>(control_mean[<span class="dv">2</span>]<span class="op">+</span>control_sd[<span class="dv">2</span>],<span class="dv">1</span>))
 <span class="kw">text</span>(<span class="fl">1.5</span>, control_mean[<span class="dv">2</span>]<span class="op">+</span>control_sd[<span class="dv">2</span>]<span class="op">+</span><span class="fl">0.05</span>, <span class="dt">labels =</span> lab)</code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>그러나 위 12개의 bar 모두에 대해서 arrows 함수를 그리기 보다는 <strong>for 문을 이용한 반복 실행을</strong> 수행하는 것이 효율적 입니다. for 문의 사용 형식과 반복 횟수 그리고 반복하며 변화되는 값을 갖는 변수에 대한 의미를 파악하고 사용하는 것이 중요합니다. for문의 사용법은 <a href="https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf">강의노트</a> 를 참고하세요.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Exercise 3-4) barplot with sd using for
+<span class="kw">barplot</span>(control_mean, <span class="dt">width=</span><span class="fl">0.83</span>, <span class="dt">space=</span><span class="fl">0.2</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(control_mean)){
+  xpos &lt;-<span class="st"> </span><span class="fl">0.5</span><span class="op">+</span>i<span class="op">-</span><span class="dv">1</span>
+  <span class="kw">arrows</span>(xpos, control_mean[i], xpos, control_mean[i]<span class="op">+</span>control_sd[i], <span class="dt">length=</span><span class="fl">0.1</span>, <span class="dt">angle=</span><span class="dv">90</span>)
+  <span class="kw">arrows</span>(xpos, control_mean[i], xpos, control_mean[i]<span class="op">-</span>control_sd[i], <span class="dt">length=</span><span class="fl">0.1</span>, <span class="dt">angle=</span><span class="dv">90</span>)
+  lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;SD:&quot;</span>, <span class="kw">round</span>(control_mean[i]<span class="op">+</span>control_sd[i],<span class="dv">1</span>))
+  <span class="kw">text</span>(xpos, control_mean[i]<span class="op">+</span>control_sd[i]<span class="op">+</span><span class="fl">0.05</span>, <span class="dt">labels =</span> lab)
+}</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>마지막으로 실습 예제 3-5는 엑셀파일 이름을 argument로 받아서 파일 내용을 읽고 데이터를 두 그룹으로 나누어 평균을 계산한 후 plot까지 그려주는 함수를 만드는 실습 예제 입니다.</p>
 
 </div>
 </div>
