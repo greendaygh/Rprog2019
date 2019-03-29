@@ -1,4 +1,4 @@
-rmd_files: ["index.Rmd", "README.md", "03-lecture.Rmd"]
+rmd_files: ["README.md", "index.Rmd", "03-lecture.Rmd"]
 book_filename: "Rprog"
 repo: https://github.com/greendaygh/Rprog2019/
 output_dir: docs
