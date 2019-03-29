@@ -12,3 +12,8 @@ github-repo: https://greendaygh.github.io/Rprog2019/
 description: "2019년 UST 강의 R 프로그래밍 웹사이트"
 ---
 
+# R 프로그래밍 
+
+이 사이트는 UST 대학원 일반강의인 R 프로그래밍 수업을 위한 사이트 입니다. 
+
+
