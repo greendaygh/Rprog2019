@@ -1,6 +1,0 @@
-rmd_files: ["index.Rmd"]
-book_filename: "Rprog"
-language:
-  ui:
-    chapter_name: "Chapter "
-delete_merged_file: true
