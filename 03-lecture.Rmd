@@ -2,7 +2,7 @@
 title: "3번째 강의 R Basics - II"
 ---
 
-# Lecture 3 - R Basics II
+# R Basics II
 
 ## matrix (행렬)
 

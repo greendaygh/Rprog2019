@@ -1,0 +1,8 @@
+---
+title: "01-lecture"
+author: "Haseong"
+date: "2019년 3월 29일"
+output: html_document
+---
+
+# R programming introduction 
