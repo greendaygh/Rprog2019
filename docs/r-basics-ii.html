@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lecture 4 R Basics II | [2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
+  <title>4 R Basics II | [2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
   <meta name="description" content="2019년 UST 강의 R 프로그래밍 웹사이트">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Lecture 4 R Basics II | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta property="og:title" content="4 R Basics II | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="https://greendaygh.github.io/Rprog2019/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Lecture 4 R Basics II | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta name="twitter:title" content="4 R Basics II | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   
   <meta name="twitter:description" content="2019년 UST 강의 R 프로그래밍 웹사이트" />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-03-30">
+<meta name="date" content="2019-03-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -100,14 +100,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Lecture intro 개요</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Lecture 개요</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal--"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references--"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation---"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule--"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#lecture-note--"><i class="fa fa-check"></i><b>1.5</b> Lecture note 강의 자료</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="lecture-01-r-introduction.html"><a href="lecture-01-r-introduction.html"><i class="fa fa-check"></i><b>2</b> Lecture 01 - R Introduction</a></li>
 <li class="chapter" data-level="3" data-path="r-basics-i.html"><a href="r-basics-i.html"><i class="fa fa-check"></i><b>3</b> R basics I</a></li>
 <li class="chapter" data-level="4" data-path="r-basics-ii.html"><a href="r-basics-ii.html"><i class="fa fa-check"></i><b>4</b> R Basics II</a><ul>
 <li class="chapter" data-level="4.1" data-path="r-basics-ii.html"><a href="r-basics-ii.html#matrix-"><i class="fa fa-check"></i><b>4.1</b> matrix (행렬)</a></li>
@@ -127,6 +127,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.6" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#draw-blocks-and-walls"><i class="fa fa-check"></i><b>5.6</b> Draw blocks and walls</a></li>
 <li class="chapter" data-level="5.7" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#move-one-step"><i class="fa fa-check"></i><b>5.7</b> Move one step</a></li>
 <li class="chapter" data-level="5.8" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#sleep-for-delay"><i class="fa fa-check"></i><b>5.8</b> Sleep for delay</a></li>
+<li class="chapter" data-level="5.9" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#move-50-steps"><i class="fa fa-check"></i><b>5.9</b> Move 50 steps</a></li>
 </ul></li>
 </ul>
 
@@ -146,7 +147,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="r-basics-ii" class="section level1">
-<h1><span class="header-section-number">Lecture 4</span> R Basics II</h1>
+<h1><span class="header-section-number">4</span> R Basics II</h1>
 <div id="matrix-" class="section level2">
 <h2><span class="header-section-number">4.1</span> matrix (행렬)</h2>
 <p>매트릭스는 2차원 행렬로 같은 형식의 데이터 값 (numberic, character, logical) 으로만 채워진 행렬을 말합니다. 메트릭스를 만드는 방법은 아래와 같으며 nrow와 ncol 파라메터에 행과 열의 수를 넣고 각 셀에 들어갈 값은 가장 앞에 위치한 data 파라메터에 넣어 줍니다 (?matrix로 파라메터 이름 확인). 메트릭스 인덱싱은 메트릭스 안의 값을 저장하거나 참조할때 (빼올때) 사용하는 방법입니다. 메트릭스 변수이름 바로 뒤에 대괄호를 이용해서 제어를 하며 대괄호 안에 콤마로 구분된 앞쪽은 row, 뒷쪽은 column 인덱스를 나타냅니다. row 또는 column에 해당하는 어느쪽에도 값을 넣지 않을 경우 그 row 또는 column 전체를 참조하게 됩니다.</p>
@@ -300,9 +301,9 @@ mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){
 
 x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>)
 <span class="kw">mysd</span>(x)</code></pre></div>
-<pre><code>## [1] 27.75608</code></pre>
+<pre><code>## [1] 34.46238</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
-<pre><code>## [1] 27.75608</code></pre>
+<pre><code>## [1] 34.46238</code></pre>
 </div>
 <div id="exercise-3-3-barplot-with-error-bars" class="section level2">
 <h2><span class="header-section-number">4.7</span> Exercise 3-3 barplot with error bars</h2>

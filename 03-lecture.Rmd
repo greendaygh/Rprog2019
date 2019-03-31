@@ -1,8 +1,8 @@
 ---
-title: "3번째 강의 R Basics - II"
+title: "03-lecture"
 ---
 
-# R Basics II
+# Lecture 03 - R Basics II
 
 
 ```{r setup, include=FALSE}

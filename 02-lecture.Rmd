@@ -5,4 +5,4 @@ date: "2019년 3월 29일"
 output: html_document
 ---
 
-# R basics I
+# Lecture 02 - R basics I

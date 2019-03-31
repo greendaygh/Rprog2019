@@ -5,7 +5,7 @@ date: "2019년 3월 29일"
 output: html_document
 ---
 
-# R programming (Maze Robot)
+# Lecture 04 - Maze Robot
 
 ## Parameter/Argument, Global/Local  
 
@@ -292,4 +292,39 @@ if(mymaze[next_x, next_y]==0){
 }
 ```
 
+
+
+## Move 50 steps 
+
+이제 for 문을 이용해서 50 step 이동하는 것을 구현해 보겠습니다. 여기서 눈여겨 볼 부분은 마지막 next_x 와 next_y의 위치에 0일 경우 draw_world를 호출하지 않고 cur_x, cur_y 값을 업데이트 시켜서 효율적으로 구현했습니다. 
+
+```{r}
+mymaze <- generate_maze(8)
+cur_x <- 2
+cur_y <- 2
+for(i in 1:50){
+  draw_world(mymaze, cur_x, cur_y)
+  Sys.sleep(1)
+  one_step_direction <- sample(c("E","W", "S", "N"), 1)
+  cat(i, "/", one_step_direction, "\n");flush.console()
+  if(one_step_direction=="E"){
+    next_x <- cur_x + 1
+    next_y <- cur_y
+  }else if(one_step_direction=="W"){
+    next_x <- cur_x - 1
+    next_y <- cur_y
+  }else if(one_step_direction=="S"){
+    next_x <- cur_x
+    next_y <- cur_y - 1
+  }else if(one_step_direction=="N"){
+    next_x <- cur_x
+    next_y <- cur_y + 1
+  }
+  if(mymaze[next_x, next_y]==0){
+    cur_x <- next_x
+    cur_y <- next_y
+  }
+}
+
+```
 

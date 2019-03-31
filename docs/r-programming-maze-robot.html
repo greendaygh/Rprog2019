@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lecture 5 R programming (Maze Robot) | [2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
+  <title>5 R programming (Maze Robot) | [2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
   <meta name="description" content="2019년 UST 강의 R 프로그래밍 웹사이트">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Lecture 5 R programming (Maze Robot) | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta property="og:title" content="5 R programming (Maze Robot) | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="https://greendaygh.github.io/Rprog2019/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Lecture 5 R programming (Maze Robot) | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta name="twitter:title" content="5 R programming (Maze Robot) | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   
   <meta name="twitter:description" content="2019년 UST 강의 R 프로그래밍 웹사이트" />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-03-30">
+<meta name="date" content="2019-03-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -100,14 +100,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Lecture intro 개요</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Lecture 개요</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#goal--"><i class="fa fa-check"></i><b>1.1</b> Goal 강의 목표</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#references--"><i class="fa fa-check"></i><b>1.2</b> References 참고 자료</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#evaluation---"><i class="fa fa-check"></i><b>1.3</b> Evaluation 평가 세부 항목</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#schedule--"><i class="fa fa-check"></i><b>1.4</b> Schedule 강의 계획</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#lecture-note--"><i class="fa fa-check"></i><b>1.5</b> Lecture note 강의 자료</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="lecture-01-r-introduction.html"><a href="lecture-01-r-introduction.html"><i class="fa fa-check"></i><b>2</b> Lecture 01 - R Introduction</a></li>
 <li class="chapter" data-level="3" data-path="r-basics-i.html"><a href="r-basics-i.html"><i class="fa fa-check"></i><b>3</b> R basics I</a></li>
 <li class="chapter" data-level="4" data-path="r-basics-ii.html"><a href="r-basics-ii.html"><i class="fa fa-check"></i><b>4</b> R Basics II</a><ul>
 <li class="chapter" data-level="4.1" data-path="r-basics-ii.html"><a href="r-basics-ii.html#matrix-"><i class="fa fa-check"></i><b>4.1</b> matrix (행렬)</a></li>
@@ -127,6 +127,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.6" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#draw-blocks-and-walls"><i class="fa fa-check"></i><b>5.6</b> Draw blocks and walls</a></li>
 <li class="chapter" data-level="5.7" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#move-one-step"><i class="fa fa-check"></i><b>5.7</b> Move one step</a></li>
 <li class="chapter" data-level="5.8" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#sleep-for-delay"><i class="fa fa-check"></i><b>5.8</b> Sleep for delay</a></li>
+<li class="chapter" data-level="5.9" data-path="r-programming-maze-robot.html"><a href="r-programming-maze-robot.html#move-50-steps"><i class="fa fa-check"></i><b>5.9</b> Move 50 steps</a></li>
 </ul></li>
 </ul>
 
@@ -146,7 +147,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="r-programming-maze-robot" class="section level1">
-<h1><span class="header-section-number">Lecture 5</span> R programming (Maze Robot)</h1>
+<h1><span class="header-section-number">5</span> R programming (Maze Robot)</h1>
 <div id="parameterargument-globallocal" class="section level2">
 <h2><span class="header-section-number">5.1</span> Parameter/Argument, Global/Local</h2>
 <p>이번 시간에는 함수와 메트릭스의 사용법을 익히기 위해서 재미있는(?) 간단한 프로그램을 만들어 보겠습니다. 정사각형 격자 안에서 랜덤하게 한 칸씩 움직이며 시작 점부터 끝 점까지 가는 로봇을 구현하고 이를 시각화하는 프로그램이 되겠습니다.</p>
@@ -242,12 +243,12 @@ maze[,n] &lt;-<span class="st"> </span><span class="dv">1</span></code></pre></d
 maze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    0    0    0    1
-## [3,]    1    0    0    0    0    0    1    1
-## [4,]    1    0    0    1    0    0    0    1
-## [5,]    1    0    0    1    0    0    0    1
-## [6,]    1    0    0    0    0    1    0    1
-## [7,]    1    0    0    0    1    1    0    1
+## [2,]    1    0    0    0    1    0    0    1
+## [3,]    1    0    0    0    1    0    1    1
+## [4,]    1    0    1    0    0    0    0    1
+## [5,]    1    1    0    0    0    1    0    1
+## [6,]    1    0    0    0    0    0    0    1
+## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 <p>이제 위 코드를 활용해서 maze matrix 맵을 만드는 함수인 generate_maze 를 작성해 봅니다. 입력 파라메터는 n 하나로 가로 또는 세로의 (정사각형) 갯수를 의미합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_maze &lt;-<span class="st"> </span><span class="cf">function</span>(n){
@@ -265,10 +266,10 @@ mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span
 mymaze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    0    0    0    1
+## [2,]    1    1    0    0    0    1    0    1
 ## [3,]    1    0    0    0    0    0    0    1
 ## [4,]    1    0    0    0    0    0    0    1
-## [5,]    1    0    0    0    1    0    1    1
+## [5,]    1    0    1    0    0    0    0    1
 ## [6,]    1    0    0    0    0    0    0    1
 ## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
@@ -382,6 +383,124 @@ one_step_direction &lt;-<span class="st"> </span><span class="kw">sample</span>(
 <span class="cf">if</span>(mymaze[next_x, next_y]<span class="op">==</span><span class="dv">0</span>){
   <span class="kw">draw_world</span>(mymaze, next_x, next_y)
 }</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+</div>
+<div id="move-50-steps" class="section level2">
+<h2><span class="header-section-number">5.9</span> Move 50 steps</h2>
+<p>이제 for 문을 이용해서 50 step 이동하는 것을 구현해 보겠습니다. 여기서 눈여겨 볼 부분은 마지막 next_x 와 next_y의 위치에 0일 경우 draw_world를 호출하지 않고 cur_x, cur_y 값을 업데이트 시켜서 효율적으로 구현했습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span class="dv">8</span>)
+cur_x &lt;-<span class="st"> </span><span class="dv">2</span>
+cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">50</span>){
+  <span class="kw">draw_world</span>(mymaze, cur_x, cur_y)
+  <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)
+  one_step_direction &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>,<span class="st">&quot;W&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="st">&quot;N&quot;</span>), <span class="dv">1</span>)
+  <span class="kw">cat</span>(i, <span class="st">&quot;/&quot;</span>, one_step_direction, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);<span class="kw">flush.console</span>()
+  <span class="cf">if</span>(one_step_direction<span class="op">==</span><span class="st">&quot;E&quot;</span>){
+    next_x &lt;-<span class="st"> </span>cur_x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    next_y &lt;-<span class="st"> </span>cur_y
+  }<span class="cf">else</span> <span class="cf">if</span>(one_step_direction<span class="op">==</span><span class="st">&quot;W&quot;</span>){
+    next_x &lt;-<span class="st"> </span>cur_x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+    next_y &lt;-<span class="st"> </span>cur_y
+  }<span class="cf">else</span> <span class="cf">if</span>(one_step_direction<span class="op">==</span><span class="st">&quot;S&quot;</span>){
+    next_x &lt;-<span class="st"> </span>cur_x
+    next_y &lt;-<span class="st"> </span>cur_y <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+  }<span class="cf">else</span> <span class="cf">if</span>(one_step_direction<span class="op">==</span><span class="st">&quot;N&quot;</span>){
+    next_x &lt;-<span class="st"> </span>cur_x
+    next_y &lt;-<span class="st"> </span>cur_y <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  }
+  <span class="cf">if</span>(mymaze[next_x, next_y]<span class="op">==</span><span class="dv">0</span>){
+    cur_x &lt;-<span class="st"> </span>next_x
+    cur_y &lt;-<span class="st"> </span>next_y
+  }
+}</code></pre></div>
+<pre><code>## 1 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<pre><code>## 2 / E</code></pre>
+<pre><code>## 3 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p>
+<pre><code>## 4 / W</code></pre>
+<pre><code>## 5 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-3.png" width="672" /></p>
+<pre><code>## 6 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-4.png" width="672" /></p>
+<pre><code>## 7 / W</code></pre>
+<pre><code>## 8 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-5.png" width="672" /></p>
+<pre><code>## 9 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-6.png" width="672" /></p>
+<pre><code>## 10 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-7.png" width="672" /></p>
+<pre><code>## 11 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-8.png" width="672" /></p>
+<pre><code>## 12 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-9.png" width="672" /></p>
+<pre><code>## 13 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-10.png" width="672" /></p>
+<pre><code>## 14 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-11.png" width="672" /></p>
+<pre><code>## 15 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-12.png" width="672" /></p>
+<pre><code>## 16 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-13.png" width="672" /></p>
+<pre><code>## 17 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-14.png" width="672" /></p>
+<pre><code>## 18 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-15.png" width="672" /></p>
+<pre><code>## 19 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-16.png" width="672" /></p>
+<pre><code>## 20 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-17.png" width="672" /></p>
+<pre><code>## 21 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-18.png" width="672" /></p>
+<pre><code>## 22 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-19.png" width="672" /></p>
+<pre><code>## 23 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-20.png" width="672" /></p>
+<pre><code>## 24 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-21.png" width="672" /></p>
+<pre><code>## 25 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-22.png" width="672" /></p>
+<pre><code>## 26 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-23.png" width="672" /></p>
+<pre><code>## 27 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-24.png" width="672" /></p>
+<pre><code>## 28 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-25.png" width="672" /></p>
+<pre><code>## 29 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-26.png" width="672" /></p>
+<pre><code>## 30 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-27.png" width="672" /></p>
+<pre><code>## 31 / S</code></pre>
+<pre><code>## 32 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-28.png" width="672" /></p>
+<pre><code>## 33 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-29.png" width="672" /></p>
+<pre><code>## 34 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-30.png" width="672" /></p>
+<pre><code>## 35 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-31.png" width="672" /></p>
+<pre><code>## 36 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-32.png" width="672" /></p>
+<pre><code>## 37 / E</code></pre>
+<pre><code>## 38 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-33.png" width="672" /></p>
+<pre><code>## 39 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-34.png" width="672" /></p>
+<pre><code>## 40 / E</code></pre>
+<pre><code>## 41 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-35.png" width="672" /></p>
+<pre><code>## 42 / S</code></pre>
+<pre><code>## 43 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-36.png" width="672" /></p>
+<pre><code>## 44 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-37.png" width="672" /></p>
+<pre><code>## 45 / S</code></pre>
+<pre><code>## 46 / S</code></pre>
+<pre><code>## 47 / S</code></pre>
+<pre><code>## 48 / S</code></pre>
+<pre><code>## 49 / W</code></pre>
+<pre><code>## 50 / E</code></pre>
 
 </div>
 </div>
