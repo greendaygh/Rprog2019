@@ -59,10 +59,15 @@ hist(x, br=20, xlim=c(-3,3), main="Main text", xlab="X label")
 
 ## boxplot 상자그래프 
 
-boxplot은 데이터의 여러가지 대표값 (중간값 median, 첫번째 사분위수 1st quantile, 세번째 사분위수 3rd quantile, 최소 minimum, 최대값 maximum) 등을 한눈에 볼 수 있도록 만들어놓은 그래프 입니다. data.frame 타입의 오브젝트에 대해서 boxplot을 그릴 경우 여러 변수의 데이터들의 분포를 한눈에 비교할 수 있읍니다. 
+boxplot은 데이터의 여러가지 대표값 (중간값 median, 첫번째 사분위수 1st quantile, 세번째 사분위수 3rd quantile, 최소 minimum, 최대값 maximum) 등을 한눈에 볼 수 있도록 만들어놓은 그래프 입니다. 
 
 ```{r}
 boxplot(x)
+```
+
+data.frame 타입의 오브젝트에 대해서 boxplot을 그릴 경우 여러 변수의 데이터들의 분포를 한눈에 비교할 수 있읍니다. 
+
+```{r}
 y <- rnorm(100, 1, 1)
 #boxplot(y)
 xy <- data.frame(x, y)
@@ -123,17 +128,84 @@ abline(lm(y~x))
 
 ## Multiplate reader 함수 만들기  
 
-함수를 만들기 위한 프로그래밍 소개 및 전략 등의 내용은 강의노트를 참고하시기 바랍니다. 먼저 excel 파일을 읽어오기 위하여 readxl 패키지를 불러옵니다. 
+함수를 만들기 위한 프로그래밍 소개 및 전략 등의 내용은 강의노트를 참고하시기 바랍니다. 특히 exp_design.xlsx 파일은 실험 후 결과 측정을 위하여 96 well plate에 위치할 샘플들의 위치 및 실험 조건을 명시해둔 파일로서 이번 시간 만드는 함수의 핵심이 되는 파일입니다. excel 파일을 읽어오기 위하여 readxl 패키지를 불러온 후 read_excel 함수의 range 파라메터를 이용하여 96 well plate의 dimension과 같은 8 x 12 데이터를 모두 읽습니다. read_excel 함수는 기본적으로 tibble 형식의 데이터를 반환하지만 본 강의에서는 data.frame 형식으로 사용하기 위하여 as.data.frame 함수를 이용하여 변환을 해 줍니다. 참고로 최근 R을 이용한 데이터 분석에는 tibble 타입이 많이 쓰이는 추세입니다.  
 
-```{r}
+```{r eval=FALSE}
+#options(readxl.show_progress = FALSE)
 library(readxl)
 design_file_name <- "exp_design.xlsx"
 data_file_name <- "Rprog04-fl.xls"
-mydesign <- read_excel(design_file_name, sheet=1)
+#mydesign <- read_excel(design_file_name, sheet=1)
+mydesign <- as.data.frame(read_excel(design_file_name, sheet=1, range="A1:L8", skip = 0, col_names=F))
+mydata <- as.data.frame(read_excel(data_file_name, sheet=1))
+#head(mydesign)
+#head(mydata)
+```
+
+```{r echo=FALSE}
+library(readxl)
+design_file_name <- "exp_design.xlsx"
+data_file_name <- "Rprog04-fl.xls"
 mydesign <- as.data.frame(read_excel(design_file_name, sheet=1, range="A1:L8", skip = 0, col_names=F))
 mydata <- as.data.frame(read_excel(data_file_name, sheet=1))
 
-head(mydesign)
-head(mydata)
+```
+
+위 design 엑셀 파일로 샘플이 놓인 위치와 그 실험 조건을 읽어올 수 있으나 data를 뽑아올 수 있는 well의 이름인 (mydata 내용 확인) A01, A02, ..., B01, B02와 같은 well 위치를 나타내는 이름 정보는 존재하지 않습니다. 따라서 96 well plate 와 동일한 모양의 메트릭스를 만들고 각 셀에 well 이름들로 값을 채워넣어 추후 인덱스를 얻었을 때 그 위치에 해당하는 well 이름도 쉽게 얻을 수 있도록 합니다. sprintf는 %02d와 같이 명시한 포맷으로 숫자를 출력해주는 함수 입니다. %02d는 digit 2자리 포맷을 가리키는 문자열로 한자리 숫자의 경우 앞에 0을 넣어 2자리로 만들어 출력해 줍니다. 
+
+
+```{r}
+# make a position matrix
+pos1 <- rep(LETTERS[1:8], time=12)
+pos2 <- rep(sprintf("%02d", 1:12), each=8)
+well_position_labels <- paste(pos1, pos2, sep="")
+well_position_matrix <- matrix(well_position_labels, nrow=8, ncol=12)
+```
+
+이제 design 메트릭스에서 실험 조건이 명시된 위치의 well 이름을 꺼내오는 작업을 수행합니다. 이 때 바로 matrix로 코딩을 하기 보다는 vector 수준에서 값을 불러오는 코드를 먼저 만들고 matrix로 확장하는 것이 좋습니다. 아래는 첫 번째 컬럼의 값들에 대해서만 (vector 수준에서) 값을 추출하는 코드입니다. is.na는 해당 값이 NA인지 검사해서 NA일 경우 TRUE를 그렇지 않으면 FALSE를 리턴해주는 함수 입니다. 
+
+```{r eval=FALSE}
+## vector
+tmpi <- mydesign[, 1]
+tmpv <- well_position_matrix[, 1]
+!is.na(tmpi)
+which(!is.na(tmpi))
+tmpi[!is.na(tmpi)]
+tmpv[!is.na(tmpi)]
+```
+
+
+lapply 함수를 사용하여 위와 같은 값을 추출하는 기능을 data.frame에 적용하는 전략을 사용하며 이를 위하여 다음 두 개의 함수(extract_values, extract_values2)를 구현합니다. extract_value 함수는 입력되는 파라메터 벡터 x에서 na 가 아닌 값들을 추출하는 함수이고 extract_value2의 경우 입력되는 파라메터 x가 16개의 값을 가지며 1부터 8까지 8개의 값들 중 na 가 아닌 인덱스를 뽑아내고 9부터 16까지의 값들 중 앞서 뽑은 인덱스에 해당하는 값들을 뽑아내는 함수입니다.  
+
+```{r}
+extract_values <- function(x){
+  index <- which(!is.na(x))
+  return(x[index])
+}
+#extract_values(tmpi)
+
+extract_values2 <- function(x){
+  conditions <- x[1:8]
+  well_names <- x[9:16]
+  index <- which(!is.na(conditions))
+  return(well_names[index])
+}
+#extract_values2(c(tmpi, tmpv))
+```
+
+위 함수들, 특히extract_value2 함수을 이용해서 well 정보들 (well 이름, well에 담긴 샘플들의 실험 컨디션)을 추출하기 위해서 well_info2 라는 메트릭스를 만듭니다. (작성중..)
+
+```{r}
+colnames(mydesign) <- as.character(1:12)
+colnames(well_position_matrix) <- as.character(1:12)
+tmpdata <- rbind(mydesign, well_position_matrix)
+
+tmpv <- lapply(tmpdata, extract_values2)
+well_names <- unlist(tmpv)
+
+tmpv <- lapply(mydesign, extract_values)
+well_conditions <- unlist(tmpv)
+
+well_info <- data.frame(well_names, well_conditions, stringsAsFactors = F)
 ```
 

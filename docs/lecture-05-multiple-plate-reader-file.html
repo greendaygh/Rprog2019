@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-04-03">
+<meta name="date" content="2019-04-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -138,6 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#boxplot-"><i class="fa fa-check"></i><b>6.4</b> boxplot 상자그래프</a></li>
 <li class="chapter" data-level="6.5" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#barplot-"><i class="fa fa-check"></i><b>6.5</b> barplot 막대그래프</a></li>
 <li class="chapter" data-level="6.6" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#other-examples--"><i class="fa fa-check"></i><b>6.6</b> other examples 그래프 예시</a></li>
+<li class="chapter" data-level="6.7" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader--"><i class="fa fa-check"></i><b>6.7</b> Multiplate reader 함수 만들기</a></li>
 </ul></li>
 </ul>
 
@@ -200,14 +201,15 @@ myxy</code></pre></div>
 </div>
 <div id="boxplot-" class="section level2">
 <h2><span class="header-section-number">6.4</span> boxplot 상자그래프</h2>
-<p>boxplot은 데이터의 여러가지 대표값 (중간값 median, 첫번째 사분위수 1st quantile, 세번째 사분위수 3rd quantile, 최소 minimum, 최대값 maximum) 등을 한눈에 볼 수 있도록 만들어놓은 그래프 입니다. data.frame 타입의 오브젝트에 대해서 boxplot을 그릴 경우 여러 변수의 데이터들의 분포를 한눈에 비교할 수 있읍니다.</p>
+<p>boxplot은 데이터의 여러가지 대표값 (중간값 median, 첫번째 사분위수 1st quantile, 세번째 사분위수 3rd quantile, 최소 minimum, 최대값 maximum) 등을 한눈에 볼 수 있도록 만들어놓은 그래프 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(x)</code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>data.frame 타입의 오브젝트에 대해서 boxplot을 그릴 경우 여러 변수의 데이터들의 분포를 한눈에 비교할 수 있읍니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">1</span>)
 <span class="co">#boxplot(y)</span>
 xy &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)
 <span class="kw">boxplot</span>(xy)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-37-2.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(xy)</code></pre></div>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 </div>
@@ -223,29 +225,91 @@ tab_xy &lt;-<span class="st"> </span><span class="kw">rbind</span>(tab_x, tab_y)
 <span class="co">#barplot(tab_xy, beside = T)</span>
 <span class="co">#barplot(tab_xy, beside = T, col=c(&quot;darkblue&quot;,&quot;red&quot;))</span>
 <span class="kw">barplot</span>(tab_xy, <span class="dt">beside =</span> T, <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;darkblue&quot;</span>,<span class="st">&quot;red&quot;</span>), <span class="dt">xlab=</span><span class="st">&quot;Month&quot;</span>)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(tab_xy, <span class="dt">beside =</span> T, <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;darkblue&quot;</span>,<span class="st">&quot;red&quot;</span>), <span class="dt">xlab=</span><span class="st">&quot;Month&quot;</span>, <span class="dt">horiz=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-39-2.png" width="672" /></p>
 </div>
 <div id="other-examples--" class="section level2">
 <h2><span class="header-section-number">6.6</span> other examples 그래프 예시</h2>
 <p>위 예제들에서 사용한 high level function들을 low level function (lines, points, ablines, axis 등)들과 함께 사용함으로써 원하는 도표 대부분을 그려낼 수 있습니다. 최근 널리 사용되는 ggplot2 패키지를 이용한 그래프 사용법 강의에서는 오늘 배우는 그래픽 명령어는 거의 사용하지 않습니다. 그러나 위 함수들은 R의 기본 그래프 함수들로서 단순한 도표에서부터 복잡한 그래픽까지 구현할 수 있는 다양한 유연성을 제공하므로 기본적인 사용법을 정확히 이해하는 것이 필수입니다.</p>
-<p>아래 도표는 평균 0, 분산 1인 분포에서 500개의 랜덤한 수를 뽑아 x에 저장하고 x의 분포를 히스토그램으로 표현한 것 입니다. 두 번째 그래프는 앞서 생성한 x 값들과 상관성이 있는 y값들을 (x에 2를 곱하고 평균 5, 분산 1인 랜덤하게 뽑힌 수를 노이즈로 더함) 생성하고 모든 1000개 값들의 분포를 그린 히스토그램 입니다. 또한 density 함수와 lines 함수를 조합하여 확률밀도함수 커브를 그려 넣었습니다. 이 때 hist 함수에 probability=T 옵션을 넣어 y scale을 확률밀도함수의 y 스케일과 맞춰주어 같은 화면에 그려지도록 했습니다.</p>
+<p>아래 도표는 평균 0, 분산 1인 분포에서 500개의 랜덤한 수를 뽑아 x에 저장하고 x의 분포를 히스토그램으로 표현한 것 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">500</span>)
 <span class="kw">hist</span>(x, <span class="dv">100</span>)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>아래는 앞서 생성한 x 값들과 상관성이 있는 y값들을 (x에 2를 곱하고 평균 5, 분산 1인 랜덤하게 뽑힌 수를 노이즈로 더함) 생성하고 모든 1000개 값들의 분포를 그린 히스토그램 입니다. 또한 density 함수와 lines 함수를 조합하여 확률밀도함수 커브를 그려 넣었습니다. 이 때 hist 함수에 probability=T 옵션을 넣어 y scale을 확률밀도함수의 y 스케일과 맞춰주어 같은 화면에 그려지도록 했습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">500</span>, <span class="dt">mean=</span><span class="dv">5</span>, <span class="dt">sd=</span><span class="dv">1</span>)
 <span class="kw">hist</span>(<span class="kw">c</span>(x,y), <span class="dt">br=</span><span class="dv">100</span>, <span class="dt">probability =</span> T)
 <span class="kw">lines</span>(<span class="kw">density</span>(<span class="kw">c</span>(x,y)))</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-39-2.png" width="672" /></p>
-<p>아래는 위에서 생성한 x, y 값의 산포도를 그리고 x축과 y축 범위를 xlim, ylim 파라메터로 조절했습니다. ?pch 도움말을 참고하여 다양한 포인트 모양을 선택할 수 있으며 x 값이 0 보다 작은 경우의 index를 뽑아 해당되는 x 값들과 그 값들의 짝이 되는 y값들에 대해서만 다시 포인트 그림을 red 색상으로 그려 넣었습니다. lm 은 linear model의 약자로 회귀 곡선을 구할 때 사용하는 함수이며 이 함수를 abline과 조합하여 회귀 직선을 그릴 수 있습니다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x,y, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">15</span>))</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>위에서 생성한 x, y 값의 산포도를 그리고 x축과 y축 범위를 xlim, ylim 파라메터로 조절했습니다. ?pch 도움말을 참고하여 다양한 포인트 모양을 선택할 수 있으며 x 값이 0 보다 작은 경우의 index를 뽑아 해당되는 x 값들과 그 값들의 짝이 되는 y값들에 대해서만 다시 포인트 그림을 red 색상으로 그려 넣었습니다. lm 은 linear model의 약자로 회귀 곡선을 구할 때 사용하는 함수이며 이 함수를 abline과 조합하여 회귀 직선을 그릴 수 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x,y, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">15</span>), <span class="dt">pch=</span><span class="dv">3</span>)
 idx &lt;-<span class="st"> </span><span class="kw">which</span>(x<span class="op">&lt;</span><span class="dv">0</span>)
 <span class="kw">points</span>(x[idx], y[idx], <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
 <span class="kw">abline</span>(<span class="kw">lm</span>(y<span class="op">~</span>x))</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-40-2.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+</div>
+<div id="multiplate-reader--" class="section level2">
+<h2><span class="header-section-number">6.7</span> Multiplate reader 함수 만들기</h2>
+<p>함수를 만들기 위한 프로그래밍 소개 및 전략 등의 내용은 강의노트를 참고하시기 바랍니다. 특히 exp_design.xlsx 파일은 실험 후 결과 측정을 위하여 96 well plate에 위치할 샘플들의 위치 및 실험 조건을 명시해둔 파일로서 이번 시간 만드는 함수의 핵심이 되는 파일입니다. excel 파일을 읽어오기 위하여 readxl 패키지를 불러온 후 read_excel 함수의 range 파라메터를 이용하여 96 well plate의 dimension과 같은 8 x 12 데이터를 모두 읽습니다. read_excel 함수는 기본적으로 tibble 형식의 데이터를 반환하지만 본 강의에서는 data.frame 형식으로 사용하기 위하여 as.data.frame 함수를 이용하여 변환을 해 줍니다. 참고로 최근 R을 이용한 데이터 분석에는 tibble 타입이 많이 쓰이는 추세입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#options(readxl.show_progress = FALSE)</span>
+<span class="kw">library</span>(readxl)
+design_file_name &lt;-<span class="st"> &quot;exp_design.xlsx&quot;</span>
+data_file_name &lt;-<span class="st"> &quot;Rprog04-fl.xls&quot;</span>
+<span class="co">#mydesign &lt;- read_excel(design_file_name, sheet=1)</span>
+mydesign &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(design_file_name, <span class="dt">sheet=</span><span class="dv">1</span>, <span class="dt">range=</span><span class="st">&quot;A1:L8&quot;</span>, <span class="dt">skip =</span> <span class="dv">0</span>, <span class="dt">col_names=</span>F))
+mydata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(data_file_name, <span class="dt">sheet=</span><span class="dv">1</span>))
+<span class="co">#head(mydesign)</span>
+<span class="co">#head(mydata)</span></code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; `..1`
+## * `` -&gt; `..2`
+## * `` -&gt; `..3`
+## * `` -&gt; `..4`
+## * `` -&gt; `..5`
+## * ... and 7 more</code></pre>
+<pre><code>## New names:
+## * Time -&gt; Time..5
+## * Time -&gt; Time..7</code></pre>
+<p>위 design 엑셀 파일로 샘플이 놓인 위치와 그 실험 조건을 읽어올 수 있으나 data를 뽑아올 수 있는 well의 이름인 (mydata 내용 확인) A01, A02, …, B01, B02와 같은 well 위치를 나타내는 이름 정보는 존재하지 않습니다. 따라서 96 well plate 와 동일한 모양의 메트릭스를 만들고 각 셀에 well 이름들로 값을 채워넣어 추후 인덱스를 얻었을 때 그 위치에 해당하는 well 이름도 쉽게 얻을 수 있도록 합니다. sprintf는 %02d와 같이 명시한 포맷으로 숫자를 출력해주는 함수 입니다. %02d는 digit 2자리 포맷을 가리키는 문자열로 한자리 숫자의 경우 앞에 0을 넣어 2자리로 만들어 출력해 줍니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make a position matrix</span>
+pos1 &lt;-<span class="st"> </span><span class="kw">rep</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>], <span class="dt">time=</span><span class="dv">12</span>)
+pos2 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%02d&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>), <span class="dt">each=</span><span class="dv">8</span>)
+well_position_labels &lt;-<span class="st"> </span><span class="kw">paste</span>(pos1, pos2, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+well_position_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(well_position_labels, <span class="dt">nrow=</span><span class="dv">8</span>, <span class="dt">ncol=</span><span class="dv">12</span>)</code></pre></div>
+<p>이제 design 메트릭스에서 실험 조건이 명시된 위치의 well 이름을 꺼내오는 작업을 수행합니다. 이 때 바로 matrix로 코딩을 하기 보다는 vector 수준에서 값을 불러오는 코드를 먼저 만들고 matrix로 확장하는 것이 좋습니다. 아래는 첫 번째 컬럼의 값들에 대해서만 (vector 수준에서) 값을 추출하는 코드입니다. is.na는 해당 값이 NA인지 검사해서 NA일 경우 TRUE를 그렇지 않으면 FALSE를 리턴해주는 함수 입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## vector
+tmpi &lt;-<span class="st"> </span>mydesign[, <span class="dv">1</span>]
+tmpv &lt;-<span class="st"> </span>well_position_matrix[, <span class="dv">1</span>]
+<span class="op">!</span><span class="kw">is.na</span>(tmpi)
+<span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(tmpi))
+tmpi[<span class="op">!</span><span class="kw">is.na</span>(tmpi)]
+tmpv[<span class="op">!</span><span class="kw">is.na</span>(tmpi)]</code></pre></div>
+<p>lapply 함수를 사용하여 위와 같은 값을 추출하는 기능을 data.frame에 적용하는 전략을 사용하며 이를 위하여 다음 두 개의 함수(extract_values, extract_values2)를 구현합니다. extract_value 함수는 입력되는 파라메터 벡터 x에서 na 가 아닌 값들을 추출하는 함수이고 extract_value2의 경우 입력되는 파라메터 x가 16개의 값을 가지며 1부터 8까지 8개의 값들 중 na 가 아닌 인덱스를 뽑아내고 9부터 16까지의 값들 중 앞서 뽑은 인덱스에 해당하는 값들을 뽑아내는 함수입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extract_values &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(x))
+  <span class="kw">return</span>(x[index])
+}
+<span class="co">#extract_values(tmpi)</span>
+
+extract_values2 &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  conditions &lt;-<span class="st"> </span>x[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]
+  well_names &lt;-<span class="st"> </span>x[<span class="dv">9</span><span class="op">:</span><span class="dv">16</span>]
+  index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(conditions))
+  <span class="kw">return</span>(well_names[index])
+}
+<span class="co">#extract_values2(c(tmpi, tmpv))</span></code></pre></div>
+<p>위 함수들, 특히extract_value2 함수을 이용해서 well 정보들 (well 이름, well에 담긴 샘플들의 실험 컨디션)을 추출하기 위해서 well_info2 라는 메트릭스를 만듭니다. (작성중..)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mydesign) &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)
+<span class="kw">colnames</span>(well_position_matrix) &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)
+tmpdata &lt;-<span class="st"> </span><span class="kw">rbind</span>(mydesign, well_position_matrix)
+
+tmpv &lt;-<span class="st"> </span><span class="kw">lapply</span>(tmpdata, extract_values2)
+well_names &lt;-<span class="st"> </span><span class="kw">unlist</span>(tmpv)
+
+tmpv &lt;-<span class="st"> </span><span class="kw">lapply</span>(mydesign, extract_values)
+well_conditions &lt;-<span class="st"> </span><span class="kw">unlist</span>(tmpv)
+
+well_info &lt;-<span class="st"> </span><span class="kw">data.frame</span>(well_names, well_conditions, <span class="dt">stringsAsFactors =</span> F)</code></pre></div>
 
 </div>
 </div>

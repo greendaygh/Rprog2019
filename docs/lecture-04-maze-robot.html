@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-04-03">
+<meta name="date" content="2019-04-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -138,6 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#boxplot-"><i class="fa fa-check"></i><b>6.4</b> boxplot 상자그래프</a></li>
 <li class="chapter" data-level="6.5" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#barplot-"><i class="fa fa-check"></i><b>6.5</b> barplot 막대그래프</a></li>
 <li class="chapter" data-level="6.6" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#other-examples--"><i class="fa fa-check"></i><b>6.6</b> other examples 그래프 예시</a></li>
+<li class="chapter" data-level="6.7" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader--"><i class="fa fa-check"></i><b>6.7</b> Multiplate reader 함수 만들기</a></li>
 </ul></li>
 </ul>
 
@@ -253,12 +254,12 @@ maze[,n] &lt;-<span class="st"> </span><span class="dv">1</span></code></pre></d
 maze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    1    0    0    1    0    1
-## [3,]    1    0    0    1    0    0    0    1
-## [4,]    1    1    0    0    0    0    0    1
-## [5,]    1    1    0    0    0    0    0    1
+## [2,]    1    0    0    0    0    0    0    1
+## [3,]    1    1    0    0    0    0    0    1
+## [4,]    1    0    1    0    0    0    0    1
+## [5,]    1    1    0    1    0    0    0    1
 ## [6,]    1    0    0    0    1    0    0    1
-## [7,]    1    0    0    1    0    0    0    1
+## [7,]    1    1    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 <p>이제 위 코드를 활용해서 maze matrix 맵을 만드는 함수인 generate_maze 를 작성해 봅니다. 입력 파라메터는 n 하나로 가로 또는 세로의 (정사각형) 갯수를 의미합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_maze &lt;-<span class="st"> </span><span class="cf">function</span>(n){
@@ -276,10 +277,10 @@ mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span
 mymaze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    0    0    0    1
+## [2,]    1    0    0    1    0    0    0    1
 ## [3,]    1    0    0    0    0    0    0    1
-## [4,]    1    1    0    0    0    0    0    1
-## [5,]    1    0    0    0    0    1    0    1
+## [4,]    1    0    0    0    0    0    0    1
+## [5,]    1    0    0    0    1    0    0    1
 ## [6,]    1    0    0    0    0    0    0    1
 ## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
@@ -427,92 +428,83 @@ cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <pre><code>## 1 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
-<pre><code>## 2 / W</code></pre>
-<pre><code>## 3 / N</code></pre>
+<pre><code>## 2 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-3.png" width="672" /></p>
-<pre><code>## 4 / E</code></pre>
+<pre><code>## 3 / W</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-4.png" width="672" /></p>
-<pre><code>## 5 / S</code></pre>
+<pre><code>## 4 / W</code></pre>
+<pre><code>## 5 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-5.png" width="672" /></p>
 <pre><code>## 6 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-6.png" width="672" /></p>
-<pre><code>## 7 / N</code></pre>
+<pre><code>## 7 / S</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-7.png" width="672" /></p>
-<pre><code>## 8 / E</code></pre>
+<pre><code>## 8 / W</code></pre>
+<pre><code>## 9 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-8.png" width="672" /></p>
-<pre><code>## 9 / W</code></pre>
+<pre><code>## 10 / S</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-9.png" width="672" /></p>
-<pre><code>## 10 / E</code></pre>
+<pre><code>## 11 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-10.png" width="672" /></p>
-<pre><code>## 11 / W</code></pre>
+<pre><code>## 12 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-11.png" width="672" /></p>
-<pre><code>## 12 / N</code></pre>
+<pre><code>## 13 / S</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-12.png" width="672" /></p>
-<pre><code>## 13 / E</code></pre>
+<pre><code>## 14 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-13.png" width="672" /></p>
-<pre><code>## 14 / W</code></pre>
+<pre><code>## 15 / W</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-14.png" width="672" /></p>
-<pre><code>## 15 / E</code></pre>
+<pre><code>## 16 / W</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-15.png" width="672" /></p>
-<pre><code>## 16 / E</code></pre>
+<pre><code>## 17 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-16.png" width="672" /></p>
-<pre><code>## 17 / E</code></pre>
+<pre><code>## 18 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-17.png" width="672" /></p>
-<pre><code>## 18 / W</code></pre>
+<pre><code>## 19 / N</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-18.png" width="672" /></p>
-<pre><code>## 19 / E</code></pre>
+<pre><code>## 20 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-19.png" width="672" /></p>
-<pre><code>## 20 / N</code></pre>
+<pre><code>## 21 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-20.png" width="672" /></p>
-<pre><code>## 21 / N</code></pre>
-<pre><code>## 22 / N</code></pre>
-<pre><code>## 23 / W</code></pre>
+<pre><code>## 22 / W</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-21.png" width="672" /></p>
-<pre><code>## 24 / S</code></pre>
+<pre><code>## 23 / N</code></pre>
+<pre><code>## 24 / N</code></pre>
+<pre><code>## 25 / W</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-22.png" width="672" /></p>
-<pre><code>## 25 / N</code></pre>
+<pre><code>## 26 / S</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-23.png" width="672" /></p>
-<pre><code>## 26 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-24.png" width="672" /></p>
 <pre><code>## 27 / W</code></pre>
+<pre><code>## 28 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-24.png" width="672" /></p>
+<pre><code>## 29 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-25.png" width="672" /></p>
-<pre><code>## 28 / S</code></pre>
+<pre><code>## 30 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-26.png" width="672" /></p>
-<pre><code>## 29 / W</code></pre>
+<pre><code>## 31 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-27.png" width="672" /></p>
-<pre><code>## 30 / W</code></pre>
+<pre><code>## 32 / E</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-32-28.png" width="672" /></p>
-<pre><code>## 31 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-29.png" width="672" /></p>
-<pre><code>## 32 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-30.png" width="672" /></p>
 <pre><code>## 33 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-31.png" width="672" /></p>
-<pre><code>## 34 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-32.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-29.png" width="672" /></p>
+<pre><code>## 34 / N</code></pre>
 <pre><code>## 35 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-33.png" width="672" /></p>
-<pre><code>## 36 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-34.png" width="672" /></p>
-<pre><code>## 37 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-35.png" width="672" /></p>
+<pre><code>## 36 / E</code></pre>
+<pre><code>## 37 / N</code></pre>
 <pre><code>## 38 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-36.png" width="672" /></p>
 <pre><code>## 39 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-37.png" width="672" /></p>
-<pre><code>## 40 / N</code></pre>
-<pre><code>## 41 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-38.png" width="672" /></p>
-<pre><code>## 42 / N</code></pre>
+<pre><code>## 40 / E</code></pre>
+<pre><code>## 41 / N</code></pre>
+<pre><code>## 42 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-30.png" width="672" /></p>
 <pre><code>## 43 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-39.png" width="672" /></p>
-<pre><code>## 44 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-40.png" width="672" /></p>
-<pre><code>## 45 / W</code></pre>
-<pre><code>## 46 / W</code></pre>
-<pre><code>## 47 / W</code></pre>
-<pre><code>## 48 / W</code></pre>
-<pre><code>## 49 / W</code></pre>
+<pre><code>## 44 / S</code></pre>
+<pre><code>## 45 / S</code></pre>
+<pre><code>## 46 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-31.png" width="672" /></p>
+<pre><code>## 47 / S</code></pre>
+<pre><code>## 48 / N</code></pre>
+<pre><code>## 49 / E</code></pre>
 <pre><code>## 50 / N</code></pre>
 
 </div>
