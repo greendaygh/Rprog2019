@@ -6,3 +6,24 @@ output: html_document
 ---
 
 # Lecture 02 - R basics I
+
+
+## exercise 2-1: who function
+
+함수를 만들고 사용하는 실습입니다. name 함수를 이용하여 벡터 값들에 대한 이름을 할당할 수 있으며 who 라는 이름의 함수를 생성하여 input 파라메터의 값 중 50 이상의 사람들에 대한 인덱스를 얻고 (which), 이들의 
+
+```{r}
+ages <- c(21, 55, 23, 53)
+names(ages) <- c("John","James","Sara", "Lilly")
+
+who <- function(input){
+  greater_than_fifty_index <- which(input > 50)
+  greater_numbers <- input[greater_than_fifty_index]
+  greater_names <- names(greater_numbers)
+  return(greater_names)
+}
+
+who(ages)
+```
+
+

@@ -58,3 +58,5 @@ description: "2019년 UST 강의 R 프로그래밍 웹사이트"
 
 - 4 (2019.03.27) - [R programming example - Maze Robot ](https://github.com/greendaygh/2019-R-programming/blob/master/04-Rprog.pdf) 
 
+- 5 (2019.04.03) - [R programming example - Read plate reader excel file ](https://github.com/greendaygh/2019-R-programming/blob/master/05-Rprog.pdf) 
+
