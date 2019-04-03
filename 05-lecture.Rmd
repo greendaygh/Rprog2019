@@ -1,5 +1,5 @@
 ---
-title: "Maze robot"
+title: "Read plate reader excel files"
 author: "Haseong"
 date: "2019년 4월 3일"
 output: html_document
@@ -8,4 +8,7 @@ output: html_document
 # Lecture 05 - Plate reader 
 
 [Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/05-Rprog.pdf) 
+
+[design excel file](https://github.com/greendaygh/Rprog2019/blob/master/exp_design.xlsx)
+
 
