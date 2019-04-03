@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-03-31">
+<meta name="date" content="2019-04-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="lecture-03-r-basics-ii.html">
-
+<link rel="next" href="lecture-05-plate-reader.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -108,7 +108,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#lecture-note--"><i class="fa fa-check"></i><b>1.5</b> Lecture note 강의 자료</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="lecture-01-r-introduction.html"><a href="lecture-01-r-introduction.html"><i class="fa fa-check"></i><b>2</b> Lecture 01 - R Introduction</a></li>
-<li class="chapter" data-level="3" data-path="lecture-02-r-basics-i.html"><a href="lecture-02-r-basics-i.html"><i class="fa fa-check"></i><b>3</b> Lecture 02 - R basics I</a></li>
+<li class="chapter" data-level="3" data-path="lecture-02-r-basics-i.html"><a href="lecture-02-r-basics-i.html"><i class="fa fa-check"></i><b>3</b> Lecture 02 - R basics I</a><ul>
+<li class="chapter" data-level="3.1" data-path="lecture-02-r-basics-i.html"><a href="lecture-02-r-basics-i.html#exercise-2-1-who-function"><i class="fa fa-check"></i><b>3.1</b> exercise 2-1: who function</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="lecture-03-r-basics-ii.html"><a href="lecture-03-r-basics-ii.html"><i class="fa fa-check"></i><b>4</b> Lecture 03 - R Basics II</a><ul>
 <li class="chapter" data-level="4.1" data-path="lecture-03-r-basics-ii.html"><a href="lecture-03-r-basics-ii.html#matrix-"><i class="fa fa-check"></i><b>4.1</b> matrix (행렬)</a></li>
 <li class="chapter" data-level="4.2" data-path="lecture-03-r-basics-ii.html"><a href="lecture-03-r-basics-ii.html#data.frame"><i class="fa fa-check"></i><b>4.2</b> data.frame</a></li>
@@ -129,6 +131,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.8" data-path="lecture-04-maze-robot.html"><a href="lecture-04-maze-robot.html#sleep-for-delay"><i class="fa fa-check"></i><b>5.8</b> Sleep for delay</a></li>
 <li class="chapter" data-level="5.9" data-path="lecture-04-maze-robot.html"><a href="lecture-04-maze-robot.html#move-50-steps"><i class="fa fa-check"></i><b>5.9</b> Move 50 steps</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="lecture-05-plate-reader.html"><a href="lecture-05-plate-reader.html"><i class="fa fa-check"></i><b>6</b> Lecture 05 - Plate reader</a></li>
 </ul>
 
       </nav>
@@ -197,7 +200,7 @@ M[<span class="dv">3</span>,] &lt;-<span class="st"> </span><span class="dv">1</
 <span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
 <span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))
 <span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>))</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>그런데 반복되는 lines 함수를 사용하는 패턴을 보실 수 있습니다. 이런 경우 다음과 같이 for 문을 이용할 수 있습니다. for 문의 i는 임의의 변수로 뒤에 오는 1:8 까지의 값을 한번씩 갖게 되며 각 값을 갖는 동안 { } 안의 코드를 8번 반복 실행하게 됩니다. 이 때 i에 저장된 값을 lines 파라메터 값을 사용하면 효율적으로 원하는 기능을 구현할 수 있습니다. 마지막 points 함수는 적당한 위치 (아래 예제에서는 x=3, y=3)의 위치에 pch=16 모양을 cex=3 만큼 크게 그리라는 명령입니다. ?points 또는 ?pch 등의 도움말을 참고 하세요.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">0</span>, <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>))
 <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>){
@@ -206,7 +209,7 @@ M[<span class="dv">3</span>,] &lt;-<span class="st"> </span><span class="dv">1</
 }
 
 <span class="kw">points</span>(<span class="dv">3</span>,<span class="dv">3</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="dv">3</span>)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>이제 앞서 코드들을 종합해서 map과 로봇을 그려주는 draw_world 라는 함수로 만들어 보겠습니다. 입력 파라메터는 현재 로봇의 위치인 cur_x, cur_y로 하고 지도를 그린 후 cur_x와 cur_y에 점(로봇)을 그리는 함수 입니다. 그리는 기능이 전부이므로 NULL을 리턴하도록 합니다 (웹페이지 작성 특성상 리턴 명령은 사용하지 않았습니다). 함수 내에서 n &lt;- 8 로 한 것은 그 아래 코드들에서 공통적으로 같은 값(지도 크기)을 사용하므로 변수에 값을 지정한 후 사용할 경우 혹시 지도의 사이즈가 변경된다고 해도 모든 값들을 바꾸지 않고 n 값만 바꿔서 쉽게 기능을 적용하기 위함 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">draw_world &lt;-<span class="st"> </span><span class="cf">function</span>(cur_x, cur_y){
   n &lt;-<span class="st"> </span><span class="dv">8</span>
@@ -223,11 +226,11 @@ M[<span class="dv">3</span>,] &lt;-<span class="st"> </span><span class="dv">1</
 cur_y &lt;-<span class="st"> </span><span class="dv">1</span>
 
 <span class="kw">draw_world</span>(cur_x, cur_y)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">draw_world</span>(cur_x<span class="op">+</span><span class="dv">1</span>, cur_y)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">draw_world</span>(cur_x<span class="op">+</span><span class="dv">1</span>, cur_y<span class="op">+</span><span class="dv">1</span>)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-21-3.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-22-3.png" width="672" /></p>
 </div>
 <div id="exercise-4-4-generate-map" class="section level2">
 <h2><span class="header-section-number">5.5</span> Exercise 4-4: Generate map</h2>
@@ -244,11 +247,11 @@ maze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
 ## [2,]    1    0    0    0    0    0    0    1
-## [3,]    1    0    1    0    0    0    0    1
-## [4,]    1    1    1    0    1    1    1    1
-## [5,]    1    0    0    0    0    0    1    1
-## [6,]    1    0    1    0    0    0    0    1
-## [7,]    1    0    0    0    0    0    0    1
+## [3,]    1    0    0    0    0    0    0    1
+## [4,]    1    1    0    0    0    0    0    1
+## [5,]    1    0    0    0    0    0    0    1
+## [6,]    1    0    0    0    0    1    1    1
+## [7,]    1    1    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 <p>이제 위 코드를 활용해서 maze matrix 맵을 만드는 함수인 generate_maze 를 작성해 봅니다. 입력 파라메터는 n 하나로 가로 또는 세로의 (정사각형) 갯수를 의미합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_maze &lt;-<span class="st"> </span><span class="cf">function</span>(n){
@@ -266,12 +269,12 @@ mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span
 mymaze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    1    0    0    1
-## [3,]    1    0    0    0    0    0    0    1
-## [4,]    1    0    0    0    0    0    0    1
+## [2,]    1    0    0    0    0    0    0    1
+## [3,]    1    0    0    1    0    0    0    1
+## [4,]    1    1    0    0    0    0    0    1
 ## [5,]    1    0    0    0    0    0    0    1
-## [6,]    1    0    0    1    0    0    0    1
-## [7,]    1    0    0    0    0    1    0    1
+## [6,]    1    0    0    0    0    0    0    1
+## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 </div>
 <div id="draw-blocks-and-walls" class="section level2">
@@ -306,7 +309,7 @@ mymaze</code></pre></div>
     }
   }
 }</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>이제 위 코드를 앞서 만들었던 draw_world 함수에 추가하여 draw_world 함수를 호출할 경우 완전한 맵과 적당한 위치의 로봇을 그려주도록 할 수 있습니다. 그런데 맵 정보는 generate_maze 함수로 생성한 매트릭스가 가지고 있으므로 생성된 맵의 정보를 draw_world 함수 내부에서 사용할 수 있도록 파라메터로 전달해서 넘겨주는 것이 필요합니다. 따라서 maze라는 파라메터를 draw_world 함수에 추가하고 함수 내부에 있던 n 값은 입력받은 매트릭스의 row 또는 column 수를 저장하도록 n &lt;- nrow(maze) 코드를 추가합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">draw_world &lt;-<span class="st"> </span><span class="cf">function</span>(maze, cur_x, cur_y){
   n &lt;-<span class="st"> </span><span class="kw">nrow</span>(maze)
@@ -331,7 +334,7 @@ mymaze</code></pre></div>
 cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
 mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span class="dv">8</span>)
 <span class="kw">draw_world</span>(mymaze, cur_x, cur_y)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 </div>
 <div id="move-one-step" class="section level2">
 <h2><span class="header-section-number">5.7</span> Move one step</h2>
@@ -339,7 +342,7 @@ mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cur_x &lt;-<span class="st"> </span><span class="dv">2</span>
 cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
 <span class="kw">draw_world</span>(mymaze, cur_x, cur_y)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">one_step_direction &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>,<span class="st">&quot;W&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="st">&quot;N&quot;</span>), <span class="dv">1</span>)
 <span class="cf">if</span>(one_step_direction<span class="op">==</span><span class="st">&quot;E&quot;</span>){
   next_x &lt;-<span class="st"> </span>cur_x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
@@ -355,7 +358,7 @@ cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
   next_y &lt;-<span class="st"> </span>cur_y <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
 }
 <span class="kw">draw_world</span>(mymaze, next_x, next_y)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-29-2.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
 </div>
 <div id="sleep-for-delay" class="section level2">
 <h2><span class="header-section-number">5.8</span> Sleep for delay</h2>
@@ -364,7 +367,7 @@ cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cur_x &lt;-<span class="st"> </span><span class="dv">2</span>
 cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
 <span class="kw">draw_world</span>(mymaze, cur_x, cur_y)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.sleep</span>(<span class="dv">1</span>)
 one_step_direction &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>,<span class="st">&quot;W&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="st">&quot;N&quot;</span>), <span class="dv">1</span>)
 <span class="cf">if</span>(one_step_direction<span class="op">==</span><span class="st">&quot;E&quot;</span>){
@@ -383,7 +386,6 @@ one_step_direction &lt;-<span class="st"> </span><span class="kw">sample</span>(
 <span class="cf">if</span>(mymaze[next_x, next_y]<span class="op">==</span><span class="dv">0</span>){
   <span class="kw">draw_world</span>(mymaze, next_x, next_y)
 }</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
 </div>
 <div id="move-50-steps" class="section level2">
 <h2><span class="header-section-number">5.9</span> Move 50 steps</h2>
@@ -414,88 +416,94 @@ cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
     cur_y &lt;-<span class="st"> </span>next_y
   }
 }</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
-<pre><code>## 1 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p>
-<pre><code>## 2 / S</code></pre>
-<pre><code>## 3 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-3.png" width="672" /></p>
-<pre><code>## 4 / S</code></pre>
-<pre><code>## 5 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-4.png" width="672" /></p>
-<pre><code>## 6 / S</code></pre>
-<pre><code>## 7 / S</code></pre>
-<pre><code>## 8 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-5.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre><code>## 1 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
+<pre><code>## 2 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-3.png" width="672" /></p>
+<pre><code>## 3 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-4.png" width="672" /></p>
+<pre><code>## 4 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-5.png" width="672" /></p>
+<pre><code>## 5 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-6.png" width="672" /></p>
+<pre><code>## 6 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-7.png" width="672" /></p>
+<pre><code>## 7 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-8.png" width="672" /></p>
+<pre><code>## 8 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-9.png" width="672" /></p>
 <pre><code>## 9 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-6.png" width="672" /></p>
-<pre><code>## 10 / S</code></pre>
-<pre><code>## 11 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-7.png" width="672" /></p>
-<pre><code>## 12 / S</code></pre>
-<pre><code>## 13 / S</code></pre>
-<pre><code>## 14 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-8.png" width="672" /></p>
-<pre><code>## 15 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-9.png" width="672" /></p>
-<pre><code>## 16 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-10.png" width="672" /></p>
+<pre><code>## 10 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-10.png" width="672" /></p>
+<pre><code>## 11 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-11.png" width="672" /></p>
+<pre><code>## 12 / W</code></pre>
+<pre><code>## 13 / E</code></pre>
+<pre><code>## 14 / W</code></pre>
+<pre><code>## 15 / W</code></pre>
+<pre><code>## 16 / E</code></pre>
 <pre><code>## 17 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-11.png" width="672" /></p>
-<pre><code>## 18 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-12.png" width="672" /></p>
-<pre><code>## 19 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-13.png" width="672" /></p>
-<pre><code>## 20 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-14.png" width="672" /></p>
+<pre><code>## 18 / S</code></pre>
+<pre><code>## 19 / W</code></pre>
+<pre><code>## 20 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-12.png" width="672" /></p>
 <pre><code>## 21 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-15.png" width="672" /></p>
-<pre><code>## 22 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-16.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-13.png" width="672" /></p>
+<pre><code>## 22 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-14.png" width="672" /></p>
 <pre><code>## 23 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-17.png" width="672" /></p>
-<pre><code>## 24 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-18.png" width="672" /></p>
-<pre><code>## 25 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-15.png" width="672" /></p>
+<pre><code>## 24 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-16.png" width="672" /></p>
+<pre><code>## 25 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-17.png" width="672" /></p>
 <pre><code>## 26 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-19.png" width="672" /></p>
-<pre><code>## 27 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-20.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-18.png" width="672" /></p>
+<pre><code>## 27 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-19.png" width="672" /></p>
 <pre><code>## 28 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-21.png" width="672" /></p>
-<pre><code>## 29 / S</code></pre>
-<pre><code>## 30 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-22.png" width="672" /></p>
-<pre><code>## 31 / E</code></pre>
-<pre><code>## 32 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-23.png" width="672" /></p>
-<pre><code>## 33 / E</code></pre>
-<pre><code>## 34 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-20.png" width="672" /></p>
+<pre><code>## 29 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-21.png" width="672" /></p>
+<pre><code>## 30 / N</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-22.png" width="672" /></p>
+<pre><code>## 31 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-23.png" width="672" /></p>
+<pre><code>## 32 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-24.png" width="672" /></p>
+<pre><code>## 33 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-25.png" width="672" /></p>
+<pre><code>## 34 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-26.png" width="672" /></p>
 <pre><code>## 35 / N</code></pre>
-<pre><code>## 36 / N</code></pre>
-<pre><code>## 37 / E</code></pre>
-<pre><code>## 38 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-24.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-27.png" width="672" /></p>
+<pre><code>## 36 / W</code></pre>
+<pre><code>## 37 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-28.png" width="672" /></p>
+<pre><code>## 38 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-29.png" width="672" /></p>
 <pre><code>## 39 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-25.png" width="672" /></p>
-<pre><code>## 40 / S</code></pre>
-<pre><code>## 41 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-30.png" width="672" /></p>
+<pre><code>## 40 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-31.png" width="672" /></p>
+<pre><code>## 41 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-32.png" width="672" /></p>
 <pre><code>## 42 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-26.png" width="672" /></p>
-<pre><code>## 43 / S</code></pre>
-<pre><code>## 44 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-27.png" width="672" /></p>
-<pre><code>## 45 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-28.png" width="672" /></p>
-<pre><code>## 46 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-29.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-33.png" width="672" /></p>
+<pre><code>## 43 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-34.png" width="672" /></p>
+<pre><code>## 44 / E</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-35.png" width="672" /></p>
+<pre><code>## 45 / S</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-36.png" width="672" /></p>
+<pre><code>## 46 / W</code></pre>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-37.png" width="672" /></p>
 <pre><code>## 47 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-30.png" width="672" /></p>
-<pre><code>## 48 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-31.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-32-38.png" width="672" /></p>
+<pre><code>## 48 / W</code></pre>
 <pre><code>## 49 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-32.png" width="672" /></p>
-<pre><code>## 50 / W</code></pre>
+<pre><code>## 50 / N</code></pre>
 
 </div>
 </div>
@@ -504,8 +512,8 @@ cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
           </div>
         </div>
       </div>
-<a href="lecture-03-r-basics-ii.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="lecture-03-r-basics-ii.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lecture-05-plate-reader.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

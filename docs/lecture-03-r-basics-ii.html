@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-03-31">
+<meta name="date" content="2019-04-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -108,7 +108,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#lecture-note--"><i class="fa fa-check"></i><b>1.5</b> Lecture note 강의 자료</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="lecture-01-r-introduction.html"><a href="lecture-01-r-introduction.html"><i class="fa fa-check"></i><b>2</b> Lecture 01 - R Introduction</a></li>
-<li class="chapter" data-level="3" data-path="lecture-02-r-basics-i.html"><a href="lecture-02-r-basics-i.html"><i class="fa fa-check"></i><b>3</b> Lecture 02 - R basics I</a></li>
+<li class="chapter" data-level="3" data-path="lecture-02-r-basics-i.html"><a href="lecture-02-r-basics-i.html"><i class="fa fa-check"></i><b>3</b> Lecture 02 - R basics I</a><ul>
+<li class="chapter" data-level="3.1" data-path="lecture-02-r-basics-i.html"><a href="lecture-02-r-basics-i.html#exercise-2-1-who-function"><i class="fa fa-check"></i><b>3.1</b> exercise 2-1: who function</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="lecture-03-r-basics-ii.html"><a href="lecture-03-r-basics-ii.html"><i class="fa fa-check"></i><b>4</b> Lecture 03 - R Basics II</a><ul>
 <li class="chapter" data-level="4.1" data-path="lecture-03-r-basics-ii.html"><a href="lecture-03-r-basics-ii.html#matrix-"><i class="fa fa-check"></i><b>4.1</b> matrix (행렬)</a></li>
 <li class="chapter" data-level="4.2" data-path="lecture-03-r-basics-ii.html"><a href="lecture-03-r-basics-ii.html#data.frame"><i class="fa fa-check"></i><b>4.2</b> data.frame</a></li>
@@ -129,6 +131,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.8" data-path="lecture-04-maze-robot.html"><a href="lecture-04-maze-robot.html#sleep-for-delay"><i class="fa fa-check"></i><b>5.8</b> Sleep for delay</a></li>
 <li class="chapter" data-level="5.9" data-path="lecture-04-maze-robot.html"><a href="lecture-04-maze-robot.html#move-50-steps"><i class="fa fa-check"></i><b>5.9</b> Move 50 steps</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="lecture-05-plate-reader.html"><a href="lecture-05-plate-reader.html"><i class="fa fa-check"></i><b>6</b> Lecture 05 - Plate reader</a></li>
 </ul>
 
       </nav>
@@ -280,12 +283,12 @@ mean_control &lt;-<span class="st"> </span><span class="kw">colMeans</span>(myod
 ## 0.017801936 0.017947840 0.010253370 0.006202754 0.022386592 0.012685731</code></pre>
 <p>본 실습에서는 각 그룹의 평균을 비교하는 막대그래프를 그려보겠습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mean_treat, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(mean_treat, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_test &lt;-<span class="st"> </span><span class="kw">data.frame</span>(mean_treat, mean_control)
 <span class="kw">barplot</span>(<span class="kw">t</span>(mean_test), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">beside=</span>T)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-13-3.png" width="672" /></p>
 </div>
 <div id="exercise-3-2-standard-deviation" class="section level2">
 <h2><span class="header-section-number">4.6</span> Exercise 3-2 standard deviation</h2>
@@ -301,9 +304,9 @@ mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){
 
 x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>)
 <span class="kw">mysd</span>(x)</code></pre></div>
-<pre><code>## [1] 26.8651</code></pre>
+<pre><code>## [1] 33.18902</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
-<pre><code>## [1] 26.8651</code></pre>
+<pre><code>## [1] 33.18902</code></pre>
 </div>
 <div id="exercise-3-3-barplot-with-error-bars" class="section level2">
 <h2><span class="header-section-number">4.7</span> Exercise 3-3 barplot with error bars</h2>
@@ -324,7 +327,7 @@ lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st"
 <span class="kw">arrows</span>(<span class="fl">1.5</span>, control_mean[<span class="dv">2</span>], <span class="fl">1.5</span>, control_mean[<span class="dv">2</span>]<span class="op">-</span>control_sd[<span class="dv">2</span>], <span class="dt">length=</span><span class="fl">0.1</span>, <span class="dt">angle=</span><span class="dv">90</span>)
 lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;SD:&quot;</span>, <span class="kw">round</span>(control_mean[<span class="dv">2</span>]<span class="op">+</span>control_sd[<span class="dv">2</span>],<span class="dv">1</span>))
 <span class="kw">text</span>(<span class="fl">1.5</span>, control_mean[<span class="dv">2</span>]<span class="op">+</span>control_sd[<span class="dv">2</span>]<span class="op">+</span><span class="fl">0.05</span>, <span class="dt">labels =</span> lab)</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>그러나 위 12개의 bar 모두에 대해서 arrows 함수를 그리기 보다는 <strong>for 문을 이용한 반복 실행을</strong> 수행하는 것이 효율적 입니다. for 문의 사용 형식과 반복 횟수 그리고 반복하며 변화되는 값을 갖는 변수에 대한 의미를 파악하고 사용하는 것이 중요합니다. for문의 사용법은 <a href="https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf">강의노트</a> 를 참고하세요.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Exercise 3-4) barplot with sd using for
 <span class="kw">barplot</span>(control_mean, <span class="dt">width=</span><span class="fl">0.83</span>, <span class="dt">space=</span><span class="fl">0.2</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
@@ -335,7 +338,7 @@ lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st"
   lab &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;SD:&quot;</span>, <span class="kw">round</span>(control_mean[i]<span class="op">+</span>control_sd[i],<span class="dv">1</span>))
   <span class="kw">text</span>(xpos, control_mean[i]<span class="op">+</span>control_sd[i]<span class="op">+</span><span class="fl">0.05</span>, <span class="dt">labels =</span> lab)
 }</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>마지막으로 실습 예제 3-5는 엑셀파일 이름을 argument로 받아서 파일 내용을 읽고 데이터를 두 그룹으로 나누어 평균을 계산한 후 plot까지 그려주는 함수를 만드는 실습 예제 입니다. 다음 시간에 이어서 합니다.</p>
 
 </div>

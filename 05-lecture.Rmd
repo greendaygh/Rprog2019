@@ -1,9 +1,11 @@
 ---
 title: "Maze robot"
 author: "Haseong"
-date: "2019년 3월 29일"
+date: "2019년 4월 3일"
 output: html_document
 ---
 
-# R programming (Plate Reader)
+# Lecture 05 - Plate reader 
+
+[Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/05-Rprog.pdf) 
 
