@@ -255,11 +255,11 @@ maze[,n] &lt;-<span class="st"> </span><span class="dv">1</span></code></pre></d
 maze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    0    0    0    1
+## [2,]    1    1    0    0    0    0    0    1
 ## [3,]    1    0    0    0    0    0    0    1
-## [4,]    1    0    0    1    0    0    1    1
-## [5,]    1    0    0    1    0    0    0    1
-## [6,]    1    0    0    1    1    0    0    1
+## [4,]    1    1    0    0    0    0    0    1
+## [5,]    1    0    1    0    0    0    0    1
+## [6,]    1    0    0    0    0    0    0    1
 ## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 <p>이제 위 코드를 활용해서 maze matrix 맵을 만드는 함수인 generate_maze 를 작성해 봅니다. 입력 파라메터는 n 하나로 가로 또는 세로의 (정사각형) 갯수를 의미합니다.</p>
@@ -278,12 +278,12 @@ mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span
 mymaze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    0    0    0    1
+## [2,]    1    0    1    0    0    0    0    1
 ## [3,]    1    0    0    0    0    0    0    1
 ## [4,]    1    0    0    0    0    0    0    1
-## [5,]    1    0    0    1    0    0    0    1
-## [6,]    1    0    0    0    1    0    0    1
-## [7,]    1    0    0    0    1    0    0    1
+## [5,]    1    0    0    0    0    0    0    1
+## [6,]    1    0    1    0    0    1    0    1
+## [7,]    1    1    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 </div>
 <div id="draw-blocks-and-walls" class="section level2">
@@ -425,85 +425,6 @@ cur_y &lt;-<span class="st"> </span><span class="dv">2</span>
     cur_y &lt;-<span class="st"> </span>next_y
   }
 }</code></pre></div>
-<pre><code>## 1 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
-<pre><code>## 2 / W</code></pre>
-<pre><code>## 3 / S</code></pre>
-<pre><code>## 4 / S</code></pre>
-<pre><code>## 5 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
-<pre><code>## 6 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-3.png" width="672" /></p>
-<pre><code>## 7 / S</code></pre>
-<pre><code>## 8 / E</code></pre>
-<pre><code>## 9 / E</code></pre>
-<pre><code>## 10 / E</code></pre>
-<pre><code>## 11 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-4.png" width="672" /></p>
-<pre><code>## 12 / W</code></pre>
-<pre><code>## 13 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-5.png" width="672" /></p>
-<pre><code>## 14 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-6.png" width="672" /></p>
-<pre><code>## 15 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-7.png" width="672" /></p>
-<pre><code>## 16 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-8.png" width="672" /></p>
-<pre><code>## 17 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-9.png" width="672" /></p>
-<pre><code>## 18 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-10.png" width="672" /></p>
-<pre><code>## 19 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-11.png" width="672" /></p>
-<pre><code>## 20 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-12.png" width="672" /></p>
-<pre><code>## 21 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-13.png" width="672" /></p>
-<pre><code>## 22 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-14.png" width="672" /></p>
-<pre><code>## 23 / N</code></pre>
-<pre><code>## 24 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-15.png" width="672" /></p>
-<pre><code>## 25 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-16.png" width="672" /></p>
-<pre><code>## 26 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-17.png" width="672" /></p>
-<pre><code>## 27 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-18.png" width="672" /></p>
-<pre><code>## 28 / N</code></pre>
-<pre><code>## 29 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-19.png" width="672" /></p>
-<pre><code>## 30 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-20.png" width="672" /></p>
-<pre><code>## 31 / E</code></pre>
-<pre><code>## 32 / E</code></pre>
-<pre><code>## 33 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-21.png" width="672" /></p>
-<pre><code>## 34 / E</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-22.png" width="672" /></p>
-<pre><code>## 35 / E</code></pre>
-<pre><code>## 36 / N</code></pre>
-<pre><code>## 37 / E</code></pre>
-<pre><code>## 38 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-23.png" width="672" /></p>
-<pre><code>## 39 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-24.png" width="672" /></p>
-<pre><code>## 40 / W</code></pre>
-<pre><code>## 41 / W</code></pre>
-<pre><code>## 42 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-25.png" width="672" /></p>
-<pre><code>## 43 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-26.png" width="672" /></p>
-<pre><code>## 44 / S</code></pre>
-<pre><code>## 45 / W</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-27.png" width="672" /></p>
-<pre><code>## 46 / S</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-28.png" width="672" /></p>
-<pre><code>## 47 / E</code></pre>
-<pre><code>## 48 / E</code></pre>
-<pre><code>## 49 / N</code></pre>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-32-29.png" width="672" /></p>
-<pre><code>## 50 / N</code></pre>
 
 </div>
 </div>

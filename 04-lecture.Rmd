@@ -298,7 +298,7 @@ if(mymaze[next_x, next_y]==0){
 
 이제 for 문을 이용해서 50 step 이동하는 것을 구현해 보겠습니다. 여기서 눈여겨 볼 부분은 마지막 next_x 와 next_y의 위치에 0일 경우 draw_world를 호출하지 않고 cur_x, cur_y 값을 업데이트 시켜서 효율적으로 구현했습니다. 
 
-```{r}
+```{r eval=FALSE}
 mymaze <- generate_maze(8)
 cur_x <- 2
 cur_y <- 2
