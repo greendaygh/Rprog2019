@@ -290,7 +290,7 @@ head(final_data)
 
 
 
-## Multiplate reader 함수 만들기 
+## Multiplate reader function 만들기 
 
 지금까지 수행한 코드들로 다음과 같은 함수를 만들 수 있습니다. 
 
