@@ -138,7 +138,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#boxplot-"><i class="fa fa-check"></i><b>6.4</b> boxplot 상자그래프</a></li>
 <li class="chapter" data-level="6.5" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#barplot-"><i class="fa fa-check"></i><b>6.5</b> barplot 막대그래프</a></li>
 <li class="chapter" data-level="6.6" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#other-examples--"><i class="fa fa-check"></i><b>6.6</b> other examples 그래프 예시</a></li>
-<li class="chapter" data-level="6.7" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader--"><i class="fa fa-check"></i><b>6.7</b> Multiplate reader 함수 만들기</a></li>
+<li class="chapter" data-level="6.7" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader--"><i class="fa fa-check"></i><b>6.7</b> Multiplate reader 기능 구현</a></li>
+<li class="chapter" data-level="6.8" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader--"><i class="fa fa-check"></i><b>6.8</b> Multiplate reader 함수 만들기</a></li>
 </ul></li>
 </ul>
 
@@ -236,10 +237,11 @@ tab_xy &lt;-<span class="st"> </span><span class="kw">rbind</span>(tab_x, tab_y)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">500</span>)
 <span class="kw">hist</span>(x, <span class="dv">100</span>)</code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
-<p>아래는 앞서 생성한 x 값들과 상관성이 있는 y값들을 (x에 2를 곱하고 평균 5, 분산 1인 랜덤하게 뽑힌 수를 노이즈로 더함) 생성하고 모든 1000개 값들의 분포를 그린 히스토그램 입니다. 또한 density 함수와 lines 함수를 조합하여 확률밀도함수 커브를 그려 넣었습니다. 이 때 hist 함수에 probability=T 옵션을 넣어 y scale을 확률밀도함수의 y 스케일과 맞춰주어 같은 화면에 그려지도록 했습니다.</p>
+<p>아래는 앞서 생성한 x 값들과 상관성이 있는 y값들을 (x에 2를 곱하고 평균 5, 분산 1인 랜덤하게 뽑힌 수를 노이즈로 더함) 생성하고 모든 1000개 값들의 분포를 그린 히스토그램 입니다. 또한 density 함수와 lines 함수를 조합하여 확률밀도함수 커브를 그려 넣었습니다. 이 때 hist 함수에 probability=T 옵션을 넣어 y축의 스케일을 확률밀도함수의 y 스케일과 맞춰주어 같은 화면에 그려지도록 했습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">500</span>, <span class="dt">mean=</span><span class="dv">5</span>, <span class="dt">sd=</span><span class="dv">1</span>)
-<span class="kw">hist</span>(<span class="kw">c</span>(x,y), <span class="dt">br=</span><span class="dv">100</span>, <span class="dt">probability =</span> T)
-<span class="kw">lines</span>(<span class="kw">density</span>(<span class="kw">c</span>(x,y)))</code></pre></div>
+z &lt;-<span class="st"> </span><span class="kw">c</span>(x,y)
+<span class="kw">hist</span>(z, <span class="dt">br=</span><span class="dv">100</span>, <span class="dt">probability =</span> T)
+<span class="kw">lines</span>(<span class="kw">density</span>(z))</code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>위에서 생성한 x, y 값의 산포도를 그리고 x축과 y축 범위를 xlim, ylim 파라메터로 조절했습니다. ?pch 도움말을 참고하여 다양한 포인트 모양을 선택할 수 있으며 x 값이 0 보다 작은 경우의 index를 뽑아 해당되는 x 값들과 그 값들의 짝이 되는 y값들에 대해서만 다시 포인트 그림을 red 색상으로 그려 넣었습니다. lm 은 linear model의 약자로 회귀 곡선을 구할 때 사용하는 함수이며 이 함수를 abline과 조합하여 회귀 직선을 그릴 수 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x,y, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">15</span>), <span class="dt">pch=</span><span class="dv">3</span>)
@@ -249,8 +251,9 @@ idx &lt;-<span class="st"> </span><span class="kw">which</span>(x<span class="op
 <p><img src="Rprog_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 </div>
 <div id="multiplate-reader--" class="section level2">
-<h2><span class="header-section-number">6.7</span> Multiplate reader 함수 만들기</h2>
-<p>함수를 만들기 위한 프로그래밍 소개 및 전략 등의 내용은 강의노트를 참고하시기 바랍니다. 특히 exp_design.xlsx 파일은 실험 후 결과 측정을 위하여 96 well plate에 위치할 샘플들의 위치 및 실험 조건을 명시해둔 파일로서 이번 시간 만드는 함수의 핵심이 되는 파일입니다. excel 파일을 읽어오기 위하여 readxl 패키지를 불러온 후 read_excel 함수의 range 파라메터를 이용하여 96 well plate의 dimension과 같은 8 x 12 데이터를 모두 읽습니다. read_excel 함수는 기본적으로 tibble 형식의 데이터를 반환하지만 본 강의에서는 data.frame 형식으로 사용하기 위하여 as.data.frame 함수를 이용하여 변환을 해 줍니다. 참고로 최근 R을 이용한 데이터 분석에는 tibble 타입이 많이 쓰이는 추세입니다.</p>
+<h2><span class="header-section-number">6.7</span> Multiplate reader 기능 구현</h2>
+<p>함수를 만들기 위한 프로그래밍 소개 및 전략 등의 내용은 강의노트를 참고하시기 바랍니다. 특히 exp_design.xlsx 파일은 실험 후 결과 측정을 위하여 96 well plate에 위치할 샘플들의 위치 및 실험 조건을 명시해둔 파일로서 이번 시간 만드는 함수의 핵심이 되는 파일입니다.</p>
+<p>일반적으로 R에서 함수를 만들기 전에 해당 함수가 가진 기능들을 한줄 한줄 먼저 구현해서 확인한 후 함수 형태로 만들어 내는 것이 좋습니다. 먼저 excel 파일을 읽어오기 위하여 readxl 패키지를 불러온 후 read_excel 함수의 range 파라메터를 이용하여 96 well plate의 dimension과 같은 8 x 12 데이터를 모두 읽습니다. read_excel 함수는 기본적으로 tibble 형식의 데이터를 반환하지만 본 강의에서는 data.frame 형식으로 사용하기 위하여 as.data.frame 함수를 이용하여 변환을 해 줍니다. 참고로 최근 R을 이용한 데이터 분석에는 tibble 타입이 많이 쓰이는 추세입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#options(readxl.show_progress = FALSE)</span>
 <span class="kw">library</span>(readxl)
 design_file_name &lt;-<span class="st"> &quot;exp_design.xlsx&quot;</span>
@@ -270,13 +273,13 @@ mydata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span
 <pre><code>## New names:
 ## * Time -&gt; Time..5
 ## * Time -&gt; Time..7</code></pre>
-<p>위 design 엑셀 파일로 샘플이 놓인 위치와 그 실험 조건을 읽어올 수 있으나 data를 뽑아올 수 있는 well의 이름인 (mydata 내용 확인) A01, A02, …, B01, B02와 같은 well 위치를 나타내는 이름 정보는 존재하지 않습니다. 따라서 96 well plate 와 동일한 모양의 메트릭스를 만들고 각 셀에 well 이름들로 값을 채워넣어 추후 인덱스를 얻었을 때 그 위치에 해당하는 well 이름도 쉽게 얻을 수 있도록 합니다. sprintf는 %02d와 같이 명시한 포맷으로 숫자를 출력해주는 함수 입니다. %02d는 digit 2자리 포맷을 가리키는 문자열로 한자리 숫자의 경우 앞에 0을 넣어 2자리로 만들어 출력해 줍니다.</p>
+<p>위 design 엑셀 파일로 샘플이 놓인 위치와 그 실험 조건을 읽어올 수 있으나 data를 뽑아올 수 있는 well의 이름인 (mydata 데이터 확인) A01, A02, …, B01, B02와 같은 이름 정보는 존재하지 않습니다. 이에 96 well plate 와 동일한 크기의 메트릭스를 만들고 각 셀에 well 이름들로 값을 넣어 추후 인덱스를 얻었을 때 그 위치에 해당하는 well 이름을 얻을 수 있도록 합니다. sprintf는 %02d와 같이 명시한 포맷으로 숫자를 출력해주는 함수 입니다. %02d는 digit 2자리 포맷을 가리키는 문자열로 한자리 숫자의 경우 앞에 0을 넣어 2자리로 만들어 출력해 줍니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make a position matrix</span>
 pos1 &lt;-<span class="st"> </span><span class="kw">rep</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>], <span class="dt">time=</span><span class="dv">12</span>)
 pos2 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%02d&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>), <span class="dt">each=</span><span class="dv">8</span>)
 well_position_labels &lt;-<span class="st"> </span><span class="kw">paste</span>(pos1, pos2, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
 well_position_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(well_position_labels, <span class="dt">nrow=</span><span class="dv">8</span>, <span class="dt">ncol=</span><span class="dv">12</span>)</code></pre></div>
-<p>이제 design 메트릭스에서 실험 조건이 명시된 위치의 well 이름을 꺼내오는 작업을 수행합니다. 이 때 바로 matrix로 코딩을 하기 보다는 vector 수준에서 값을 불러오는 코드를 먼저 만들고 matrix로 확장하는 것이 좋습니다. 아래는 첫 번째 컬럼의 값들에 대해서만 (vector 수준에서) 값을 추출하는 코드입니다. is.na는 해당 값이 NA인지 검사해서 NA일 경우 TRUE를 그렇지 않으면 FALSE를 리턴해주는 함수 입니다.</p>
+<p>이제 design 메트릭스에서 실험 조건이 명시된 위치의 well 이름을 꺼내오는 작업을 수행합니다. 이 때 바로 matrix에 대해서 코딩을 하기 보다는 vector 수준에서 값을 불러오는 코드를 먼저 만들고 matrix로 확장하는 것이 좋습니다. 아래는 첫 번째 컬럼의 값들에 대해서만 (vector 수준에서) 값을 추출하는 코드입니다. is.na는 해당 값이 NA인지 검사해서 NA일 경우 TRUE를 그렇지 않으면 FALSE를 리턴해주는 함수 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## vector
 tmpi &lt;-<span class="st"> </span>mydesign[, <span class="dv">1</span>]
 tmpv &lt;-<span class="st"> </span>well_position_matrix[, <span class="dv">1</span>]
@@ -284,7 +287,7 @@ tmpv &lt;-<span class="st"> </span>well_position_matrix[, <span class="dv">1</sp
 <span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(tmpi))
 tmpi[<span class="op">!</span><span class="kw">is.na</span>(tmpi)]
 tmpv[<span class="op">!</span><span class="kw">is.na</span>(tmpi)]</code></pre></div>
-<p>lapply 함수를 사용하여 위와 같은 값을 추출하는 기능을 data.frame에 적용하는 전략을 사용하며 이를 위하여 다음 두 개의 함수(extract_values, extract_values2)를 구현합니다. extract_value 함수는 입력되는 파라메터 벡터 x에서 na 가 아닌 값들을 추출하는 함수이고 extract_value2의 경우 입력되는 파라메터 x가 16개의 값을 가지며 1부터 8까지 8개의 값들 중 na 가 아닌 인덱스를 뽑아내고 9부터 16까지의 값들 중 앞서 뽑은 인덱스에 해당하는 값들을 뽑아내는 함수입니다.</p>
+<p>이제 위 코드를 함수로 만들고 lapply 함수를 사용하여 data.frame에 적용하도록 합니다. 함수는 다음 두 개의 함수(extract_values, extract_values2)로서 extract_value 함수는 입력되는 파라메터 벡터 x에서 na 가 아닌 값들을 추출하는 함수입니다. extract_value2는 다른 두 개의 메트리스를 파라메터로 넘겨서 값을 뽑기 위한 변형된 함수로 입력되는 파라메터 x가 16개의 값을 가지며 1부터 8까지 8개의 값들 중 na 가 아닌 인덱스를 뽑아내고 실제 값은 9부터 16까지의 8개 값들 중 해당하는 인덱스의 값을 뽑아내는 함수 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extract_values &lt;-<span class="st"> </span><span class="cf">function</span>(x){
   index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(x))
   <span class="kw">return</span>(x[index])
@@ -298,18 +301,159 @@ extract_values2 &lt;-<span class="st"> </span><span class="cf">function</span>(x
   <span class="kw">return</span>(well_names[index])
 }
 <span class="co">#extract_values2(c(tmpi, tmpv))</span></code></pre></div>
-<p>위 함수들, 특히extract_value2 함수을 이용해서 well 정보들 (well 이름, well에 담긴 샘플들의 실험 컨디션)을 추출하기 위해서 well_info2 라는 메트릭스를 만듭니다. (작성중..)</p>
+<p>이제 위 함수들, 특히extract_value2 함수을 이용해서 well 이름을 추출하기 위해서 mydesign과 well_position_matrix 두 메트릭스를 bind한 bound_matrix라는 메트릭스를 만들고 lapply로 extract_value 함수와 extract_value2 함수를 사용하여 well 이름과 well_condition을 각각 뽑아 냅니다. 마지막 well_info data.frame은 두 변수를 묶어놓은 것으로 data.frame 생성시 문자형이 factor형으로 자동 형 변환 되는 것을 막기 위하여 stingAsFactors = F 옵션을 추가해 줍니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mydesign) &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)
 <span class="kw">colnames</span>(well_position_matrix) &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)
-tmpdata &lt;-<span class="st"> </span><span class="kw">rbind</span>(mydesign, well_position_matrix)
+bound_matrix &lt;-<span class="st"> </span><span class="kw">rbind</span>(mydesign, well_position_matrix)
 
-tmpv &lt;-<span class="st"> </span><span class="kw">lapply</span>(tmpdata, extract_values2)
+tmpv &lt;-<span class="st"> </span><span class="kw">lapply</span>(bound_matrix, extract_values2)
 well_names &lt;-<span class="st"> </span><span class="kw">unlist</span>(tmpv)
 
 tmpv &lt;-<span class="st"> </span><span class="kw">lapply</span>(mydesign, extract_values)
 well_conditions &lt;-<span class="st"> </span><span class="kw">unlist</span>(tmpv)
 
 well_info &lt;-<span class="st"> </span><span class="kw">data.frame</span>(well_names, well_conditions, <span class="dt">stringsAsFactors =</span> F)</code></pre></div>
+<p>well_info에 명시된 well 이름에 해당하는 데이터를 mydata에서 추출하기 위해 match 함수를 사용합니다. match 함수는 두 개의 벡터에서 공통되는 값을 가진 인덱스를 뽑기 위한 함수 입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#dim(mydata)</span>
+<span class="kw">head</span>(mydata)</code></pre></div>
+<pre><code>##   Plate Repeat Well Type      Time..5 595nm_kk (A)      Time..7
+## 1     1      1  B01    M 0.0001843750    0.7012086 0.0008273148
+## 2     1      1  B02    M 0.0001888889    0.7518509 0.0008320602
+## 3     1      1  B03    M 0.0001931713    0.7232866 0.0008368056
+## 4     1      1  B04    M 0.0001974537    0.7440926 0.0008415509
+## 5     1      1  B05    M 0.0002017361    0.7056004 0.0008462963
+## 6     1      1  B06    M 0.0002060185    0.7228400 0.0008510417
+##   EGFP_sulim (Counts)
+## 1               67809
+## 2               60025
+## 3              102745
+## 4               99979
+## 5              108175
+## 6              109575</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(well_info)</code></pre></div>
+<pre><code>##    well_names well_conditions
+## 11        B01           1;1;0
+## 12        C01           1;2;0
+## 13        D01           2;1;0
+## 14        E01           2;2;0
+## 21        B02          1;1;10
+## 22        C02          1;2;10</code></pre>
+<p>mydata에는 well 이라는 변수에 well_info에는 well_names라는 변수에 우리가 비교하고자 하는 값들이 들어 있습니다. match 함수의 리턴 값은 첫번째 파라메터로 넘겨진 변수를 기준으로 해당 값들이 두 번째 파라메터 변수의 값에 해당하는 인덱스 입니다. 쉽게 혼동될 수 있으니 꼭 help를 참고해서 명확히 이해하시길 바랍니다. mydata에서 데이터를 뽑아야 하므로 아래처럼 well_info에 존재하는지 검사하고 존재하는 값들만 subset 함수를 사용해서 뽑아냅니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># match(mydata$Well, well_info$well_names)</span>
+tmpidx &lt;-<span class="st"> </span><span class="kw">match</span>(mydata<span class="op">$</span>Well, well_info<span class="op">$</span>well_names)
+tmp_mydata_subset &lt;-<span class="st"> </span><span class="kw">subset</span>(mydata, <span class="op">!</span><span class="kw">is.na</span>(tmpidx))
+<span class="kw">head</span>(tmp_mydata_subset)</code></pre></div>
+<pre><code>##    Plate Repeat Well Type      Time..5 595nm_kk (A)      Time..7
+## 1      1      1  B01    M 0.0001843750    0.7012086 0.0008273148
+## 2      1      1  B02    M 0.0001888889    0.7518509 0.0008320602
+## 3      1      1  B03    M 0.0001931713    0.7232866 0.0008368056
+## 4      1      1  B04    M 0.0001974537    0.7440926 0.0008415509
+## 13     1      1  C01    M 0.0002644676    0.8026616 0.0009127315
+## 14     1      1  C02    M 0.0002687500    0.7750938 0.0009174769
+##    EGFP_sulim (Counts)
+## 1                67809
+## 2                60025
+## 3               102745
+## 4                99979
+## 13               42654
+## 14               33957</code></pre>
+<p>위 tmp_mydata_subset에서 우리가 필요한 정보는 well 이름과 OD, 형광값으로 각각 3번째 6번째 8번째 컬럼에 들어있습니다. 그러나 실험에서 OD 만 찍을 경우 8번째 컬럼은 존재하지 않게 됩니다. 즉, 이 부분이 실험 조건에 따라서 에러가 발생될 수 있는 부분이라 좀 더 일반적으로 사용 가능한 함수를 구현하기 위해서는 이 부분을 개선해줄 필요가 있습니다. OD, green 형광, red 형광을 측정할 경우 3, 6, 8, 10 번째 컬럼 순으로 데이터가 저장될 수 있습니다. 따라서 tmp_mydata_subset 의 컬럼 길이보다 작은 짝수만큼 컬럼을 선택하면되고 다음과 같이 간단히 코드를 작성할 수 있습니다 (3은 필수, 최소 하나의 데이터를 찍으면 6번째 컬럼에 들어가므로 시작은 6부터).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel_column &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="kw">seq</span>(<span class="dv">6</span>, <span class="kw">ncol</span>(tmp_mydata_subset), <span class="dt">by=</span><span class="dv">2</span>))
+mydata_subset &lt;-<span class="st"> </span>tmp_mydata_subset[,sel_column]
+<span class="kw">head</span>(mydata_subset)</code></pre></div>
+<pre><code>##    Well 595nm_kk (A) EGFP_sulim (Counts)
+## 1   B01    0.7012086               67809
+## 2   B02    0.7518509               60025
+## 3   B03    0.7232866              102745
+## 4   B04    0.7440926               99979
+## 13  C01    0.8026616               42654
+## 14  C02    0.7750938               33957</code></pre>
+<p>이제 well_info와 mydata_subset을 하나의 data.frame으로 합하겠습니다. 하나의 오브젝트로 구성하는 것이 추후 그래프 작성이나 분석을 위해서 편리하기 때문입니다. merge라는 함수는 두 데이터셋을 각각 공통으로 가진 변수를 기준으로 합해주는 함수입니다. 단순히 cbind 등으로 두 데이터프레임을 붙여 놓을 경우 각각의 데이터 정렬 순서가 다르기 때문에 하나의 row에 다른 정보가 섞이게 됩니다. 따라서 두 데이터셋을 붙일 경우 위와 같이 공통되는 변수를 기준으로 적절히 정렬 후 붙이는 것이 필수입니다. 아래 코드의 by.x는 첫번째 파라메터로 넘겨진 오브젝트가 갖는 공통된 변수 이름이며 두번째 by.y는 두번째 파라메터로 넘겨진 오브젝트가 갖는 공통된 변수 이름 입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">final_data &lt;-<span class="st"> </span><span class="kw">merge</span>(well_info, mydata_subset, <span class="dt">by.x=</span><span class="st">&quot;well_names&quot;</span>, <span class="dt">by.y=</span><span class="st">&quot;Well&quot;</span>)
+<span class="kw">head</span>(final_data)</code></pre></div>
+<pre><code>##   well_names well_conditions 595nm_kk (A) EGFP_sulim (Counts)
+## 1        B01           1;1;0    0.7012086               67809
+## 2        B02          1;1;10    0.7518509               60025
+## 3        B03         1;1;100    0.7232866              102745
+## 4        B04        1;1;1000    0.7440926               99979
+## 5        C01           1;2;0    0.8026616               42654
+## 6        C02          1;2;10    0.7750938               33957</code></pre>
+<p>이제 목적했던 함수를 만들기 전 마지막 단계로 실험 조건을 좀 더 보기 쉽게 바꿔보도록 하겠습니다. 위 데이터에 보시면 well_conditions 변수에 세 개의 실험 조건이 “;”으로 붙어 표현되어 있습니다. 각각 샘플이름, 반복횟수, 약품농도 입니다. 아래 strsplit 함수는 split에 명시된 문자를 기준으로 첫번째 파라메터 문자를 나누어 주는 기능을 수행합니다. 아래처럼 벡터연산이 가능하여 한번에 모든 컨디션 정보를 나누어 줄 수도 있습니다. 리턴값 형태는 리스트로서 unlist를 통해 벡터로 전환 가능 합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## strsplit(&quot;1;1;0&quot;, split=&quot;;&quot;)
+## unlist(strsplit(&quot;1;1;0&quot;, &quot;;&quot;))
+tmp &lt;-<span class="st"> </span><span class="kw">strsplit</span>(final_data<span class="op">$</span>well_conditions, <span class="st">&quot;;&quot;</span>)
+<span class="kw">head</span>(tmp)</code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;1&quot; &quot;1&quot; &quot;0&quot;
+## 
+## [[2]]
+## [1] &quot;1&quot;  &quot;1&quot;  &quot;10&quot;
+## 
+## [[3]]
+## [1] &quot;1&quot;   &quot;1&quot;   &quot;100&quot;
+## 
+## [[4]]
+## [1] &quot;1&quot;    &quot;1&quot;    &quot;1000&quot;
+## 
+## [[5]]
+## [1] &quot;1&quot; &quot;2&quot; &quot;0&quot;
+## 
+## [[6]]
+## [1] &quot;1&quot;  &quot;2&quot;  &quot;10&quot;</code></pre>
+<p>그런데 위와 같이 벡터연산을 수행하여 정보를 추출할 경우 목적하는 바에 따라서 불편한 점도 있습니다. 본 강의에서는 아래와 같이 하나의 백터로 조건 정보를 입력받아 값을 쪼갠 후 이름을 붙여주는 함수를 만들고 이를 apply 함수와 비슷한 기능의 sapply를 적용하도록 하겠습니다. sapply의 차이점은 help를 참고하세요.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myparse &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  tmp &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(x, <span class="st">&quot;;&quot;</span>))
+  <span class="kw">names</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;sample_names&quot;</span>, <span class="st">&quot;replication&quot;</span>, <span class="st">&quot;concentration&quot;</span>)
+  <span class="kw">return</span>(tmp)
+}
+tmpcond &lt;-<span class="st"> </span><span class="kw">sapply</span>(final_data<span class="op">$</span>well_conditions, myparse)
+<span class="kw">head</span>(tmpcond)</code></pre></div>
+<pre><code>##               1;1;0 1;1;10 1;1;100 1;1;1000 1;2;0 1;2;10 1;2;100 1;2;1000
+## sample_names  &quot;1&quot;   &quot;1&quot;    &quot;1&quot;     &quot;1&quot;      &quot;1&quot;   &quot;1&quot;    &quot;1&quot;     &quot;1&quot;     
+## replication   &quot;1&quot;   &quot;1&quot;    &quot;1&quot;     &quot;1&quot;      &quot;2&quot;   &quot;2&quot;    &quot;2&quot;     &quot;2&quot;     
+## concentration &quot;0&quot;   &quot;10&quot;   &quot;100&quot;   &quot;1000&quot;   &quot;0&quot;   &quot;10&quot;   &quot;100&quot;   &quot;1000&quot;  
+##               2;1;0 2;1;10 2;1;100 2;1;1000 2;2;0 2;2;10 2;2;100 2;2;1000
+## sample_names  &quot;2&quot;   &quot;2&quot;    &quot;2&quot;     &quot;2&quot;      &quot;2&quot;   &quot;2&quot;    &quot;2&quot;     &quot;2&quot;     
+## replication   &quot;1&quot;   &quot;1&quot;    &quot;1&quot;     &quot;1&quot;      &quot;2&quot;   &quot;2&quot;    &quot;2&quot;     &quot;2&quot;     
+## concentration &quot;0&quot;   &quot;10&quot;   &quot;100&quot;   &quot;1000&quot;   &quot;0&quot;   &quot;10&quot;   &quot;100&quot;   &quot;1000&quot;</code></pre>
+<p>각각 쪼개서 이름을 붙이는 작업 후 리턴된 결과를 보니 3 x 16 matrix 입니다. 앞서 우리가 구한 final_data와 나란히 붙여 넣기 위해서 t라는 함수를 사용하여 행과 열을 교환하는 transformation 을 수행합니다. 이제 merge 함수를 사용하여 붙여 넣어야 하는데 t_tmpcond 행렬에는 final_data와 같은 정보를 갖는 변수가 없습니다. 따라서 final_data의 well_conditions 와 같은 정보를 갖는 t_tmpcond의 rowname을 하나의 변수로 추가해 준 후 해당 공통 정보를 갖는 변수를 기준으로 두 오브젝트를 merge 해 줍니다. 마지막으로 well_conditions 정보는 중복이므로 제거해 주는 작업을 수행합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t_tmpcond &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">sapply</span>(final_data<span class="op">$</span>well_conditions, myparse))
+t_tmpcond2 &lt;-<span class="st"> </span><span class="kw">cbind</span>(t_tmpcond, <span class="kw">rownames</span>(t_tmpcond))
+t_tmpcond2 &lt;-<span class="st"> </span><span class="kw">cbind</span>(t_tmpcond, <span class="dt">well_conditions=</span><span class="kw">rownames</span>(t_tmpcond))
+final_data &lt;-<span class="st"> </span><span class="kw">merge</span>(final_data, t_tmpcond2, <span class="dt">by=</span><span class="st">&quot;well_conditions&quot;</span>)
+final_data &lt;-<span class="st"> </span>final_data[,<span class="op">-</span><span class="dv">1</span>]
+<span class="kw">head</span>(final_data)</code></pre></div>
+<pre><code>##   well_names 595nm_kk (A) EGFP_sulim (Counts) sample_names replication
+## 1        B01    0.7012086               67809            1           1
+## 2        B02    0.7518509               60025            1           1
+## 3        B03    0.7232866              102745            1           1
+## 4        B04    0.7440926               99979            1           1
+## 5        C01    0.8026616               42654            1           2
+## 6        C02    0.7750938               33957            1           2
+##   concentration
+## 1             0
+## 2            10
+## 3           100
+## 4          1000
+## 5             0
+## 6            10</code></pre>
+</div>
+<div id="multiplate-reader--" class="section level2">
+<h2><span class="header-section-number">6.8</span> Multiplate reader 함수 만들기</h2>
+<p>지금까지 수행한 코드들로 다음과 같은 함수를 만들 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">read_multiplate_data &lt;-<span class="st"> </span><span class="cf">function</span>(file_names){
+  design_file_name &lt;-<span class="st"> </span>file_names[<span class="dv">1</span>]
+  data_file_name &lt;-<span class="st"> </span>file_names[<span class="dv">2</span>]
+  <span class="co"># ....</span>
+  <span class="co"># .... code for the function ...</span>
+  <span class="co"># .... do it yourself ...</span>
+  <span class="co"># ....</span>
+  <span class="kw">return</span>(final_data)
+}</code></pre></div>
+<p>그리고 다음과 같이 엑셀 파일 이름만 넣어주면 원하는 데이터가 정리되어 나오게 됩니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiplate_file_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;exp_design.xlsx&quot;</span>, <span class="st">&quot;Rprog04-fl.xls&quot;</span>)
+myfinal_data &lt;-<span class="st"> </span><span class="kw">read_multiplate_data</span>(multiplate_file_names)</code></pre></div>
+<p>함수의 기능은 앞서 설명드린 코드들로 대부분 구현 가능합니다. 물론 조금씩 더 신경쓸 부분이 있을 수 있으나 큰 오류는 없을 것으로 생각되며 구현중에 어려운 부분은 수업시간에 질문해 주시면 되겠습니다.</p>
 
 </div>
 </div>
