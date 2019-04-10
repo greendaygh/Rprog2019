@@ -9,6 +9,10 @@ output: html_document
 
 실습용 엑셀파을 먼저 download 하세요
 
-[design excel file](https://github.com/greendaygh/Rprog2019/blob/master/exp_design2.xlsx)  
-[data excel file](https://github.com/greendaygh/Rprog2019/blob/master/Rprog04-fl.xls)  
+[design excel file 2](https://github.com/greendaygh/Rprog2019/blob/master/exp_design2.xlsx)  
+[data excel file 1](https://github.com/greendaygh/Rprog2019/blob/master/20171012-phenol-1.xls)  
+[data excel file 2](https://github.com/greendaygh/Rprog2019/blob/master/20171012-phenol-2.xls)  
+[data excel file 3](https://github.com/greendaygh/Rprog2019/blob/master/20171227-phenol-1.xls)  
+[data excel file 4](https://github.com/greendaygh/Rprog2019/blob/master/20171227-phenol-2.xls)  
+
 
