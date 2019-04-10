@@ -35,6 +35,7 @@ nchar(s)
 ss <- toupper(s)
 regexpr("ATG", ss)
 
+regexpr("ATG", x)
 
 source("read_plate.R")
 
@@ -47,7 +48,7 @@ data_file_names <- c("20171012-phenol-1.xls",
 mydata1 <- multiple_plate_excel_reader3(design_file_name, data_file_names[1], sheet4design=1)
 mydata2 <- multiple_plate_excel_reader3(design_file_name, data_file_names[2], sheet4design=2)
 mydata3 <- multiple_plate_excel_reader3(design_file_name, data_file_names[3], sheet4design=3)
-#mydata4 <- multiple_plate_excel_reader3(design_file_name, data_file_name, sheet4design=2)
+mydata4 <- multiple_plate_excel_reader3(design_file_name, data_file_names[4], sheet4design=4)
 
 mydata <- rbind(mydata1, mydata2, mydata3)
 
@@ -55,10 +56,43 @@ library(ggplot2)
 ggplot(data=mydata, aes(x=sample_names, y=GFP))
 
 ggplot(data=mydata, aes(x=sample_names, y=GFP)) +
+  geom_bar()
+
+?geom_bar
+
+ggplot(data=mydata, aes(x=sample_names, y=GFP)) +
   geom_bar(stat="identity")
 
-ggplot(data=mydata, aes(x=sample_names, y=GFP, color=concentration)) +
+ggplot(data=mydata, aes(x=sample_names, y=GFP, fill=concentration)) +
   geom_bar(stat="identity", position="dodge")
+
+mydata2 <- mydata
+mydata2$concentration <- as.factor(mydata2$concentration)
+
+ggplot(data=mydata2, aes(x=sample_names, y=GFP, fill=concentration)) +
+  geom_bar(stat="identity", position="dodge")
+
+ggplot(data=mydata2, aes(x=sample_names, y=GFP, fill=concentration)) +
+  geom_bar(stat="identity", position="dodge") +
+  scale_fill_manual(values = rainbow(11))
+  
+ggplot(data=mydata2, aes(x=sample_names, y=GFP, fill=concentration)) +
+  geom_bar(stat="identity", position="dodge") +
+  scale_fill_manual(values = heat.colors(11))
+
+
+ggplot(data=mydata2, aes(x=sample_names, y=GFP, fill=concentration, color="black")) +
+  geom_bar(stat="identity", position="dodge") +
+  scale_fill_manual(values = heat.colors(11))
+
+
+
+library(plyr)
+df <- ddply(mydata2, c("GFP", "replication"), summarize, Mean = mean(GFP), SD = sd(GFP))  
+
+  
+## change color
+RColorBrewer::display.brewer.all()
 
 
 
