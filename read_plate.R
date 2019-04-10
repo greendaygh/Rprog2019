@@ -57,8 +57,10 @@ multiple_plate_excel_reader <- function(design_file_name, data_file_name){
   
   ## make final data matrix
   t_tmpcond <- t(tmpcond)
-  t_tmpcond2 <- cbind(t_tmpcond, rownames(t_tmpcond))
   t_tmpcond2 <- cbind(t_tmpcond, well_conditions=rownames(t_tmpcond))
+  rownames(t_tmpcond2) <- NULL
+  t_tmpcond2 <- data.frame(t_tmpcond2)
+  t_tmpcond2$concentration <- as.numeric(as.character(t_tmpcond2$concentration))
   final_data <- merge(tmp_final_data, t_tmpcond2, by="well_conditions")
   final_data <- final_data[,-1]
   
