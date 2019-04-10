@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-04-04">
+<meta name="date" content="2019-04-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -264,15 +264,15 @@ mydata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span
 <span class="co">#head(mydesign)</span>
 <span class="co">#head(mydata)</span></code></pre></div>
 <pre><code>## New names:
-## * `` -&gt; `..1`
-## * `` -&gt; `..2`
-## * `` -&gt; `..3`
-## * `` -&gt; `..4`
-## * `` -&gt; `..5`
-## * ... and 7 more</code></pre>
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ... and 7 more problems</code></pre>
 <pre><code>## New names:
-## * Time -&gt; Time..5
-## * Time -&gt; Time..7</code></pre>
+## * Time -&gt; Time...5
+## * Time -&gt; Time...7</code></pre>
 <p>위 design 엑셀 파일로 샘플이 놓인 위치와 그 실험 조건을 읽어올 수 있으나 data를 뽑아올 수 있는 well의 이름인 (mydata 데이터 확인) A01, A02, …, B01, B02와 같은 이름 정보는 존재하지 않습니다. 이에 96 well plate 와 동일한 크기의 메트릭스를 만들고 각 셀에 well 이름들로 값을 넣어 추후 인덱스를 얻었을 때 그 위치에 해당하는 well 이름을 얻을 수 있도록 합니다. sprintf는 %02d와 같이 명시한 포맷으로 숫자를 출력해주는 함수 입니다. %02d는 digit 2자리 포맷을 가리키는 문자열로 한자리 숫자의 경우 앞에 0을 넣어 2자리로 만들어 출력해 줍니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make a position matrix</span>
 pos1 &lt;-<span class="st"> </span><span class="kw">rep</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>], <span class="dt">time=</span><span class="dv">12</span>)
@@ -316,7 +316,7 @@ well_info &lt;-<span class="st"> </span><span class="kw">data.frame</span>(well_
 <p>well_info에 명시된 well 이름에 해당하는 데이터를 mydata에서 추출하기 위해 match 함수를 사용합니다. match 함수는 두 개의 벡터에서 공통되는 값을 가진 인덱스를 뽑기 위한 함수 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#dim(mydata)</span>
 <span class="kw">head</span>(mydata)</code></pre></div>
-<pre><code>##   Plate Repeat Well Type      Time..5 595nm_kk (A)      Time..7
+<pre><code>##   Plate Repeat Well Type     Time...5 595nm_kk (A)     Time...7
 ## 1     1      1  B01    M 0.0001843750    0.7012086 0.0008273148
 ## 2     1      1  B02    M 0.0001888889    0.7518509 0.0008320602
 ## 3     1      1  B03    M 0.0001931713    0.7232866 0.0008368056
@@ -343,7 +343,7 @@ well_info &lt;-<span class="st"> </span><span class="kw">data.frame</span>(well_
 tmpidx &lt;-<span class="st"> </span><span class="kw">match</span>(mydata<span class="op">$</span>Well, well_info<span class="op">$</span>well_names)
 tmp_mydata_subset &lt;-<span class="st"> </span><span class="kw">subset</span>(mydata, <span class="op">!</span><span class="kw">is.na</span>(tmpidx))
 <span class="kw">head</span>(tmp_mydata_subset)</code></pre></div>
-<pre><code>##    Plate Repeat Well Type      Time..5 595nm_kk (A)      Time..7
+<pre><code>##    Plate Repeat Well Type     Time...5 595nm_kk (A)     Time...7
 ## 1      1      1  B01    M 0.0001843750    0.7012086 0.0008273148
 ## 2      1      1  B02    M 0.0001888889    0.7518509 0.0008320602
 ## 3      1      1  B03    M 0.0001931713    0.7232866 0.0008368056

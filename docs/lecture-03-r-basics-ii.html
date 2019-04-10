@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-04-04">
+<meta name="date" content="2019-04-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -241,12 +241,12 @@ mydata&lt;-<span class="kw">read.table</span>(<span class="dt">file=</span><span
 <pre><code>## Warning: package &#39;readxl&#39; was built under R version 3.5.3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;Rprog04-fl.xls&quot;</span>, <span class="dt">sheet=</span><span class="dv">2</span>, <span class="dt">skip =</span> <span class="dv">6</span>, <span class="dt">col_names=</span>F)</code></pre></div>
 <pre><code>## New names:
-## * `` -&gt; `..1`
-## * `` -&gt; `..2`
-## * `` -&gt; `..3`
-## * `` -&gt; `..4`
-## * `` -&gt; `..5`
-## * ... and 7 more</code></pre>
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ... and 7 more problems</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myod &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mydata[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>, ])
 mygfp &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mydata[<span class="dv">12</span><span class="op">:</span><span class="dv">21</span>, ])</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(myod[,<span class="dv">1</span>])
@@ -313,9 +313,9 @@ mysd &lt;-<span class="st"> </span><span class="cf">function</span>(x){
 
 x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>)
 <span class="kw">mysd</span>(x)</code></pre></div>
-<pre><code>## [1] 29.00958</code></pre>
+<pre><code>## [1] 31.85122</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
-<pre><code>## [1] 29.00958</code></pre>
+<pre><code>## [1] 31.85122</code></pre>
 </div>
 <div id="exercise-3-3-barplot-with-error-bars" class="section level2">
 <h2><span class="header-section-number">4.7</span> Exercise 3-3 barplot with error bars</h2>

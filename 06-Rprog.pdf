@@ -1,0 +1,24 @@
+---
+title: "Read plate reader excel files"
+author: "Haseong"
+date: "2019년 4월 9일"
+output: html_document
+---
+
+# Lecture 06 - Multiple plate reader file
+
+강의노트와 실습용 엑셀파일은 다음을 참고 하세요
+
+
+```{r}
+#options(readxl.show_progress = FALSE)
+library(readxl)
+design_file_name <- "exp_design.xlsx"
+data_file_name <- "Rprog04-fl.xls"
+#mydesign <- read_excel(design_file_name, sheet=1)
+mydesign <- as.data.frame(read_excel(design_file_name, sheet=1, range="A1:L8", skip = 0, col_names=F))
+mydata <- as.data.frame(read_excel(data_file_name, sheet=1))
+#head(mydesign)
+#head(mydata)
+```
+
