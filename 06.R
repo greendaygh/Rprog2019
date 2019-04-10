@@ -9,6 +9,9 @@ data_file_name <- "Rprog04-fl.xls"
 mydata <- multiple_plate_excel_reader(design_file_name, data_file_name)
 
 args(multiple_plate_excel_reader)
+
+
+
 args(multiple_plate_excel_reader2)
 
 mydata <- multiple_plate_excel_reader2(design_file_name, data_file_name, sheet4design=2)
@@ -35,7 +38,7 @@ regexpr("ATG", ss)
 
 source("read_plate.R")
 
-design_file_name <- "exp_design.xlsx"
+design_file_name <- "exp_design2.xlsx"
 data_file_names <- c("20171012-phenol-1.xls", 
                      "20171012-phenol-2.xls", 
                      "20171227-phenol-1.xls", 

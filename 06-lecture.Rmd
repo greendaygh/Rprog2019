@@ -14,5 +14,5 @@ output: html_document
 [data excel file 2](https://github.com/greendaygh/Rprog2019/blob/master/20171012-phenol-2.xls)  
 [data excel file 3](https://github.com/greendaygh/Rprog2019/blob/master/20171227-phenol-1.xls)  
 [data excel file 4](https://github.com/greendaygh/Rprog2019/blob/master/20171227-phenol-2.xls)  
-
+[R function for plate read](https://github.com/greendaygh/Rprog2019/blob/master/read_plate.R)  
 
