@@ -18,7 +18,7 @@ multiple_plate_excel_reader <- function(design_file_name, data_file_name){
   mydesign <- as.data.frame(read_excel(design_file_name, sheet=1, range="A1:L8", skip = 0, col_names=F))
   mydata <- as.data.frame(read_excel(data_file_name, sheet=1))
   
-  ## read data in all wells
+  ## build a position matrix
   pos1 <- rep(LETTERS[1:8], time=12)
   pos2 <- rep(sprintf("%02d", 1:12), each=8)
   well_position_labels <- paste(pos1, pos2, sep="")
