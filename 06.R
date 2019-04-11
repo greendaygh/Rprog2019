@@ -45,14 +45,22 @@ data_file_names <- c("20171012-phenol-1.xls",
                      "20171227-phenol-1.xls", 
                      "20171227-phenol-2.xls")
 
-mydata1 <- multiple_plate_excel_reader3(design_file_name, data_file_names[1], sheet4design=1)
-mydata2 <- multiple_plate_excel_reader3(design_file_name, data_file_names[2], sheet4design=2)
-mydata3 <- multiple_plate_excel_reader3(design_file_name, data_file_names[3], sheet4design=3)
-mydata4 <- multiple_plate_excel_reader3(design_file_name, data_file_names[4], sheet4design=4)
+mydata1 <- multiple_plate_excel_reader2(design_file_name, data_file_names[1], sheet4design=1)
+mydata2 <- multiple_plate_excel_reader2(design_file_name, data_file_names[2], sheet4design=2)
+mydata3 <- multiple_plate_excel_reader2(design_file_name, data_file_names[3], sheet4design=3)
+mydata4 <- multiple_plate_excel_reader2(design_file_name, data_file_names[4], sheet4design=4)
 
-mydata <- rbind(mydata1, mydata2, mydata3)
+mydata <- rbind(mydata1, mydata2, mydata3, mydata4)
+
+tmp1 <- subset(mydata, (sample_names==1 & concentration==0))
+tmp2 <- subset(mydata, (sample_names==1 & concentration==0.1))
+tmp3 <- subset(mydata, (sample_names==1 & concentration==1))
+
+barplot(c(mean(tmp1$GFP), mean(tmp2$GFP), mean(tmp3$GFP)))
+
 
 library(ggplot2)
+
 ggplot(data=mydata, aes(x=sample_names, y=GFP))
 
 ggplot(data=mydata, aes(x=sample_names, y=GFP)) +

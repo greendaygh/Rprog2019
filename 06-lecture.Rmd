@@ -16,3 +16,7 @@ output: html_document
 [data excel file 4](https://github.com/greendaygh/Rprog2019/blob/master/20171227-phenol-2.xls)  
 [R function for plate read](https://github.com/greendaygh/Rprog2019/blob/master/read_plate.R)  
 
+강의 노트  
+[Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/06-Rprog.pdf)  
+
+이번 시간에는 지난시간에 이어서 multiple plate reader에 의해서 측정되고 엑셀에 저장된 데이터를 읽어오는 함수를 마무리하고 해당 함수를 사용하여 여러 파일들을 읽어오는 실습을 하겠습니다. 
