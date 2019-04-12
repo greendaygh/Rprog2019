@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,7 +141,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.7" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader--"><i class="fa fa-check"></i><b>6.7</b> Multiplate reader 기능 구현</a></li>
 <li class="chapter" data-level="6.8" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader-function-"><i class="fa fa-check"></i><b>6.8</b> Multiplate reader function 만들기</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html"><i class="fa fa-check"></i><b>7</b> Lecture 06 - Multiple plate reader / ggplot</a></li>
+<li class="chapter" data-level="7" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html"><i class="fa fa-check"></i><b>7</b> Lecture 06 - Multiple plate reader / ggplot</a><ul>
+<li class="chapter" data-level="7.1" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#multiple_plate_excel_reader--"><i class="fa fa-check"></i><b>7.1</b> multiple_plate_excel_reader 함수 만들기</a></li>
+<li class="chapter" data-level="7.2" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#multiple_plate_excel_reader2--"><i class="fa fa-check"></i><b>7.2</b> multiple_plate_excel_reader2 함수 업데이트</a></li>
+<li class="chapter" data-level="7.3" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#read-data"><i class="fa fa-check"></i><b>7.3</b> Read data</a></li>
+<li class="chapter" data-level="7.4" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#ggplot--barplot-"><i class="fa fa-check"></i><b>7.4</b> ggplot 이용 barplot 그리기</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -170,8 +175,267 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a href="https://github.com/greendaygh/Rprog2019/blob/master/read_plate.R">R function for plate read</a></p>
 <p>강의 노트<br />
 <a href="https://github.com/greendaygh/2019-R-programming/blob/master/06-Rprog.pdf">Lecture note</a></p>
-<p>이번 시간에는 지난시간에 이어서 multiple plate reader에 의해서 측정되고 엑셀에 저장된 데이터를 읽어오는 함수를 마무리하고 해당 함수를 사용하여 여러 파일들을 읽어오는 실습을 하겠습니다.</p>
+<p>이번 시간에는 지난시간에 이어서 multiple plate reader에 의해서 측정되고 엑셀에 저장된 데이터를 읽어오는 함수를 마무리하고 해당 함수를 사용하여 여러 파일들을 읽어오는 실습을 하겠습니다. 후반부에서는 읽어들인 데이터를 ggplot 패키지를 사용하여 간단한 barplot을 그려보는 것으로 강의는 마무리 하겠습니다.</p>
+<p>강의시간에 말씀 드렸지만 오늘 만드는 함수대한 세부적인 내용을 모두 이해하실 필요는 없습니다. 다만 지금 만들고있는 함수를 왜 만들고 어떻게 사용하는지를 아는 것은 중요합니다. 프로그래밍의 대부분은 함수와 로직을 만드는데 있고 R을 이용한 데이터 분석 또한 함수를 사용하면서 대부분의 시간을 보내기 때문에 함수를 왜 만들고 사용하는지를 이해하는 것은 중요합니다.</p>
+<div id="multiple_plate_excel_reader--" class="section level2">
+<h2><span class="header-section-number">7.1</span> multiple_plate_excel_reader 함수 만들기</h2>
+<p>먼저 처음 만드는 함수는 다음과 같이 만들어지고 쓰일 것 입니다. 함수의 이름은 multiple_plate_excel_reader 이고 입력 파라메터의 갯수는 두 개입니다. design file과 data file 이름들 입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiple_plate_excel_reader &lt;-<span class="st"> </span><span class="cf">function</span>(design_file_name, data_file_name){
+### 
+### code
+### 
+}
 
+design_file_name &lt;-<span class="st"> &quot;exp_design.xlsx&quot;</span>
+data_file_name &lt;-<span class="st"> &quot;Rprog04-fl.xls&quot;</span>
+
+mydata &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_read</span>(design_file_name, data_file_name)</code></pre></div>
+<p>이제 함수를 만들기 위해 read_plate.R 이라는 파일을 만들고 다음처럼 코드를 작성합니다. 간단한 기능을 하는 짧은 라인의 함수의 경우 바로 함수를 작성해도 괜찮습니다. 그러나 지금과 같이 비교적 긴 라인의 함수는 파라메터로 입력되는 값들을 미리 정의해 놓고 함수 선언문 이후의 코드들을 하나하나 실행하면서 작동을 확인 합니다. 그 후 마지막에 함수 선언문을 작성하고 블럭으로 묶어놓는 방식으로 함수를 작성합니다. 아래의 경우는 함수가 선언되는 부분을 주석으로 처리해 두었습니다. require 명령은 library와 같은 기능입니다. 그리고 read_excel 함수를 사용해서 엑셀 파일들을 불러오는 부분입니다. 최근에는 tibble 형태의 오브젝트를 많이 쓰지만 여기서는 기존 data.frame 오브젝트로 읽어오기 위해서 앞에 as.data.frame을 붙였습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">design_file_name &lt;-<span class="st"> &quot;exp_design.xlsx&quot;</span>
+data_file_name &lt;-<span class="st"> &quot;Rprog04-fl.xls&quot;</span>
+
+<span class="co">#multiple_plate_excel_reader &lt;- function(design_file_name, data_file_name){</span>
+<span class="kw">require</span>(readxl)
+
+## read excel files
+mydesign &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(design_file_name, <span class="dt">sheet=</span><span class="dv">1</span>, <span class="dt">range=</span><span class="st">&quot;A1:L8&quot;</span>, <span class="dt">skip =</span> <span class="dv">0</span>, <span class="dt">col_names=</span>F))
+mydata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(data_file_name, <span class="dt">sheet=</span><span class="dv">1</span>))
+<span class="co">#...code  </span></code></pre></div>
+<p>이후 코드들은 모두 지난 시간 강의를 보시면 자세한 설명이 나와 있으니 생략하도록 하겠습니다. 아래는 완성된 함수의 전체 코드입니다. 마지막 부분에 <code>rownames(t_tmpcond2) &lt;- NULL</code> 코드가 지난번과 다르지만 이 부분은 row이름이 바뀌는 것을 막기 위해서 넣어주었습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiple_plate_excel_reader &lt;-<span class="st"> </span><span class="cf">function</span>(design_file_name, data_file_name){
+  <span class="kw">require</span>(readxl)
+  
+  ## read excel files
+  mydesign &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(design_file_name, <span class="dt">sheet=</span><span class="dv">1</span>, 
+                                       <span class="dt">range=</span><span class="st">&quot;A1:L8&quot;</span>, <span class="dt">skip =</span> <span class="dv">0</span>, <span class="dt">col_names=</span>F))
+  mydata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(data_file_name, <span class="dt">sheet=</span><span class="dv">1</span>))
+  
+  ## build a position matrix
+  pos1 &lt;-<span class="st"> </span><span class="kw">rep</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>], <span class="dt">time=</span><span class="dv">12</span>)
+  pos2 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%02d&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>), <span class="dt">each=</span><span class="dv">8</span>)
+  well_position_labels &lt;-<span class="st"> </span><span class="kw">paste</span>(pos1, pos2, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+  well_position_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(well_position_labels, <span class="dt">nrow=</span><span class="dv">8</span>, <span class="dt">ncol=</span><span class="dv">12</span>)
+  
+  ## extract positions from position matrix by using design matrix indexes
+  <span class="kw">colnames</span>(mydesign) &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)
+  <span class="kw">colnames</span>(well_position_matrix) &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)
+  bound_matrix &lt;-<span class="st"> </span><span class="kw">rbind</span>(mydesign, well_position_matrix)
+  tmpv &lt;-<span class="st"> </span><span class="kw">lapply</span>(bound_matrix, extract_values_from_other_matrix)
+  well_names &lt;-<span class="st"> </span><span class="kw">unlist</span>(tmpv)
+  
+  ## extract conditions from design matrix by design matrix indexes
+  tmpv &lt;-<span class="st"> </span><span class="kw">lapply</span>(mydesign, extract_values_from_own_matrix)
+  well_conditions &lt;-<span class="st"> </span><span class="kw">unlist</span>(tmpv)
+  
+  ## build well_info matrix 
+  well_info &lt;-<span class="st"> </span><span class="kw">data.frame</span>(well_names, well_conditions, <span class="dt">stringsAsFactors =</span> F)
+  
+  ## subset of the data filtered by the wells that we are interested in
+  tmpidx &lt;-<span class="st"> </span><span class="kw">match</span>(mydata<span class="op">$</span>Well, well_info<span class="op">$</span>well_names)
+  tmp_mydata_subset &lt;-<span class="st"> </span><span class="kw">subset</span>(mydata, <span class="op">!</span><span class="kw">is.na</span>(tmpidx))
+  
+  ## extract OD, GFP, etc if there is any
+  sel_column &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="kw">seq</span>(<span class="dv">6</span>, <span class="kw">ncol</span>(tmp_mydata_subset), <span class="dt">by=</span><span class="dv">2</span>))
+  mydata_subset &lt;-<span class="st"> </span>tmp_mydata_subset[,sel_column]
+  
+  ## to make the condition column more readable
+  tmp_final_data &lt;-<span class="st"> </span><span class="kw">merge</span>(well_info, mydata_subset, <span class="dt">by.x=</span><span class="st">&quot;well_names&quot;</span>, <span class="dt">by.y=</span><span class="st">&quot;Well&quot;</span>)
+  tmpcond &lt;-<span class="st"> </span><span class="kw">sapply</span>(tmp_final_data<span class="op">$</span>well_conditions, <span class="cf">function</span>(x){
+    tmp &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(x, <span class="st">&quot;;&quot;</span>))
+    <span class="kw">names</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;sample_names&quot;</span>, <span class="st">&quot;replication&quot;</span>, <span class="st">&quot;concentration&quot;</span>)
+    <span class="kw">return</span>(tmp)
+  }
+  )
+  
+  ## make final data matrix
+  t_tmpcond &lt;-<span class="st"> </span><span class="kw">t</span>(tmpcond)
+  t_tmpcond2 &lt;-<span class="st"> </span><span class="kw">cbind</span>(t_tmpcond, <span class="dt">well_conditions=</span><span class="kw">rownames</span>(t_tmpcond))
+  <span class="kw">rownames</span>(t_tmpcond2) &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  t_tmpcond2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(t_tmpcond2)
+  t_tmpcond2<span class="op">$</span>concentration &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(t_tmpcond2<span class="op">$</span>concentration))
+  final_data &lt;-<span class="st"> </span><span class="kw">merge</span>(tmp_final_data, t_tmpcond2, <span class="dt">by=</span><span class="st">&quot;well_conditions&quot;</span>)
+  final_data &lt;-<span class="st"> </span>final_data[,<span class="op">-</span><span class="dv">1</span>]
+  
+  <span class="kw">return</span>(final_data)
+}</code></pre></div>
+<p>이제 함수를 사용해 보겠습니다. 현재 실행중인 working 디렉토리 안에 <code>&quot;exp_design.xlsx&quot; &quot;Rprog04-fl.xls&quot;</code> 이 두 파일을 넣고 아래와 같은 코드를 실행 합니다. 여기서 처음보는 명령이 source 입니다. 이 명령은 해당 R 파일의 내용을 실행시키는 것과 같습니다. 즉 방금 만든 함수를 read_plate.R 파일에 저장해 두었고 해당 함수를 사용하기 위해서 전체 함수를 ctrl+enter 로 실행시키지 않고 <code>source(&quot;read_plate.R&quot;)</code> 한 줄 실행하는 것 만으로도 해당 함수를 사용할 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;read_plate.R&quot;</span>)
+
+design_file_name &lt;-<span class="st"> &quot;exp_design.xlsx&quot;</span>
+data_file_name &lt;-<span class="st"> &quot;Rprog04-fl.xls&quot;</span>
+
+mydata &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader</span>(design_file_name, data_file_name)
+<span class="kw">head</span>(mydata)</code></pre></div>
+<pre><code>##   well_names 595nm_kk (A) EGFP_sulim (Counts) sample_names replication
+## 1        B01    0.7012086               67809            1           1
+## 2        B02    0.7518509               60025            1           1
+## 3        B03    0.7232866              102745            1           1
+## 4        B04    0.7440926               99979            1           1
+## 5        C01    0.8026616               42654            1           2
+## 6        C02    0.7750938               33957            1           2
+##   concentration
+## 1             0
+## 2            10
+## 3           100
+## 4          1000
+## 5             0
+## 6            10</code></pre>
+</div>
+<div id="multiple_plate_excel_reader2--" class="section level2">
+<h2><span class="header-section-number">7.2</span> multiple_plate_excel_reader2 함수 업데이트</h2>
+<p>여기까지만 해도 어느 정도는 대부분의 실험 데이터를 읽어올 수 있는 함수로 사용될 수 있습니다. 그러나 좀 더 편리한 함수를 위해서 업그레이드를 해 보겠습니다. 대략 세 가지의 문제점이 있으며 그 첫번째로 실험 컨디션을 3개만 사용하고 있는 부분입니다. drug 농도 앞에 drug 이름을 넣는 경우를 생각해서 함수를 업데이트 하겠습니다. 또한 design 파일을 매 실험마다 새로 만들지 않고 sheet를 활용하는 방법과 마지막으로 column 이름에 595가 들어갈 경우 OD로 GFP가 들어가면 GFP로 컬럼 이름을 자동으로 바뀌게 하는 코드를 작성해 보겠습니다. 컬럼 이름을 바꾸는 이유는 앞서 결과에 보이는 것 처럼 컬럼 이름이 <code>595nm_kk (A)</code> 이런식으로 주어질 경우 indexing 하기 힘들기 때문입니다.</p>
+<p><code>595</code> 가 문자열에 있는지를 판단하는 코드를 작성하기 위해서 문자열 다루는 실습을 해 보겠습니다. 문자열은 추후 유전자서열에 대한 조작을 할 때 많이 쓰이는 함수의 모음으로 다음과 같습니다. substr은 일부 문자열 뽑기, nchar는 문자의 갯수, strsplit는 split 문자를 기준으로 문자열 나누기, sub은 문자열 바꾸기 등 입니다. 각각 실행해 보시고 자세한 설명은 help 페이지를 참고 바랍니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s &lt;-<span class="st"> &quot;This is the sixth lecture of R programming&quot;</span>
+<span class="kw">substr</span>(s, <span class="dv">0</span>, <span class="dv">11</span>)
+<span class="kw">nchar</span>(s)
+<span class="kw">toupper</span>(s)
+<span class="kw">tolower</span>(s)
+<span class="kw">strsplit</span>(s, <span class="dt">split=</span><span class="st">&quot; &quot;</span>)
+<span class="kw">paste</span>(s, <span class="st">&quot; at UST&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+<span class="kw">sub</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;That&quot;</span>, s)</code></pre></div>
+<p>문자열 다루기에서 흔히 쓰이는 방법 중 하나는 정규식 입니다. 정규식은 특정 문자열의 집합을 표현하는데 사용되는 언어라고 할 수 있으며 대부분의 프로그래밍 언어나 편집기에서 지원하고 있습니다. 아래의 경우 <code>.</code> 은 모든 문자를 나타내고 <code>+</code> 는 바로 앞 문자가 하나 또는 그 이상을 나타내는 기호이므로 <code>.+</code>는 모든 연속되는 문자열을 나타낸다고 할 수 있습니다. 따라서 <code>sub(&quot;This is.+of &quot;, &quot;&quot;, s)</code> 는 This is 부터 of 까지의 문자열을 모두 가리키는 것이고 이를 <code>&quot;&quot;</code> 지우는 명령 입니다. <code>grep</code> 은 s 에 “This” 문자열이 있는지를 검사해서 있으며 1 없으면 0을 반환하고 regexpr의 경우는 있을 경우 시작위치와 끝위치를 리턴하는 함수 입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## regular expression
+<span class="kw">sub</span>(<span class="st">&quot;This is.+of &quot;</span>, <span class="st">&quot;&quot;</span>, s)
+<span class="kw">grep</span>(<span class="st">&quot;This&quot;</span>, s)
+<span class="kw">regexpr</span>(<span class="st">&quot;This&quot;</span>, s)</code></pre></div>
+<p>이제 함수를 업데이트 해 보겠습니다. 마지막 부분의 <code>final_data</code>를 만드는 부분에서 컬럼 이름들을 뽑고 grep을 사용하여 특정 문자열을 (<code>595</code>나 <code>GFP</code> 같은..) 찾은 뒤 해당 문자열이 있는 값을 원하는 값으로 (<code>OD</code>나 ```GFP````)로 바꿔줍니다. 이 후 컬럼 이름을 다시 바뀐 이름으로 저장하면 되겠습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  ## .... code
+  ## column names
+  cnames &lt;-<span class="st"> </span><span class="kw">colnames</span>(final_data)
+  idx &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;595&quot;</span>, cnames)
+  <span class="cf">if</span>(<span class="kw">length</span>(idx)<span class="op">&gt;</span><span class="dv">0</span>){
+    cnames[idx] &lt;-<span class="st"> &quot;OD&quot;</span>
+  }
+  idx &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;GFP&quot;</span>, cnames)
+  <span class="cf">if</span>(<span class="kw">length</span>(idx)<span class="op">&gt;</span><span class="dv">0</span>){
+    cnames[idx] &lt;-<span class="st"> &quot;GFP&quot;</span>
+  }
+  idx &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;RFP&quot;</span>, cnames)
+  <span class="cf">if</span>(<span class="kw">length</span>(idx)<span class="op">&gt;</span><span class="dv">0</span>){
+    cnames[idx] &lt;-<span class="st"> &quot;RFP&quot;</span>
+  }
+  
+  <span class="kw">colnames</span>(final_data) &lt;-<span class="st"> </span>cnames</code></pre></div>
+<p>두 번째 조건을 하나 더 추가하기 위한 코드를 만들어 봅니다. 함수에서 실험 조건을 parsing 하는 코드는 아래와 같습니다. <code>tmp_final_data$well_conditions</code> 에 <code>1;1;100</code> 형식의 조건을 <code>1;1;phenol;100</code> 형식으로 바꿀경우 sapply 에서 사용한 function에서 <code>names(tmp) &lt;- c(&quot;sample_names&quot;, &quot;replication&quot;, &quot;concentration&quot;)</code> 부분을 <code>names(tmp) &lt;- c(&quot;sample_names&quot;, &quot;replication&quot;, &quot;treatment&quot;, &quot;concentration&quot;)</code> 으로만 바꾸어 주면 되겠습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  ## to make the condition column more readable
+  tmp_final_data &lt;-<span class="st"> </span><span class="kw">merge</span>(well_info, mydata_subset, <span class="dt">by.x=</span><span class="st">&quot;well_names&quot;</span>, <span class="dt">by.y=</span><span class="st">&quot;Well&quot;</span>)
+  tmpcond &lt;-<span class="st"> </span><span class="kw">sapply</span>(tmp_final_data<span class="op">$</span>well_conditions, <span class="cf">function</span>(x){
+    tmp &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(x, <span class="st">&quot;;&quot;</span>))
+    <span class="kw">names</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;sample_names&quot;</span>, <span class="st">&quot;replication&quot;</span>, <span class="st">&quot;concentration&quot;</span>)
+    <span class="kw">return</span>(tmp)
+  }
+  )</code></pre></div>
+<p>본 강의에서는 아래처럼 컨디션 문자열을 parsing 하는 함수를 따로 떼어서 만들어서 사용하겠습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">split_condition &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  tmp &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(x, <span class="st">&quot;;&quot;</span>))
+  <span class="kw">names</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;sample_names&quot;</span>, <span class="st">&quot;replication&quot;</span>, <span class="st">&quot;drugname&quot;</span>, <span class="st">&quot;concentration&quot;</span>)
+  <span class="kw">return</span>(tmp)
+}
+
+multiple_plate_excel_reader2 &lt;-<span class="st"> </span><span class="cf">function</span>(design_file_name, data_file_name){
+  ### 
+  ### ... 
+  ###
+  tmpcond &lt;-<span class="st"> </span><span class="kw">sapply</span>(tmp_final_data<span class="op">$</span>well_conditions, split_condition)
+  ### 
+  ### ...
+  ###
+}</code></pre></div>
+<p>마지막으로 design excel 파일의 sheet 를 지정하는 코드는 다음과 같이 sheet4design 이라는 파라메터를 추가하고 그 아래 read_excel 함수에서 이 값을 사용하여 sheet를 지정하는 것으로 바꿀 수 있습니다. 업데이트된 파일은 <a href="https://github.com/greendaygh/Rprog2019/blob/master/read_plate.R">여기</a> 에서 보실 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiple_plate_excel_reader2 &lt;-<span class="st"> </span><span class="cf">function</span>(design_file_name, data_file_name, sheet4design){
+  <span class="kw">require</span>(readxl)
+  
+  ## read excel files
+  mydesign &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(design_file_name, <span class="dt">sheet=</span>sheet4design, 
+                                       <span class="dt">range=</span><span class="st">&quot;A1:L8&quot;</span>, <span class="dt">skip =</span> <span class="dv">0</span>, <span class="dt">col_names=</span>F))
+  mydata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">read_excel</span>(data_file_name, <span class="dt">sheet=</span><span class="dv">1</span>))
+  ## ...
+  ## ...</code></pre></div>
+</div>
+<div id="read-data" class="section level2">
+<h2><span class="header-section-number">7.3</span> Read data</h2>
+<p>이제 만들어진 함수를 이용하여 몇 개 파일의 데이터를 읽어보도록 하겠습니다. 총 4개의 실험 파일이 있으며 각 실험 데이터에 대한 조건 정보는 exp_design2.xlsx 파일의 네 개의 sheet에 명시되어 있습니다. 간단히 6개의 세포와 1종류의 약품처리 그리고 11개의 농도 조건과 각 샘플별 반복이 4개 입니다. 아래 4개 파일은 모두 동일한 반복 데이터라고 볼 수 있겠습니다. 이제 우리가 만든 함수의 파라메터에 맞게 값을 입력하고 읽어들이면 mydata1 ~ mydata4 까지 우리가 원하는 포맷의 데이터가 들어가게 되고 rbind 함수로 각각의 데이터를 하나의 오브젝트 (data.frame)로 저장할 있습니다. 함수를 만들지 않았을 경우 각 엑셀 파일마다 우리가 원하는 포맷으로 만들어 주기위한 복잡하고 반복적인 코드를 실행해야 하는 것과 비교하면 훨씬 간단한 작업인 것이고 이러한 재사용성이 함수를 만드는 이유 중 하나가 됩니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;read_plate.R&quot;</span>)
+
+design_file_name &lt;-<span class="st"> &quot;exp_design2.xlsx&quot;</span>
+data_file_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;20171012-phenol-1.xls&quot;</span>, 
+                     <span class="st">&quot;20171012-phenol-2.xls&quot;</span>, 
+                     <span class="st">&quot;20171227-phenol-1.xls&quot;</span>, 
+                     <span class="st">&quot;20171227-phenol-2.xls&quot;</span>)
+
+mydata1 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">1</span>], <span class="dt">sheet4design=</span><span class="dv">1</span>)
+mydata2 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">2</span>], <span class="dt">sheet4design=</span><span class="dv">2</span>)
+mydata3 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">3</span>], <span class="dt">sheet4design=</span><span class="dv">3</span>)
+mydata4 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">4</span>], <span class="dt">sheet4design=</span><span class="dv">4</span>)
+
+mydata &lt;-<span class="st"> </span><span class="kw">rbind</span>(mydata1, mydata2, mydata3, mydata4)
+<span class="kw">dim</span>(mydata1)</code></pre></div>
+<pre><code>## [1] 70  7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(mydata)</code></pre></div>
+<pre><code>## [1] 308   7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mydata)</code></pre></div>
+<pre><code>##   well_names        OD    GFP sample_names replication drugname
+## 1        G02 0.9042823 124002            1           1   phenol
+## 2        F02 0.9368631 127999            1           1   phenol
+## 3        E02 0.9228352  44070            1           1   phenol
+## 4        D02 0.8994368   4280            1           1   phenol
+## 5        C02 0.9145258   3928            1           1   phenol
+## 6        B02 0.9241626   3882            1           1   phenol
+##   concentration
+## 1         0e+00
+## 2         5e-02
+## 3         5e-01
+## 4         5e+00
+## 5         5e+01
+## 6         5e+02</code></pre>
+</div>
+<div id="ggplot--barplot-" class="section level2">
+<h2><span class="header-section-number">7.4</span> ggplot 이용 barplot 그리기</h2>
+<p>데이터 분석에서 데이터를 눈으로 확인하는 것은 중요합니다. 가능하면 raw 데이터를 보면서 크기 비교나 분포를 대략적으로 예측한다면 tool을 사용해서 나오는 결과를 가늠하는 척도가 될 수도 있습니다. 그러나 우리 데이터는 6개의 세포와 11개의 농도 4번의 반복으로 약 308 개의 샘플을 갖는 비교적 큰 데이터 입니다. 이럴 경우 눈으로 확인하는 것은 한계가 있으므로 대부분 그래프나 도표를 그려서 데이터의 분포를 확인하게 됩니다. 농도 포인트가 11개 이므로 각 농도 포인트별로 6개 샘플들의 값의 분포가 어떻게 되어있는지를 나타내는 그림을 그리면 좋을 듯 하므로 ggplot을 이용하여 barplot을 그려보도록 하겠습니다.</p>
+<p>ggplot은 수업시간에 말씀 드린바와 같이 문법이 있습니다. 간단히 다음과 같은 순서 입니다. 각 요소들은 레이어로 볼 수 있고 각 레이어는 <code>+</code> 기호로 줄을 바꿔가며 명시해 주면 되겠습니다.</p>
+<ul>
+<li>데이터 지정 (ggplot)</li>
+<li>색상, 크기, x축의 값, y축의 값 등 심미적 요소 지정 (aes)</li>
+<li>점, 선, 면 등 기하학적 요소 지정 (geoms)</li>
+<li>그릴 통계량 지정 (stats)</li>
+<li>테마, 스케일 지정</li>
+</ul>
+<p>아래 ggplot2를 로딩후 ggplot을 실행할 경우 데이터와 x, y 축만 지정한 상태로 어떤 그래프 (히스토그램인지, 산포도인지 등)를 그릴지 명시되어 있지 않아서 아무것도 그리지 않은 상태의 빈 켄버스만 그려지게 됩니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+
+<span class="kw">ggplot</span>(<span class="dt">data=</span>mydata, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>GFP))</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><code>+</code> 로 레이어를 추가하면서 geom_bar() 함수로 막대그래프를 그린다고 명시를 하면 되지만 geom_bar의 기본 stat은 count로 mydata의 GFP 즉 y 값은 count 데이터가 아니므로 에러를 보여줍니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mydata, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>GFP)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p>따라서 stat을 “identity”로 명시하고 그릴 경우 정상적으로 barplot이 그려지게 됩니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mydata, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>GFP)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p>위 그림은 반복이나 농도 등을 고려하지 않고 모두 한 위치 (예를 들어 1번 샘플의 반복 및 다른 농도 값들 모두 첫 번째 위치)에 그려지게 됩니다. 따라서 아래와 같이 각 농도를 다른 색으로 채우고 <code>fill=concentration</code>, 위치도 다르게 <code>&quot;position=dodge&quot;</code> 그려줄 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mydata, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>GFP, <span class="dt">fill=</span>concentration)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
+<p>그러나 색은 다른 색으로 보이나 위치는 변경되지 않았습니다. 이는 concentration이라는 변수에 저장된 값들이 numeric 으로 연속형이라 나란히 막대그래프를 위치시킬 수 없기 때문입니다. 이 때는 concentration을 factor 형으로 변환한 후 그리면 됩니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata2 &lt;-<span class="st"> </span>mydata
+mydata2<span class="op">$</span>concentration &lt;-<span class="st"> </span><span class="kw">as.factor</span>(mydata2<span class="op">$</span>concentration)
+
+<span class="kw">ggplot</span>(<span class="dt">data=</span>mydata2, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>GFP, <span class="dt">fill=</span>concentration)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
+<p>이제 샘플별로 농도별로 값을 한 눈에 볼 수 있습니다. 아래처럼 <code>scale_fill_manual(values = heat.colors(11))</code>를 이용해서 bar의 색을 바꾸거나</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mydata2, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>GFP, <span class="dt">fill=</span>concentration)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">heat.colors</span>(<span class="dv">11</span>))</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p><code>color=&quot;black&quot;</code> 으로 태두리 색상도 바꿀 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mydata2, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>GFP, <span class="dt">fill=</span>concentration)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">heat.colors</span>(<span class="dv">11</span>))</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p>그런데 위 그림에 보시면 여전히 한 위치에 다른 그래프가 여러개 그려져 있는 것을 확인하실 수 있고 이는 반복 실험 데이터로서 4개의 반복이 같은 위치에 그려지고 있는 것 입니다. 이럴 경우 보통 평균을 구해서 bar를 그리고 4개의 standard deviation이나 standard error를 구한 후 error를 표시히 주면 됩니다. 그런데 현재 mydata의 값들에서 샘플별로 농도별로 묶은 후 각 4개의 값에 대한 평균과 표준편차를 구하는 일은 일반적인 툴의 경우 번거롭고 시간이 걸리는 작업일 수 있습니다. 다음 시간에는 dplyr 패키지를 사용하여 이러한 평균과 분산을 빠르게 구하고 ggplot을 이용해서 barplot의 error bar 를 표현하는 방법을 알아보도록 하겠습니다. 이 외에도 다른 ggplot의 기능을 사용한 여러 그래프를 그리는 실습을 하도록 하겠습니다.</p>
+
+</div>
 </div>
             </section>
 

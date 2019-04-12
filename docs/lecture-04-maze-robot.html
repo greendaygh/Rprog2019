@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-04-11">
+<meta name="date" content="2019-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,7 +141,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.7" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader--"><i class="fa fa-check"></i><b>6.7</b> Multiplate reader 기능 구현</a></li>
 <li class="chapter" data-level="6.8" data-path="lecture-05-multiple-plate-reader-file.html"><a href="lecture-05-multiple-plate-reader-file.html#multiplate-reader-function-"><i class="fa fa-check"></i><b>6.8</b> Multiplate reader function 만들기</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html"><i class="fa fa-check"></i><b>7</b> Lecture 06 - Multiple plate reader / ggplot</a></li>
+<li class="chapter" data-level="7" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html"><i class="fa fa-check"></i><b>7</b> Lecture 06 - Multiple plate reader / ggplot</a><ul>
+<li class="chapter" data-level="7.1" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#multiple_plate_excel_reader--"><i class="fa fa-check"></i><b>7.1</b> multiple_plate_excel_reader 함수 만들기</a></li>
+<li class="chapter" data-level="7.2" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#multiple_plate_excel_reader2--"><i class="fa fa-check"></i><b>7.2</b> multiple_plate_excel_reader2 함수 업데이트</a></li>
+<li class="chapter" data-level="7.3" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#read-data"><i class="fa fa-check"></i><b>7.3</b> Read data</a></li>
+<li class="chapter" data-level="7.4" data-path="lecture-06-multiple-plate-reader-ggplot.html"><a href="lecture-06-multiple-plate-reader-ggplot.html#ggplot--barplot-"><i class="fa fa-check"></i><b>7.4</b> ggplot 이용 barplot 그리기</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -257,11 +262,11 @@ maze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
 ## [2,]    1    0    0    0    0    0    0    1
-## [3,]    1    0    0    0    1    0    0    1
-## [4,]    1    0    0    0    0    1    0    1
-## [5,]    1    0    0    0    0    0    0    1
-## [6,]    1    0    0    1    0    0    1    1
-## [7,]    1    0    0    0    0    0    0    1
+## [3,]    1    0    0    0    0    0    1    1
+## [4,]    1    0    1    1    1    0    0    1
+## [5,]    1    0    0    0    0    0    1    1
+## [6,]    1    0    0    1    0    0    0    1
+## [7,]    1    0    0    0    1    0    1    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 <p>이제 위 코드를 활용해서 maze matrix 맵을 만드는 함수인 generate_maze 를 작성해 봅니다. 입력 파라메터는 n 하나로 가로 또는 세로의 (정사각형) 갯수를 의미합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_maze &lt;-<span class="st"> </span><span class="cf">function</span>(n){
@@ -279,12 +284,12 @@ mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span
 mymaze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    0    0    0    1
+## [2,]    1    1    0    0    0    0    0    1
 ## [3,]    1    0    0    0    0    0    0    1
-## [4,]    1    0    0    1    0    0    0    1
-## [5,]    1    1    0    0    0    1    0    1
+## [4,]    1    1    0    0    0    0    0    1
+## [5,]    1    0    0    0    0    0    0    1
 ## [6,]    1    0    0    0    0    0    0    1
-## [7,]    1    0    0    0    0    1    0    1
+## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 </div>
 <div id="draw-blocks-and-walls" class="section level2">
