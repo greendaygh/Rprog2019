@@ -7,12 +7,19 @@ output: html_document
 
 # Lecture 07 - ggplot / data transformation
 
-실습용 엑셀파일 중 지난시간 오류가 있었던 design excel 파일 다시 다운로드 받아 주세요
+지난 시간 실습용 파일들 중 일부가 업데이트 되었습니다. 다시 다운로드 받아 주세요 
+
 [design excel file 2](https://github.com/greendaygh/Rprog2019/blob/master/exp_design2.xlsx)  
+[data excel file 1](https://github.com/greendaygh/Rprog2019/blob/master/20171012-phenol-1.xls)  
+[data excel file 2](https://github.com/greendaygh/Rprog2019/blob/master/20171012-phenol-2.xls)  
+[data excel file 3](https://github.com/greendaygh/Rprog2019/blob/master/20171227-phenol-1.xls)  
+[data excel file 4](https://github.com/greendaygh/Rprog2019/blob/master/20171227-phenol-2.xls)  
+[R function for plate read](https://github.com/greendaygh/Rprog2019/blob/master/read_plate.R)  
 
-수업 전 다음 패키지 설치가 필요합니다. 인터넷 연결된 상태에서 R studio 콘솔창에 다음을 입력하세요
 
-```{r}
+수업 전 다음 패키지 설치가 필요합니다. 인터넷 연결된 상태에서 Rstudio 콘솔창에 다음을 입력하세요
+
+```{r eval=FALSE}
 install.packages("ggplot2")
 install.packages("dplyr")
 ```
