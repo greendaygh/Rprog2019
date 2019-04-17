@@ -1,0 +1,25 @@
+---
+title: "Read plate reader excel files"
+author: "Haseong"
+date: "2019년 4월 17일"
+output: html_document
+---
+
+# Lecture 07 - ggplot / data transformation
+
+실습용 엑셀파일 중 지난시간 오류가 있었던 design excel 파일 다시 다운로드 받아 주세요
+[design excel file 2](https://github.com/greendaygh/Rprog2019/blob/master/exp_design2.xlsx)  
+
+수업 전 다음 패키지 설치가 필요합니다. 인터넷 연결된 상태에서 R studio 콘솔창에 다음을 입력하세요
+
+```{r}
+install.packages("ggplot2")
+install.packages("dplyr")
+```
+
+강의 노트 (수업 후 업데이트 예정)
+[Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/07-Rprog.pdf)  
+
+
+
+
