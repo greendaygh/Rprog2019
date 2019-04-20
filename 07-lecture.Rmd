@@ -24,8 +24,13 @@ install.packages("ggplot2")
 install.packages("dplyr")
 ```
 
-강의 노트 (수업 후 업데이트 예정)
+강의 노트 (강의 자료 업데이트가 늦었습니다)
 [Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/07-Rprog.pdf)  
+
+
+
+
+
 
 
 
