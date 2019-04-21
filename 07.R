@@ -161,6 +161,11 @@ cos(sin(pi))
 iris %>% head(10)
 iris %>% str
 
+round(pi, digits=6)
+6 %>% round(pi, digits=.)
+
+
+
 
 x <- 1:5
 paste("1", letters[x], sep="")
@@ -177,10 +182,13 @@ colMeans(df)
 
 
 
+
+iris %>% head(10)
+iris %>% str
+
 iris_split <- split(iris, iris$Species)
 iris_means <- lapply(iris_split, function(x){colMeans(x[,1:4])})
 iris_means_df <- data.frame(iris_means)
-
 
 barplot(iris_means_df)
 iris_means_df_sepal <- as.matrix(iris_means_df[1:2,])
@@ -188,6 +196,8 @@ barplot(iris_means_df_sepal)
 barplot(iris_means_df_sepal, beside = T)
 ?barplot
 barplot(iris_means_df_sepal, beside = T, legend.text=rownames(iris_means_df_sepal))
+
+
 
 iris %>% 
   group_by(Species) %>% 
