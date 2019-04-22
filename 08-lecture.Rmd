@@ -1,0 +1,10 @@
+---
+title: "08"
+author: "Haseong"
+date: "2019년 4월 24일"
+output: html_document
+---
+
+# Lecture 08 - ggplot / data transformation
+
+4월 24일 수요일 강의는 연구동 중회의실에서 진행하겠습니다. 시간은 오후 1시~4시로 같습니다. 

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>[2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
+  <title>9 Lecture 08 - ggplot / data transformation | [2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
   <meta name="description" content="2019년 UST 강의 R 프로그래밍 웹사이트">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="[2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta property="og:title" content="9 Lecture 08 - ggplot / data transformation | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="https://greendaygh.github.io/Rprog2019/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="[2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta name="twitter:title" content="9 Lecture 08 - ggplot / data transformation | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   
   <meta name="twitter:description" content="2019년 UST 강의 R 프로그래밍 웹사이트" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
+<link rel="prev" href="lecture-07-ggplot-data-transformation.html">
 
-<link rel="next" href="lecture-01-r-introduction.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -173,84 +173,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">[2019 UST 일반강의] R 프로그래밍과 데이터 분석</h1>
-<p class="author"><em>Haseong Kim</em></p>
-<p class="date"><em>2019-04-22</em></p>
-</div>
-<div id="lecture-" class="section level1">
-<h1><span class="header-section-number">1</span> Lecture 개요</h1>
-<ul>
-<li>장소: 한국생명공학연구원 연구동 세미나실 1213호 (매주수요일 13:00~16:00)</li>
-<li>강사: 한국생명공학연구원 바이오합성연구센터 김하성</li>
-<li>연락처: 042-860-4372, <a href="mailto:haseong@kribb.re.kr">haseong@kribb.re.kr</a> (생명연 연구동 1143)</li>
-<li>homepage: <a href="https://greendaygh.github.io/Rprog2019/" class="uri">https://greendaygh.github.io/Rprog2019/</a> <a href="https://github.com/greendaygh/Rprog2019" class="uri">https://github.com/greendaygh/Rprog2019</a></li>
-</ul>
-<div id="goal--" class="section level2">
-<h2><span class="header-section-number">1.1</span> Goal 강의 목표</h2>
-<ul>
-<li>이공계열 대학원생이 통계 분석용 범용 프로그램 언어인 R의 사용법을 익히고 이를 이용한 프로그래밍 기술의 습득을 주요 목적으로 함. 생물 데이터 위주의 분석 예제를 통해 R의 활용 기술을 배움.</li>
-<li>이 강좌는 오프라인 강의를 기본으로 함. R 사용에 대한 기본 개념과 프로그래밍을 중심으로 필요시 기초 통계지식 강의. 실습 데이터로는 주로 생물데이터를 사용함. 모든 강의 시간 실습을 위한 개인 노트북 지참 필수. 강의 자료는 pdf로 제작하여 수업 진행과 관련된 정보와 함께 웹사이트를 통해 배포됨. 상황에 따라 강의 일정이 조정될 수 있음.</li>
-</ul>
-</div>
-<div id="references--" class="section level2">
-<h2><span class="header-section-number">1.2</span> References 참고 자료</h2>
-<ul>
-<li>R for Data Science (<a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>, <a href="https://github.com/hadley" class="uri">https://github.com/hadley</a>)</li>
-<li>Using R for Introductory Statistics by John Verzani</li>
-<li>Free version of 1st Edition
-<ul>
-<li><a href="https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf" class="uri">https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf</a></li>
-<li><a href="http://cbb.sjtu.edu.cn/~mywu/bi217/usingR.pdf" class="uri">http://cbb.sjtu.edu.cn/~mywu/bi217/usingR.pdf</a></li>
-</ul></li>
-<li>Second edition
-<ul>
-<li><a href="https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731" class="uri">https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731</a></li>
-</ul></li>
-<li>Bioinformatics Data Skills by Vince Buffalo</li>
-<li><a href="https://resources.rstudio.com/" class="uri">https://resources.rstudio.com/</a></li>
-<li>일반통계학 (영지문화사, 김우철 외)</li>
-</ul>
-</div>
-<div id="evaluation---" class="section level2">
-<h2><span class="header-section-number">1.3</span> Evaluation 평가 세부 항목</h2>
-<ul>
-<li>출석 50% / 과제 50% / 수업참여 +alpha</li>
-</ul>
-</div>
-<div id="schedule--" class="section level2">
-<h2><span class="header-section-number">1.4</span> Schedule 강의 계획</h2>
-<ul>
-<li>Introduction and installation of R/Rstudio</li>
-<li>R language basics</li>
-<li>Data manipulation</li>
-<li>Visualizing data in R</li>
-<li>Shiny for interactive applications in R</li>
-<li>Workflows with R scripts</li>
-<li>Working with Range Data</li>
-<li>Sequence analysis</li>
-<li>Clustering and significance testing with genomic data</li>
-</ul>
-</div>
-<div id="lecture-note--" class="section level2">
-<h2><span class="header-section-number">1.5</span> Lecture note 강의 자료</h2>
-<ul>
-<li><p>1 (2019.03.06) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/01-Rprog.pdf">Introduction and installation of R/Rstudio, Basics of variables and functions</a></p></li>
-<li><p>2 (2019.03.13) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/02-Rprog.pdf">R Basics - Objects (vector, factor, matrix) and functions</a> 다음 시간 readxl, Biostrings 두 패키지 미리 설치한 후 강의 참석 부탁드립니다.</p></li>
-<li><p>3 (2019.03.20) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/03-Rprog.pdf">R Basics II - file I/O</a> 강의가 좀 빠르게 진행된 듯 합니다. 기본으로 제공되는 R 기능을 사용하기 보다는 함수나 프로그래밍 코딩 원리를 이해하기 위해 직접 함수를 만들어보는 연습을 하고 있으니 참고 하시고 다음 시간 전에 이번 시간 코드 복습하시고 오시면 도움이 되실 것 같습니다.</p></li>
-<li><p>4 (2019.03.27) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/04-Rprog.pdf">R programming example - Maze Robot</a></p></li>
-<li><p>5 (2019.04.03) - <a href="https://github.com/greendaygh/2019-R-programming/blob/master/05-Rprog.pdf">R programming example - Plate reader</a></p></li>
-</ul>
+<div id="lecture-08---ggplot-data-transformation" class="section level1">
+<h1><span class="header-section-number">9</span> Lecture 08 - ggplot / data transformation</h1>
+<p>4월 24일 수요일 강의는 연구동 중회의실에서 진행하겠습니다. 시간은 오후 1시~4시로 같습니다.</p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="lecture-07-ggplot-data-transformation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="lecture-01-r-introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

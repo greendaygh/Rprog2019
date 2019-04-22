@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="lecture-06-multiple-plate-reader-ggplot.html">
-
+<link rel="next" href="lecture-08-ggplot-data-transformation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -155,6 +155,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.5" data-path="lecture-07-ggplot-data-transformation.html"><a href="lecture-07-ggplot-data-transformation.html#ddplyr---pipe-operator"><i class="fa fa-check"></i><b>8.5</b> ddplyr - pipe operator</a></li>
 <li class="chapter" data-level="8.6" data-path="lecture-07-ggplot-data-transformation.html"><a href="lecture-07-ggplot-data-transformation.html#dplyr---important-functions"><i class="fa fa-check"></i><b>8.6</b> dplyr - Important functions</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="lecture-08-ggplot-data-transformation.html"><a href="lecture-08-ggplot-data-transformation.html"><i class="fa fa-check"></i><b>9</b> Lecture 08 - ggplot / data transformation</a></li>
 </ul>
 
       </nav>
@@ -212,7 +213,7 @@ y &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">s
 </div>
 <div id="bar-graph-with-ggplot" class="section level2">
 <h2><span class="header-section-number">8.2</span> Bar graph with ggplot</h2>
-<p>이제 앞서와 같은 4가지 데이터들을 ggplot을 이용하여 차례로 bar graph를 그려 보겠습니다. ggplot의 사용은 강의 시간 설명을 참고하시고 간단히 ggplot 함수로 먼저 데이터와 aes로 x축 y축 등을 명시하고 <code>+</code> 오퍼레이터를 사용하여 필요한 레이어를 차례로 추가하면서 그래프를 그릴 수 있습니다.</p>
+<p>이제 앞서와 같은 4가지 데이터들을 ggplot을 이용하여 차례로 bar graph를 그려 보겠습니다. ggplot의 사용은 강의 시간 설명을 참고하시고 간단히 ggplot 함수로 먼저 데이터와 aes로 (미학요소 또는 미적요소) x축 y축 등을 명시하고 <code>+</code> 오퍼레이터를 사용하여 필요한 레이어를 차례로 추가하면서 그래프를 그릴 수 있습니다.</p>
 <p>x가 연속형일 경우 아래와 같이 histogram을 그려 줍니다. continuous 일 경우 stat은 bin으로 하면 특정 범위 안에 있는 값들의 빈도수를 계산하여 히스토그램을 그려줍니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1=</span><span class="kw">rnorm</span>(<span class="dv">100</span>))
 <span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x=</span>x1)) <span class="op">+</span>
@@ -373,7 +374,7 @@ x <span class="op">%&gt;%</span><span class="st"> </span>colMeans <span class="o
 ##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <p>데이터를 확인한 후 분석을 시작합니다. 분석은 간단히 각 iris 품종별로 꽃과 꽃받침의 평균을 비교하는 것으로 합니다.</p>
 <p>dplyr의 전신이라 할 수 있는 plyr 패키지는 다음과 같이 설명이 되어 있습니다. <em>A set of tools for a common set of problems: you need to split up a big data structure into homogeneous pieces, apply a function to each piece and then combine all the results back together.</em> 즉 split-apply-combine 세 가지 동작을 쉽게 할 수 있도록 만들어 놓은 툴 입니다. R이 다른 언어에 비해 데이터 분석에서 주목을 받는 이유로 split, apply 등의 행렬 연산 함수가 발달한 것을 내세우는데 dplyr은 이들보다 더 편리하게 데이터 조작을 할 수 있도록 만들어 놓은 것 입니다.</p>
-<p>이제 split, apply, combine을 활용하여 평균을 구하는 코드와 dplyr 패키지를 사용하여 만든 코드를 비교해 보도록 하겠습니다.</p>
+<p>이제 split, apply, combine을 활용하여 평균을 구하는 코드와 dplyr 패키지를 사용하여 만든 코드를 비교해 보도록 하겠습니다. split은 factor형 변수인 Species를 기준으로 iris 데이터를 나누어 주는 역할을 하며 lapply는 list 형 데이터인 iris_split을 각 리스트의 각각의 원소들에 대해서 function(x) 를 수행하는 역할을 합니다. 마지막 data.frame으로 최종 경로를 merge 합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_split &lt;-<span class="st"> </span><span class="kw">split</span>(iris, iris<span class="op">$</span>Species)
 iris_means &lt;-<span class="st"> </span><span class="kw">lapply</span>(iris_split, <span class="cf">function</span>(x){<span class="kw">colMeans</span>(x[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])})
 iris_means_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(iris_means)
@@ -383,7 +384,7 @@ iris_means_df</code></pre></div>
 ## Sepal.Width   3.428      2.770     2.974
 ## Petal.Length  1.462      4.260     5.552
 ## Petal.Width   0.246      1.326     2.026</code></pre>
-<p>위 코드에서 따로 각 스텝별로 변수에 저장하지 않고 마지막 iris_means_df 를 구한다면 다음과 같이 됩니다. 한눈에 코드가 들어오지 않고 이렇게 중첩해서 함수를 사용하는 습관은 어떤 프로그래밍 언어에서도 권장하지 않습니다.</p>
+<p>위 코드를 한 줄로 사용하여 최종 iris_means_df 데이터를 를 구한다면 다음과 같이 됩니다. 한눈에 코드가 들어오지 않고 이렇게 중첩해서 함수를 사용하는 습관은 어떤 프로그래밍 언어에서도 권장하지 않습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_means_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">lapply</span>(<span class="kw">split</span>(iris, iris<span class="op">$</span>Species), <span class="cf">function</span>(x){<span class="kw">colMeans</span>(x[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])}))</code></pre></div>
 <p>아래는 dplyr 패키지를 사용한 코드 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_means_df2 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(mean)
@@ -395,10 +396,18 @@ iris_means_df2</code></pre></div>
 ## 2 versicolor         5.94        2.77         4.26       1.33 
 ## 3 virginica          6.59        2.97         5.55       2.03</code></pre>
 <p>위에서 보듯 dplyr 패키지를 사용할 경우 그 결과는 같으나 코드의 가독성과 효율성면에서 장점을 보여줍니다. 여기서 group_by, summarise_all 함수 등의 사용법은 help 페이지를 참고해 주세요. 간단히 iris 데이터를 받아서 Species에 명시된 그룹으로 나누고 mean 함수를 모든 컬럼에 대해서 사용하라는 의미 입니다.</p>
-<p>이제 ggplot을 이용하여 각 평균에 대한 barplot을 그려보도록 하겠습니다. 지난 예제와는 달리 ggplot에서는 data만 명시해 주고 geom_bar에 aes와 stat을 모두 사용한 것이 다릅니다.</p>
+<p>이제 ggplot을 이용하여 각 평균에 대한 barplot을 그려보도록 하겠습니다. 지난 예제와는 달리 ggplot에서는 data만 명시해 주고 geom_bar에 aes와 stat을 모두 사용한 것이 다릅니다. ggplot 구문에서 지정해주는 aes 등의 옵션은 하위 geom_xxx 레이어들에 모두 적용이 되고 각 geom_xxx 레이어에서 지정해주는 aes는 해당 레이어에서만 효과를 나타냅니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris_means_df2) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Species, <span class="dt">y=</span>Sepal.Length), <span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+<p>마지막으로 위 dplyr 패키지를 ggplot 과 함께 사용할 수도 있습니다. 보통은 앞서와 같이 결과를 특정 변수에 저장한 후 도표 등을 그리지만 다음과 같이 <code>%&gt;%</code> 를 사용하여 plot 까지 함께 볼 수도 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise_all</span>(mean) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Species, <span class="dt">y=</span>Sepal.Length), <span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) </code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
+<p>다음시간에는 dplyr 패키지를 이용하여 실제 예제 데이터의 평균과 표준편차를 구해보고 bar graph외 산포도, heatmap 등의 실습을 해 보도록 하겠습니다. 다음 시간 수업은 같은 시간 연구동 <strong>중회의실</strong> 입니다.</p>
 
 </div>
 </div>
@@ -407,8 +416,8 @@ iris_means_df2</code></pre></div>
           </div>
         </div>
       </div>
-<a href="lecture-06-multiple-plate-reader-ggplot.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="lecture-06-multiple-plate-reader-ggplot.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lecture-08-ggplot-data-transformation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
