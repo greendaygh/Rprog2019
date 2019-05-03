@@ -7,4 +7,9 @@ output: html_document
 
 # Lecture 08 - ggplot / data transformation using dplyr
 
-4월 24일 수요일 강의는 강사 사정으로 휴강하며 수업 내용은 추후 보강을 진행하도록 하겠습니다.
+4월 24일 수요일 강의는 강사 사정으로 휴강하였으며 5월 1일은 근로자의날로 5월 3일 보강을 진행하였습니다. 
+
+강의 노트 
+[Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/08-Rprog.pdf)  
+
+
