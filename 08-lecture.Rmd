@@ -1,10 +1,10 @@
 ---
 title: "08"
 author: "Haseong"
-date: "2019년 4월 24일"
+date: "2019년 5월 3일"
 output: html_document
 ---
 
-# Lecture 08 - ggplot / data transformation
+# Lecture 08 - ggplot / data transformation using dplyr
 
 4월 24일 수요일 강의는 강사 사정으로 휴강하며 수업 내용은 추후 보강을 진행하도록 하겠습니다.
