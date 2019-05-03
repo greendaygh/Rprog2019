@@ -13,3 +13,5 @@ output: html_document
 [Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/08-Rprog.pdf)  
 
 
+이번 시간에는 ggplot을 이용한 error bar를 구현하기 위하여 dplyr의 mutate, select, join 함수들 그리고 reshape2 패키지의 melt 함수에대하여 알아보기로 하겠습니다. 
+
