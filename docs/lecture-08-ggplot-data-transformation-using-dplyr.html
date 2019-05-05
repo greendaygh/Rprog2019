@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-05-03">
+<meta name="date" content="2019-05-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -155,7 +155,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.5" data-path="lecture-07-ggplot-data-transformation.html"><a href="lecture-07-ggplot-data-transformation.html#ddplyr---pipe-operator"><i class="fa fa-check"></i><b>8.5</b> ddplyr - pipe operator</a></li>
 <li class="chapter" data-level="8.6" data-path="lecture-07-ggplot-data-transformation.html"><a href="lecture-07-ggplot-data-transformation.html#dplyr---important-functions"><i class="fa fa-check"></i><b>8.6</b> dplyr - Important functions</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="lecture-08-ggplot-data-transformation-using-dplyr.html"><a href="lecture-08-ggplot-data-transformation-using-dplyr.html"><i class="fa fa-check"></i><b>9</b> Lecture 08 - ggplot / data transformation using dplyr</a></li>
+<li class="chapter" data-level="9" data-path="lecture-08-ggplot-data-transformation-using-dplyr.html"><a href="lecture-08-ggplot-data-transformation-using-dplyr.html"><i class="fa fa-check"></i><b>9</b> Lecture 08 - ggplot / data transformation using dplyr</a><ul>
+<li class="chapter" data-level="9.1" data-path="lecture-08-ggplot-data-transformation-using-dplyr.html"><a href="lecture-08-ggplot-data-transformation-using-dplyr.html#dplyr-mutate-select-"><i class="fa fa-check"></i><b>9.1</b> dplyr mutate / select 함수</a></li>
+<li class="chapter" data-level="9.2" data-path="lecture-08-ggplot-data-transformation-using-dplyr.html"><a href="lecture-08-ggplot-data-transformation-using-dplyr.html#ggplot2----bar-graph--"><i class="fa fa-check"></i><b>9.2</b> ggplot2를 이용한 두 개의 bar graph 겹쳐 그리기</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -177,8 +180,77 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">9</span> Lecture 08 - ggplot / data transformation using dplyr</h1>
 <p>4월 24일 수요일 강의는 강사 사정으로 휴강하였으며 5월 1일은 근로자의날로 5월 3일 보강을 진행하였습니다.</p>
 <p>강의 노트 <a href="https://github.com/greendaygh/2019-R-programming/blob/master/08-Rprog.pdf">Lecture note</a></p>
-<p>이번 시간에는 ggplot을 이용한 error bar를 구현하기 위하여 dplyr의 mutate, select, join 함수들 그리고 reshape2 패키지의 melt 함수에대하여 알아보기로 하겠습니다.</p>
+<p>이번 시간에는 ggplot을 이용한 error bar를 구현하기 위하여 dplyr의 mutate, select, join 함수들 그리고 reshape2 패키지의 melt 함수에대하여 알아보기로 하겠습니다. 수업 전 다음 패키지 설치가 필요합니다. 이미 설치되어 있다면 생략할 수 있습니다. 인터넷 연결된 상태에서 Rstudio 콘솔창에 다음을 입력하세요.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;reshape2&quot;</span>)</code></pre></div>
+<div id="dplyr-mutate-select-" class="section level2">
+<h2><span class="header-section-number">9.1</span> dplyr mutate / select 함수</h2>
+<p>dplyr패키지의 mutate 함수는 데이터프레임의 특정 변수 값들을 변환 후 새로운 변수를 만들어 추가해 주는 기능을 합니다. 다음 df 데이터는 x, y 두 변수로 이루어져 있으며 각 변수를 표준화한 변수 std_x와 std_y를 생성하고 이 변수들로 새로운 데이터프레임 std_df를 만들어 봅니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">rnorm</span>(<span class="dv">10</span>)<span class="op">+</span><span class="dv">1</span>, <span class="dt">y=</span><span class="kw">rnorm</span>(<span class="dv">10</span>)<span class="op">+</span><span class="dv">3</span>)
+std_x &lt;-<span class="st"> </span>(df<span class="op">$</span>x<span class="op">-</span><span class="kw">mean</span>(df<span class="op">$</span>x))<span class="op">/</span><span class="kw">sd</span>(df<span class="op">$</span>x)
+std_y &lt;-<span class="st"> </span>(df<span class="op">$</span>y<span class="op">-</span><span class="kw">mean</span>(df<span class="op">$</span>y))<span class="op">/</span><span class="kw">sd</span>(df<span class="op">$</span>y)
+std_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(std_x, std_y)
+std_df</code></pre></div>
+<pre><code>##         std_x       std_y
+## 1   1.2319393 -1.49695075
+## 2   0.2985089  0.79669868
+## 3  -1.1570219  0.55365346
+## 4  -0.3009895  0.78585959
+## 5   0.6655317  0.85518970
+## 6  -0.9383345 -1.27113884
+## 7  -1.2349377  0.97614961
+## 8   0.6653246 -1.36530635
+## 9  -0.7050466  0.18893443
+## 10  1.4750258 -0.02308953</code></pre>
+<p>위와같은 코드를 사용해도 되겠지만 ‘’’df$’’’ 의 반복적인 사용이 불편합니다. data.frame 만들어주는 라인도 std_x와 std_y 같은 새로운 변수 오브젝트를 생성한 후 std_df를 만들어내므로 메모리적으로도 낭비가 있습니다. 이제 위 코드를 mutate 함수를 사용해서 만들어 봅니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(df, <span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y))</code></pre></div>
+<pre><code>##             x        y      std_x       std_y
+## 1  0.98170445 1.520065  1.2319393 -1.49695075
+## 2  0.62695458 3.311599  0.2985089  0.79669868
+## 3  0.07378065 3.121760 -1.1570219  0.55365346
+## 4  0.39911546 3.303133 -0.3009895  0.78585959
+## 5  0.76644147 3.357285  0.6655317  0.85518970
+## 6  0.15689275 1.696443 -0.9383345 -1.27113884
+## 7  0.04416880 3.451765 -1.2349377  0.97614961
+## 8  0.76636277 1.622890  0.6653246 -1.36530635
+## 9  0.24555372 2.836884 -0.7050466  0.18893443
+## 10 1.07408939 2.671275  1.4750258 -0.02308953</code></pre>
+<p>위와 같이 사용하면 std_x나 std_y 변수를 따로 만들지도 않고 data.frame으로 따로 묶지 않아도 새로운 변수를 추가해 줍니다. 그러나 우리가 목적한 std_df는 std_x와 std_y만을 필요로 하므로 아래와 같이 select 함수를 연동하면 됩니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmpdf &lt;-<span class="st"> </span><span class="kw">mutate</span>(df, <span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y))
+std_df &lt;-<span class="st"> </span><span class="kw">select</span>(tmpdf, std_x, std_y)
+std_df</code></pre></div>
+<pre><code>##         std_x       std_y
+## 1   1.2319393 -1.49695075
+## 2   0.2985089  0.79669868
+## 3  -1.1570219  0.55365346
+## 4  -0.3009895  0.78585959
+## 5   0.6655317  0.85518970
+## 6  -0.9383345 -1.27113884
+## 7  -1.2349377  0.97614961
+## 8   0.6653246 -1.36530635
+## 9  -0.7050466  0.18893443
+## 10  1.4750258 -0.02308953</code></pre>
+<p>위와 같은 코드가 일반적인 함수를 사용하는 방법입니다. 그런데 tmpdf라는 임의의 변수를 중간에 생성 후 std_df를 만드는 과정이 메모리 관리 측면에서는 비효율적입니다. 이 때 파이프오퍼레이터 <code>%&gt;%</code>를 이용하면 tmpdf 없이 바로 std_df를 만들어 쓸 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">std_df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(std_x, std_y)
+std_df</code></pre></div>
+<pre><code>##         std_x       std_y
+## 1   1.2319393 -1.49695075
+## 2   0.2985089  0.79669868
+## 3  -1.1570219  0.55365346
+## 4  -0.3009895  0.78585959
+## 5   0.6655317  0.85518970
+## 6  -0.9383345 -1.27113884
+## 7  -1.2349377  0.97614961
+## 8   0.6653246 -1.36530635
+## 9  -0.7050466  0.18893443
+## 10  1.4750258 -0.02308953</code></pre>
+<p>mutate와 select의 자세한 내용은 help 페이지를 참고하세요.</p>
+</div>
+<div id="ggplot2----bar-graph--" class="section level2">
+<h2><span class="header-section-number">9.2</span> ggplot2를 이용한 두 개의 bar graph 겹쳐 그리기</h2>
 
+</div>
 </div>
             </section>
 

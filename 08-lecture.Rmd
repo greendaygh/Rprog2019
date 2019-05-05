@@ -12,6 +12,65 @@ output: html_document
 강의 노트 
 [Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/08-Rprog.pdf)  
 
+이번 시간에는 ggplot을 이용한 error bar를 구현하기 위하여 dplyr의 mutate, select, join 함수들 그리고 reshape2 패키지의 melt 함수에대하여 알아보기로 하겠습니다. 수업 전 다음 패키지 설치가 필요합니다. 이미 설치되어 있다면 생략할 수 있습니다. 인터넷 연결된 상태에서 Rstudio 콘솔창에 다음을 입력하세요.
 
-이번 시간에는 ggplot을 이용한 error bar를 구현하기 위하여 dplyr의 mutate, select, join 함수들 그리고 reshape2 패키지의 melt 함수에대하여 알아보기로 하겠습니다. 
+```{r eval=FALSE}
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("reshape2")
+```
+
+
+## dplyr mutate / select 함수 
+
+dplyr패키지의 mutate 함수는 데이터프레임의 특정 변수 값들을 변환 후 새로운 변수를 만들어 추가해 주는 기능을 합니다. 다음 df 데이터는 x, y 두 변수로 이루어져 있으며 각 변수를 표준화한 변수 std_x와 std_y를 생성하고 이 변수들로 새로운 데이터프레임 std_df를 만들어 봅니다. 
+
+
+```{r}
+df <- data.frame(x=rnorm(10)+1, y=rnorm(10)+3)
+std_x <- (df$x-mean(df$x))/sd(df$x)
+std_y <- (df$y-mean(df$y))/sd(df$y)
+std_df <- data.frame(std_x, std_y)
+std_df
+```
+
+위와같은 코드를 사용해도 되겠지만 '''df$''' 의 반복적인 사용이 불편합니다. data.frame 만들어주는 라인도 std_x와 std_y 같은 새로운 변수 오브젝트를 생성한 후 std_df를 만들어내므로 메모리적으로도 낭비가 있습니다. 이제 위 코드를 mutate 함수를 사용해서 만들어 봅니다.
+
+```{r}
+mutate(df, std_x=(x-mean(x))/sd(x), std_y=(y-mean(y))/sd(y))
+```
+
+위와 같이 사용하면 std_x나 std_y 변수를 따로 만들지도 않고 data.frame으로 따로 묶지 않아도 새로운 변수를 추가해 줍니다. 그러나 우리가 목적한 std_df는 std_x와 std_y만을 필요로 하므로 아래와 같이 select 함수를 연동하면 됩니다. 
+
+
+```{r}
+tmpdf <- mutate(df, std_x=(x-mean(x))/sd(x), std_y=(y-mean(y))/sd(y))
+std_df <- select(tmpdf, std_x, std_y)
+std_df
+```
+
+위와 같은 코드가 일반적인 함수를 사용하는 방법입니다. 그런데 tmpdf라는 임의의 변수를 중간에 생성 후 std_df를 만드는 과정이 메모리 관리 측면에서는 비효율적입니다. 이 때 파이프오퍼레이터 ```%>%```를 이용하면 tmpdf 없이 바로 std_df를 만들어 쓸 수 있습니다. 
+
+```{r}
+std_df <- df %>% 
+  mutate(std_x=(x-mean(x))/sd(x), std_y=(y-mean(y))/sd(y)) %>% 
+  select(std_x, std_y)
+std_df
+```
+
+참고로 R은 한 line 별로 명령을 실행하는 스크립트 언어 입니다. 그러나 ```%>%```를 사용한 후 enter를 눌러 라인을 바꾸어도 두 라인으로 인식하지 않고 여전히 한 라인이 계속 이어지는 것으로 인식하여 라인을 실행하지 않습니다. 이는 괄호```(```를 열어준 후 ```)```로 닫기 전까지는 계속 한 라인으로 인식하는 것과 같습니다. R에서는 한 라인의 명령이 길어질 경우 위와 같은 조건에서 라인을 바꾸어 가독성을 높여주는 코드를 작성합니다. 실행하는 중으로  mutate와 select의 자세한 내용은 help 페이지를 참고하세요. 
+
+
+## ggplot2를 이용한 두 개의 bar graph 겹쳐 그리기 
+
+
+
+
+
+
+
+
+
+
+
 
