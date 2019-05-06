@@ -127,18 +127,22 @@ library(reshape2)
 
 
 tmp1 <- group_by(iris, Species) %>%  summarise_all(mean) %>% melt
+
 ggplot(tmp, aes(x=Species, y=value, fill=variable)) +
   geom_bar(stat="identity", position="dodge")
 
 
 tmp1 <- group_by(iris, Species) %>%  summarise_all(mean) %>% melt(value.name=c("mean"))
 tmp2 <- group_by(iris, Species) %>%  summarise_all(sd) %>% melt(value.name = c("sd"))
-tmp <- inner_join(tmp1, tmp2)
+iris_melt <- inner_join(tmp1, tmp2)
 
-ggplot(tmp, aes(x=Species, y=mean, fill=variable)) +
+ggplot(iris_melt, aes(x=Species, y=mean, fill=variable)) +
   geom_bar(stat="identity", position="dodge") +
   geom_errorbar(aes(min=mean-sd, max=mean+sd),
                 position="dodge")
+
+
+
 
 ##
 
