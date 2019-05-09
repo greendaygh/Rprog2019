@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-05-06">
+<meta name="date" content="2019-05-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="lecture-07-ggplot-data-transformation.html">
-
+<link rel="next" href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -161,6 +161,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.3" data-path="lecture-08-ggplot-data-transformation-using-dplyr.html"><a href="lecture-08-ggplot-data-transformation-using-dplyr.html#dplyr--iris-data-"><i class="fa fa-check"></i><b>9.3</b> dplyr 이용한 iris data 가공</a></li>
 <li class="chapter" data-level="9.4" data-path="lecture-08-ggplot-data-transformation-using-dplyr.html"><a href="lecture-08-ggplot-data-transformation-using-dplyr.html#ggplot--iris-data-------"><i class="fa fa-check"></i><b>9.4</b> ggplot을 이용한 iris data 평균 값 및 에러 비교 그래프 그리기</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><i class="fa fa-check"></i><b>10</b> Lecture 09 - ggplot / dlyr for 96well fluorescence data</a><ul>
+<li class="chapter" data-level="10.1" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#dplyr-functions"><i class="fa fa-check"></i><b>10.1</b> dplyr functions</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -198,46 +201,46 @@ std_x &lt;-<span class="st"> </span>(df<span class="op">$</span>x<span class="op
 std_y &lt;-<span class="st"> </span>(df<span class="op">$</span>y<span class="op">-</span><span class="kw">mean</span>(df<span class="op">$</span>y))<span class="op">/</span><span class="kw">sd</span>(df<span class="op">$</span>y)
 std_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(std_x, std_y)
 <span class="kw">head</span>(std_df)</code></pre></div>
-<pre><code>##         std_x      std_y
-## 1 -0.11337635 -1.7510538
-## 2 -0.35463741  1.2084732
-## 3 -0.08031896 -1.0494955
-## 4  0.46086599 -0.2034120
-## 5 -0.47155261  1.7131916
-## 6  1.96555880 -0.8296773</code></pre>
+<pre><code>##        std_x       std_y
+## 1 -2.5625927 -0.92272579
+## 2 -1.2774051 -0.68547737
+## 3  0.6115823  0.01510129
+## 4  0.7294949  0.40181016
+## 5 -0.9842250  0.73361638
+## 6 -0.2744944 -0.44045747</code></pre>
 <p>위와같은 코드를 사용해도 되겠지만 ‘’’df$’’’ 의 반복적인 사용이 불편합니다. data.frame 만들어주는 라인도 std_x와 std_y 같은 새로운 변수 오브젝트를 생성한 후 std_df를 만들어내므로 메모리적으로도 낭비가 있습니다. 이제 위 코드를 mutate 함수를 사용해서 만들어 봅니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmpdf &lt;-<span class="st"> </span><span class="kw">mutate</span>(df, <span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y)) 
 <span class="kw">head</span>(tmpdf)</code></pre></div>
-<pre><code>##           x        y       std_x      std_y
-## 1 0.8667390 1.310813 -0.11337635 -1.7510538
-## 2 0.6222082 4.111221 -0.35463741  1.2084732
-## 3 0.9002445 1.974652 -0.08031896 -1.0494955
-## 4 1.4487640 2.775246  0.46086599 -0.2034120
-## 5 0.5037085 4.588803 -0.47155261  1.7131916
-## 6 2.9738495 2.182652  1.96555880 -0.8296773</code></pre>
+<pre><code>##             x        y      std_x       std_y
+## 1 -1.32387105 1.937954 -2.5625927 -0.92272579
+## 2 -0.20482408 2.181211 -1.2774051 -0.68547737
+## 3  1.43996726 2.899536  0.6115823  0.01510129
+## 4  1.54263686 3.296040  0.7294949  0.40181016
+## 5  0.05045557 3.636251 -0.9842250  0.73361638
+## 6  0.66843683 2.432438 -0.2744944 -0.44045747</code></pre>
 <p>위와 같이 사용하면 std_x나 std_y 변수를 따로 만들지도 않고 data.frame으로 따로 묶지 않아도 새로운 변수를 추가해 줍니다. 그러나 우리가 목적한 std_df는 std_x와 std_y만을 필요로 하므로 아래와 같이 select 함수를 연동하면 됩니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmpdf &lt;-<span class="st"> </span><span class="kw">mutate</span>(df, <span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y))
 std_df &lt;-<span class="st"> </span><span class="kw">select</span>(tmpdf, std_x, std_y)
 <span class="kw">head</span>(std_df)</code></pre></div>
-<pre><code>##         std_x      std_y
-## 1 -0.11337635 -1.7510538
-## 2 -0.35463741  1.2084732
-## 3 -0.08031896 -1.0494955
-## 4  0.46086599 -0.2034120
-## 5 -0.47155261  1.7131916
-## 6  1.96555880 -0.8296773</code></pre>
+<pre><code>##        std_x       std_y
+## 1 -2.5625927 -0.92272579
+## 2 -1.2774051 -0.68547737
+## 3  0.6115823  0.01510129
+## 4  0.7294949  0.40181016
+## 5 -0.9842250  0.73361638
+## 6 -0.2744944 -0.44045747</code></pre>
 <p>위와 같은 코드가 일반적인 함수를 사용하는 방법입니다. 그런데 tmpdf라는 임의의 변수를 중간에 생성 후 std_df를 만드는 과정이 메모리 관리 측면에서는 비효율적입니다. 이 때 파이프오퍼레이터 <code>%&gt;%</code>를 이용하면 tmpdf 없이 바로 std_df를 만들어 쓸 수 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">std_df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(std_x, std_y)
 <span class="kw">head</span>(std_df)</code></pre></div>
-<pre><code>##         std_x      std_y
-## 1 -0.11337635 -1.7510538
-## 2 -0.35463741  1.2084732
-## 3 -0.08031896 -1.0494955
-## 4  0.46086599 -0.2034120
-## 5 -0.47155261  1.7131916
-## 6  1.96555880 -0.8296773</code></pre>
+<pre><code>##        std_x       std_y
+## 1 -2.5625927 -0.92272579
+## 2 -1.2774051 -0.68547737
+## 3  0.6115823  0.01510129
+## 4  0.7294949  0.40181016
+## 5 -0.9842250  0.73361638
+## 6 -0.2744944 -0.44045747</code></pre>
 <p>참고로 R은 한 line 별로 명령을 실행하는 스크립트 언어 입니다. 그러나 <code>%&gt;%</code>를 사용한 후 enter를 눌러 라인을 바꾸어도 두 라인으로 인식하지 않고 여전히 한 라인이 계속 이어지는 것으로 인식하여 라인을 실행하지 않습니다. 이는 괄호<code>(</code>를 열어준 후 <code>)</code>로 닫기 전까지는 계속 한 라인으로 인식하는 것과 같습니다. R에서는 한 라인의 명령이 길어질 경우 위와 같은 조건에서 라인을 바꾸어 가독성을 높여주는 코드를 작성합니다. 실행하는 중으로 mutate와 select의 자세한 내용은 help 페이지를 참고하세요.</p>
 </div>
 <div id="ggplot2----bar-graph--" class="section level2">
@@ -261,7 +264,7 @@ std_df &lt;-<span class="st"> </span><span class="kw">select</span>(tmpdf, std_x
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
-<p>즉, x와 y 각각에 대해서 geom_bar를 그리게 된 결과입니다. 다만 이 때는 y축에 그려지는 df<span class="math inline">\(x, df\)</span>y가 같은 stat을 사용해야합니다. 또한 x축에 그려질 데이터는 df<span class="math inline">\(x, df\)</span>y는 같은 그룹이어야 합니다 (이 경우에 대한 예제는 없습니다).</p>
+<p>즉, x와 y 각각에 대해서 geom_bar를 그리게 된 결과입니다. 다만 이 때는 y축에 그려지는 <code>df$x, df$y</code>가 같은 stat을 사용해야합니다. 또한 x축에 그려질 데이터는 <code>df$x, df$y</code>는 같은 그룹이어야 합니다 (이 경우에 대한 예제는 없습니다).</p>
 <p>위 예제의 bar에 칠해지는 색을 다르게 표현해 보도록 하겠습니다. 이번에는 투명한 색으로 칠하여 겹치는 부분의 bar까지 확인할 수 있도록 합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x), <span class="dt">stat=</span><span class="st">&quot;bin&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;#0000ff55&quot;</span>) <span class="op">+</span>
@@ -273,7 +276,7 @@ std_df &lt;-<span class="st"> </span><span class="kw">select</span>(tmpdf, std_x
 
 ## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
-<p>그러나 보통의 경우 ggplot을 이용하여 두 개 이상의 변수를 한 화면에 그릴때 위와같은 방법을 사용하지 않습니다. 자세한 내용은 수업시간에 설명드렸으며 간단히 x, y 변수로 구성된 df를 variable과 value로 구성된 데이터프레임으로 변형하여 사용합니다. 즉 다음과 같은 두 변수를 갖는 데이터프레임이 있다고 가정해 봅니다.</p>
+<p>그러나 보통의 경우 ggplot을 이용하여 두 개 이상의 변수를 한 화면에 그릴때 위와같은 방법을 사용하는 것은 아닙니다. 자세한 내용은 수업시간에 설명드렸으며 간단히 x, y 변수로 구성된 df를 variable과 value로 구성된 데이터프레임으로 변형하여 사용합니다. 즉 다음과 같은 두 변수를 갖는 데이터프레임이 있다고 가정해 봅니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>)
 y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)
 df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)
@@ -446,8 +449,8 @@ p1</code></pre></div>
           </div>
         </div>
       </div>
-<a href="lecture-07-ggplot-data-transformation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="lecture-07-ggplot-data-transformation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

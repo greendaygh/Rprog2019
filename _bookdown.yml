@@ -1,6 +1,6 @@
 rmd_files: ["index.Rmd", "01-lecture.Rmd", 
 "02-lecture.Rmd", "03-lecture.Rmd", "04-lecture.Rmd", "05-lecture.Rmd", 
-"06-lecture.Rmd", "07-lecture.Rmd", "08-lecture.Rmd"]
+"06-lecture.Rmd", "07-lecture.Rmd", "08-lecture.Rmd", "09-lecture.Rmd"]
 book_filename: "Rprog"
 repo: https://github.com/greendaygh/Rprog2019/
 output_dir: docs
