@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-05-09">
+<meta name="date" content="2019-05-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -163,6 +163,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="10" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><i class="fa fa-check"></i><b>10</b> Lecture 09 - ggplot / dlyr for 96well fluorescence data</a><ul>
 <li class="chapter" data-level="10.1" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#dplyr-functions"><i class="fa fa-check"></i><b>10.1</b> dplyr functions</a></li>
+<li class="chapter" data-level="10.2" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#data-transformation-using-melt-function"><i class="fa fa-check"></i><b>10.2</b> Data transformation using melt function</a></li>
+<li class="chapter" data-level="10.3" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#scale-and-theme-of-ggplot2"><i class="fa fa-check"></i><b>10.3</b> scale and theme of ggplot2</a></li>
 </ul></li>
 </ul>
 
@@ -190,7 +192,148 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(reshape2)</code></pre></div>
 <div id="dplyr-functions" class="section level2">
 <h2><span class="header-section-number">10.1</span> dplyr functions</h2>
-<p>지난 시간 학습한바와 같이 dplyr패키지에는 select, filter, group_by, summarize, arrange, join, mutate 등의 함수로 이루어져 있습니다.</p>
+<p>지난 시간 학습한바와 같이 dplyr패키지에는 select, filter, group_by, summarize, arrange, join, mutate 등의 함수로 이루어져 있습니다. iris data를 가지고 몇 가지 함수에대한 실습을 하겠습니다. 먼저 select 함수는 특정 data.frame에서 원하는 variable을 뽑아주는 기능을 합니다. 첫번째 인자로 data.frame을 넣고 두 번째부터는 해당 data.frame에 있는 변수들 중 뽑고싶은 변수들의 이름을 넣습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(iris)</code></pre></div>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_select &lt;-<span class="st"> </span><span class="kw">select</span>(iris, Sepal.Length, Sepal.Width, Species)
+<span class="kw">head</span>(iris_select)</code></pre></div>
+<pre><code>##   Sepal.Length Sepal.Width Species
+## 1          5.1         3.5  setosa
+## 2          4.9         3.0  setosa
+## 3          4.7         3.2  setosa
+## 4          4.6         3.1  setosa
+## 5          5.0         3.6  setosa
+## 6          5.4         3.9  setosa</code></pre>
+<p>select 함수는 관심있는 변수(column)를 뽑았다면 filter 함수는 관심있는 데이터(row)를 뽑는 함수로 생각하시면 됩니다. iris 데이터 중 Species 가 sentosa 인 데이터만 뽑고싶은 경우 다음과 같이 작성하면 됩니다. 주의할 점은 R의 기본 stats 패키지에도 filter라는 함수가 있어서 library(dplyr)로 dplyr 패키지를 읽지 않아도 실행은 되지만 문법이 달라서 에러가 뜰 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(iris)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_filter &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span>)
+<span class="kw">str</span>(iris_filter)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    50 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>다음 group_by 함수는 데이터를 특정 기준으로 나누어주는 기능을 합니다. 예를 들어 iris 데이터에는 Species각 3졸류가 있고 group_by 함수는 이 3가지 species 별로 데이터를 나누어주는 함수입니다. 이 때 기준이 되는 변수는 factor형이어야 합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(iris_select)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    150 obs. of  3 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_group &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris_select, Species)
+<span class="kw">str</span>(iris_group)</code></pre></div>
+<pre><code>## Classes &#39;grouped_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:  150 obs. of  3 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  - attr(*, &quot;groups&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   3 obs. of  2 variables:
+##   ..$ Species: Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 2 3
+##   ..$ .rows  :List of 3
+##   .. ..$ : int  1 2 3 4 5 6 7 8 9 10 ...
+##   .. ..$ : int  51 52 53 54 55 56 57 58 59 60 ...
+##   .. ..$ : int  101 102 103 104 105 106 107 108 109 110 ...
+##   ..- attr(*, &quot;.drop&quot;)= logi TRUE</code></pre>
+<p>이제 summarize 함수를 이용해서 앞서 그룹별로 나누어진 데이터들의 summary를 구할 수 있습니다. 통계에서 summary는 데이터를 나타내는 대푯값으로 중앙을 나타내는 평균, 흩어진정도를 나타내는 분산(표준편차), 최대값, 최소값 등을 말합니다. summarize의 help를 참고하시면 되겠습니다. 앞서 Species 별로 그룹을 나누었고 각 그룹별로 sepal.length와 sepal.width에 대한 평균을 구하는 코드입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_mean &lt;-<span class="st"> </span><span class="kw">summarise</span>(iris_group, 
+          <span class="kw">mean</span>(Sepal.Length), 
+          <span class="kw">mean</span>(Sepal.Width))
+<span class="kw">head</span>(iris_mean)</code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   Species    `mean(Sepal.Length)` `mean(Sepal.Width)`
+##   &lt;fct&gt;                     &lt;dbl&gt;               &lt;dbl&gt;
+## 1 setosa                     5.01                3.43
+## 2 versicolor                 5.94                2.77
+## 3 virginica                  6.59                2.97</code></pre>
+<p>그런데 만약 sepal.length, sepal.width 외에도 petal.length, petal.with 등 해당 data.frame (tibble)의 모든 변수(컬럼)에 대한 평균을 구할 경우는 summarize_all 함수를 사용합니다. 위에서 mean(sepal.length) 등 모든 변수들에 대해서 같은 mean 함수를 적용하는 수고를 덜어주는 방법입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_mean &lt;-<span class="st"> </span><span class="kw">summarize_all</span>(iris_group, mean)
+<span class="kw">head</span>(iris_mean)</code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   Species    Sepal.Length Sepal.Width
+##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 setosa             5.01        3.43
+## 2 versicolor         5.94        2.77
+## 3 virginica          6.59        2.97</code></pre>
+<p>mean 외에도 앞에서 언급한바와 같이 sd, min, max 등의 함수를 적용하는 것이 가능합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_sd &lt;-<span class="st"> </span><span class="kw">summarize_all</span>(iris_group, sd)
+<span class="kw">head</span>(iris_sd)</code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   Species    Sepal.Length Sepal.Width
+##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 setosa            0.352       0.379
+## 2 versicolor        0.516       0.314
+## 3 virginica         0.636       0.322</code></pre>
+<p>ggplot을 이용하여 그래프를 그릴 때 모든 필요한 정보는 ggplot의 첫번째 인자로 들어가는 data.frame 안에 들어있어야 합니다. 즉, barplot을 그릴 때 mean 값과 error bar를 그릴 표준편차 (sd)값이 모두 하나의 data.frame 안에 있어야 하므로 앞에서 구한 iris_mean과 iris_sd를 합해서 하나의 data.frame으로 만들어야 합니다. 이렇게 두 데이터를 merge 할 때 주의할 점은 mean 값을 갖는 샘플과 같의 샘플에 sd 값을 붙여주어야 한다는 것 입니다. 즉, cbind로 mean 과 sd 컬럼을 막연히 가져다 붙이면 안되고 각 샘플이 같은지 확인 후 붙여야 합니다. 여기서 각 샘플이 같은지는 합 할 두 data.frame가 갖는 공통의 ID를 비교해서 알 수 있습니다. join 함수의 by 파라미터로 공통의 ID를 지정할 수 있습니다. inner_join, left_join, right_join 등 두 데이터셋의 ID가 같지 않을 경우에 대해서 다른 기능을 수행하는 몇 가지 함수들이 있습니다. 자세한 내용은 help페이지를 참고하세요. 본 예에서는 Species를 공통의 변수로 가지고 있으므로 <code>by=&quot;Species&quot;</code>로 명시해줍니다. 만약 같은 샘플 정보를 가지고 있으나 각 데이터에서 이름의 변수로 저장되어 있다면 해당 변수들의 이름을 <code>c()</code> 함수를 이용해서 함께 적어주면 되겠습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_join &lt;-<span class="st"> </span><span class="kw">inner_join</span>(iris_mean, iris_sd, <span class="dt">by=</span><span class="st">&quot;Species&quot;</span>)
+iris_join</code></pre></div>
+<pre><code>## # A tibble: 3 x 5
+##   Species    Sepal.Length.x Sepal.Width.x Sepal.Length.y Sepal.Width.y
+##   &lt;fct&gt;               &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;
+## 1 setosa               5.01          3.43          0.352         0.379
+## 2 versicolor           5.94          2.77          0.516         0.314
+## 3 virginica            6.59          2.97          0.636         0.322</code></pre>
+</div>
+<div id="data-transformation-using-melt-function" class="section level2">
+<h2><span class="header-section-number">10.2</span> Data transformation using melt function</h2>
+<p>지난 몇 번의 강의에서 언급한바와 같이 위 iris_join의 경우 처럼 다수의 변수를 갖는 데이터를 ggplot를 이용한 그래프로 표현하기 위해서는 (간단히 말해) 변수이름을 나타내는 변수 하나와 각 변수들의 값을 갖는 변수 하나, 해서 두 개의 변수로 가지고 있는 데이터를 변환해 주는 것이 필요합니다. 위 iris_join 데이터는 sepal.length.x와 sepal.width.x 평균 값을 갖는 변수 2개를 가지고 있는데, 이 데이터를 ggplot으로 그림을 그린다면 x축에는 species를 y축에는 평균을 그려야 하지만 y축 평균을 <code>y=Sepal.Length.x</code> 로 할지 <code>y=Sepal.Width.x</code> 를 할지 하나만을 골라야 합니다. geom_xxx 함수를 여러번 이용해서 다수의 변수 값들을 표현하는 방법이 있을 수 있으나 한정적인 그래프의 경우만 가능하고 변수가 많아질 경우 코드가 복잡해집니다.</p>
+<p>reshape2 패키지의 melt함수는 위에서 말한 데이터의 변환을 자동으로 수행해주는 함수 입니다. data.frame에 대해서 작동하는 경우만을 생각해 보면 (?melt.data.frame) id.vars 와 measure.vars 두 개의 파라메터를 볼 수 있습니다. id.vars 는 변환 전 관측값 외의 ID 가 될 수 있는 변수의 이름을 명시해 주고 measure.vars는 관측한 값이 저장된 변수를 모두 적어줄 수 있습니다. 각각의 입력 변수 이름은 사용자의 의도에 따라서 다르게 사용할 수 있습니다. iris_join 예에서는 Species를 제외한 모든 값들이 관측값이므로 다음과 같이 실행하면 되겠습니다. 가장 처음 column의 factor형 변수가 default로 id로 인식되므로 <code>id.vars=&quot;Species&quot;</code>를 적지 않아도 동일하게 작동합니다 (Species가 id로 사용된다는 메세지 출력).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">melt</span>(iris_join, <span class="dt">id.vars=</span><span class="st">&quot;Species&quot;</span>)</code></pre></div>
+<pre><code>##       Species       variable     value
+## 1      setosa Sepal.Length.x 5.0060000
+## 2  versicolor Sepal.Length.x 5.9360000
+## 3   virginica Sepal.Length.x 6.5880000
+## 4      setosa  Sepal.Width.x 3.4280000
+## 5  versicolor  Sepal.Width.x 2.7700000
+## 6   virginica  Sepal.Width.x 2.9740000
+## 7      setosa Sepal.Length.y 0.3524897
+## 8  versicolor Sepal.Length.y 0.5161711
+## 9   virginica Sepal.Length.y 0.6358796
+## 10     setosa  Sepal.Width.y 0.3790644
+## 11 versicolor  Sepal.Width.y 0.3137983
+## 12  virginica  Sepal.Width.y 0.3224966</code></pre>
+<p>위 melt 함수의 파라메터 중 value.name 이라는 인자에는 value 라는 이름 대신 사용하고싶은 이름을 넣으면 되겠습니다. 그러나 위의 경우 mean과 sd 값이 모두 섞여있습니다. 그런데 우리가 그려줄 값은 mean 값이고 sd 는 error bar를 그리는데에만 사용될 것입니다. 즉, y축에는 평균만 그리므로 sd 값들은 제외하고 ggplot의 aes에서 y=value라는 코드를 사용할 수 있을 것 입니다.</p>
+<p>정리해 보면 위 melt 를 사용하기 전에 join으로 mean과 sd를 merge 했으나 실제로는 melt를 사용해서 모든 평균 값들을 하나의 변수에 저장하고 그 후 join으로 sd와 합하여 error bar를 그리는데 필요한 정보를 넘겨주는 것이 맞는 방법으로 보입니다. 이러한 일련의 작업들을 <code>%&gt;%</code>를 사용하여 아래 코드를 작성하였습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_mean &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(mean) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">melt</span>(<span class="dt">value.name=</span><span class="st">&quot;mean&quot;</span>)</code></pre></div>
+<pre><code>## Using Species as id variables</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_sd &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(sd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">melt</span>(<span class="dt">value.name=</span><span class="st">&quot;sd&quot;</span>)</code></pre></div>
+<pre><code>## Using Species as id variables</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_join &lt;-<span class="st"> </span><span class="kw">inner_join</span>(iris_mean, iris_sd, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;variable&quot;</span>))
+iris_join</code></pre></div>
+<pre><code>##       Species     variable  mean        sd
+## 1      setosa Sepal.Length 5.006 0.3524897
+## 2  versicolor Sepal.Length 5.936 0.5161711
+## 3   virginica Sepal.Length 6.588 0.6358796
+## 4      setosa  Sepal.Width 3.428 0.3790644
+## 5  versicolor  Sepal.Width 2.770 0.3137983
+## 6   virginica  Sepal.Width 2.974 0.3224966
+## 7      setosa Petal.Length 1.462 0.1736640
+## 8  versicolor Petal.Length 4.260 0.4699110
+## 9   virginica Petal.Length 5.552 0.5518947
+## 10     setosa  Petal.Width 0.246 0.1053856
+## 11 versicolor  Petal.Width 1.326 0.1977527
+## 12  virginica  Petal.Width 2.026 0.2746501</code></pre>
+<p>위 데이터는 모든 종류의 꽃잎과 꽃받침에 대한 평균과 표준편차를 하나의 테이블로 나타낸 최종 결과입니다. 이제 ggplot을 이용하여 평균을 그리고 각각에 대한 표준편차도 error bar로 표시할 수 있게 되었습니다. 지금까지의 데이터와 위치 조정을 통해서 그려진 bar graph는 다음과 같습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris_join, <span class="kw">aes</span>(<span class="dt">x=</span>Species, <span class="dt">y=</span>mean, <span class="dt">fill=</span>variable)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>mean<span class="op">-</span>sd, <span class="dt">ymax=</span>mean<span class="op">+</span>sd), 
+                <span class="dt">width=</span><span class="fl">0.3</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>))
+p1</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-135-1.png" width="672" /></p>
+</div>
+<div id="scale-and-theme-of-ggplot2" class="section level2">
+<h2><span class="header-section-number">10.3</span> scale and theme of ggplot2</h2>
+<p>이제 ggplot의 scale과 theme에 대해서 알아봅니다.</p>
 
 </div>
 </div>
