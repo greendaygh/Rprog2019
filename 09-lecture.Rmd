@@ -21,7 +21,9 @@ library(reshape2)
 
 ## dplyr functions 
 
-지난 시간 학습한바와 같이 dplyr패키지에는 select, filter, group_by, summarize, arrange, join, mutate 등의 함수로 이루어져 있습니다. iris data를 가지고 몇 가지 함수에대한 실습을 하겠습니다. 먼저 select 함수는 특정 data.frame에서 원하는 variable을 뽑아주는 기능을 합니다. 첫번째 인자로 data.frame을 넣고 두 번째부터는 해당 data.frame에 있는 변수들 중 뽑고싶은 변수들의 이름을 넣습니다.  
+지난 시간 학습한바와 같이 dplyr패키지에는 select, filter, group_by, summarize, arrange, join, mutate 등의 함수로 이루어져 있습니다. iris data를 가지고 몇 가지 함수에대한 실습을 하겠습니다. 
+
+먼저 select 함수는 특정 data.frame에서 원하는 variable을 뽑아주는 기능을 합니다. 첫번째 인자로 data.frame을 넣고 두 번째부터는 해당 data.frame에 있는 변수들 중 뽑고싶은 변수들의 이름을 넣습니다.  
 
 ```{r}
 head(iris)
@@ -29,7 +31,7 @@ iris_select <- select(iris, Sepal.Length, Sepal.Width, Species)
 head(iris_select)
 ```
 
-select 함수는 관심있는 변수(column)를 뽑았다면 filter 함수는 관심있는 데이터(row)를 뽑는 함수로 생각하시면 됩니다. iris 데이터 중 Species 가 sentosa 인 데이터만 뽑고싶은 경우 다음과 같이 작성하면 됩니다. 주의할 점은 R의 기본 stats 패키지에도 filter라는 함수가 있어서 library(dplyr)로 dplyr 패키지를 읽지 않아도 실행은 되지만 문법이 달라서 에러가 뜰 수 있습니다. 
+select 함수가 관심있는 변수(column)를 뽑았다면 filter 함수는 관심있는 데이터(row)를 뽑는 함수로 생각하면 되겠습니다. iris 데이터 중 Species 가 sentosa 인 데이터만 뽑고싶은 경우 다음과 같이 작성하면 됩니다. 주의할 점은 R의 기본 stats 패키지에도 filter라는 함수가 있어서 library(dplyr)로 dplyr 패키지를 읽지 않아도 실행은 되지만 문법이 달라서 에러가 발생할 수 있습니다. 
 
 ```{r}
 str(iris)
@@ -37,7 +39,7 @@ iris_filter <- filter(iris, Species=="setosa")
 str(iris_filter)
 ```
 
-다음 group_by 함수는 데이터를 특정 기준으로 나누어주는 기능을 합니다. 예를 들어 iris 데이터에는 Species각 3졸류가 있고 group_by 함수는 이 3가지 species 별로 데이터를 나누어주는 함수입니다. 이 때 기준이 되는 변수는 factor형이어야 합니다. 
+다음 group_by 함수는 데이터를 특정 기준으로 나누어주는 기능을 합니다. 예를 들어 iris 데이터에는 Species각 3종류가 있고 group_by 함수는 이 3가지 species 별로 데이터를 나누어주는 함수입니다. 이 때 기준이 되는 변수는 factor형이어야 합니다. 
 
 ```{r}
 str(iris_select)
@@ -70,7 +72,11 @@ iris_sd <- summarize_all(iris_group, sd)
 head(iris_sd)
 ```
 
-ggplot을 이용하여 그래프를 그릴 때 모든 필요한 정보는 ggplot의 첫번째 인자로 들어가는 data.frame 안에 들어있어야 합니다. 즉, barplot을 그릴 때 mean 값과 error bar를 그릴 표준편차 (sd)값이 모두 하나의 data.frame 안에 있어야 하므로 앞에서 구한 iris_mean과 iris_sd를 합해서 하나의 data.frame으로 만들어야 합니다. 이렇게 두 데이터를 merge 할 때 주의할 점은 mean 값을 갖는 샘플과 같의 샘플에 sd 값을 붙여주어야 한다는 것 입니다. 즉, cbind로 mean 과 sd 컬럼을 막연히 가져다 붙이면 안되고 각 샘플이 같은지 확인 후 붙여야 합니다. 여기서 각 샘플이 같은지는 합 할 두 data.frame가 갖는 공통의 ID를 비교해서 알 수 있습니다. join 함수의 by 파라미터로 공통의 ID를 지정할 수 있습니다. inner_join, left_join, right_join 등 두 데이터셋의 ID가 같지 않을 경우에 대해서 다른 기능을 수행하는 몇 가지 함수들이 있습니다. 자세한 내용은 help페이지를 참고하세요. 본 예에서는 Species를 공통의 변수로 가지고 있으므로 ```by="Species"```로 명시해줍니다. 만약 같은 샘플 정보를 가지고 있으나 각 데이터에서 이름의 변수로 저장되어 있다면 해당 변수들의 이름을 ```c()``` 함수를 이용해서 함께 적어주면 되겠습니다.  
+마지막으로 join 함수 입니다. ggplot을 이용하여 그래프를 그릴 때 모든 필요한 정보는 ggplot의 첫번째 인자로 들어가는 data.frame 안에 들어있어야 합니다. 즉, barplot을 그릴 때 mean 값과 error bar를 그릴 표준편차 (sd)값이 모두 하나의 data.frame 안에 있어야 하므로 앞에서 구한 iris_mean과 iris_sd를 합해서 하나의 data.frame으로 만들어야 합니다. 
+
+이렇게 두 데이터를 merge 할 때 주의할 점은 mean 값을 갖는 샘플과 같은 샘플에 sd 값을 붙여주어야 한다는 것 입니다. 즉, cbind로 mean 과 sd 컬럼을 막연히 가져다 붙이면 안되고 각 샘플이 같은지 확인 후 붙여야 합니다. 여기서 각 샘플이 같은지는 합 할 두 data.frame가 갖는 공통의 ID를 비교해서 알 수 있습니다. join 함수의 by 파라미터로 공통의 ID를 지정할 수 있습니다. inner_join, left_join, right_join 등 두 데이터셋의 ID가 같지 않을 경우에 대해서 다른 기능을 수행하는 몇 가지 함수들이 있습니다. 자세한 내용은 help페이지를 참고하세요. 
+
+본 예에서는 Species를 공통의 변수로 가지고 있으므로 ```by="Species"```로 명시해줍니다. 만약 여러 변수를 참조해야 할 경우에는 해당 변수들의 이름을 ```c()``` 함수를 이용해서 함께 적어주면 되겠습니다.  
 
 
 ```{r}
@@ -81,18 +87,18 @@ iris_join
 
 ## Data transformation using melt function 
 
-지난 몇 번의 강의에서 언급한바와 같이 위 iris_join의 경우 처럼 다수의 변수를 갖는 데이터를 ggplot를 이용한 그래프로 표현하기 위해서는 (간단히 말해) 변수이름을 나타내는 변수 하나와 각 변수들의 값을 갖는 변수 하나, 해서 두 개의 변수로 가지고 있는 데이터를 변환해 주는 것이 필요합니다.  위 iris_join 데이터는 sepal.length.x와 sepal.width.x 평균 값을 갖는 변수 2개를 가지고 있는데, 이 데이터를 ggplot으로 그림을 그린다면 x축에는 species를 y축에는 평균을 그려야 하지만 y축 평균을 ```y=Sepal.Length.x``` 로 할지 ```y=Sepal.Width.x``` 를 할지 하나만을 골라야 합니다. geom_xxx 함수를 여러번 이용해서 다수의 변수 값들을 표현하는 방법이 있을 수 있으나 한정적인 그래프의 경우만 가능하고 변수가 많아질 경우 코드가 복잡해집니다. 
+지난 몇 번의 강의에서 언급한바와 같이 위 iris_join의 경우 처럼 다수의 변수를 갖는 데이터를 ggplot를 이용한 그래프로 표현하기 위해서는 변수이름을 나타내는 변수 하나와 각 변수들의 값을 갖는 변수 하나, 해서 두 개의 변수로 가지고 있는 데이터를 변환해 주는 것이 필요합니다.  위 iris_join 데이터는 sepal.length.x와 sepal.width.x 평균 값을 갖는 변수 2개를 가지고 있는데, 이 데이터를 ggplot으로 그림을 그린다면 x축에는 species를 y축에는 평균을 그려야 하지만 y축 평균을 ```y=Sepal.Length.x``` 로 할지 ```y=Sepal.Width.x``` 를 할지 하나만을 골라야 합니다. geom_xxx 함수를 여러번 이용해서 다수의 변수 값들을 표현하는 방법이 있을 수 있으나 한정적인 그래프의 경우만 가능하고 변수가 많아질 경우 코드가 복잡해집니다. 
 
-reshape2 패키지의 melt함수는 위에서 말한 데이터의 변환을 자동으로 수행해주는 함수 입니다. data.frame에 대해서 작동하는 경우만을 생각해 보면 (?melt.data.frame) id.vars 와 measure.vars 두 개의 파라메터를 볼 수 있습니다. id.vars 는 변환 전 관측값 외의 ID 가 될 수 있는 변수의 이름을 명시해 주고 measure.vars는 관측한 값이 저장된 변수를 모두 적어줄 수 있습니다. 각각의 입력 변수 이름은 사용자의 의도에 따라서 다르게 사용할 수 있습니다. iris_join 예에서는 Species를 제외한 모든 값들이 관측값이므로 다음과 같이 실행하면 되겠습니다. 가장 처음 column의 factor형 변수가 default로 id로 인식되므로 ```id.vars="Species"```를 적지 않아도 동일하게 작동합니다 (Species가 id로 사용된다는 메세지 출력).  
+reshape2 패키지의 melt함수는 위에서 말한 데이터의 변환을 자동으로 수행해주는 함수 입니다. data.frame에 대해서 작동하는 경우만을 생각해 보면 (?melt.data.frame) id.vars 와 measure.vars 두 개의 파라메터를 볼 수 있습니다. measure.vars는 관측한 값이 저장된 변수를 모두 적어줄 수 있고 id.vars 관측값 외의 변수의 이름을 명시해 주어서 ID가 되도록 합니다. 각각의 입력 변수 이름은 사용자가 어떤 데이터를 만들지에 따라서 다르게 입력될 수 있습니다. iris_join 예에서는 Species를 제외한 모든 값들이 관측값이므로 다음과 같이 실행하면 되겠습니다. 가장 처음 column의 factor형 변수가 default로 id로 인식되므로 ```id.vars="Species"```를 적지 않아도 동일하게 작동합니다 (Species가 id로 사용된다는 메세지 출력).  
 
 ```{r}
 melt(iris_join, id.vars="Species")
 ```
 
 
-위 melt 함수의 파라메터 중 value.name 이라는 인자에는 value 라는 이름 대신 사용하고싶은 이름을 넣으면 되겠습니다. 그러나 위의 경우 mean과 sd 값이 모두 섞여있습니다. 그런데 우리가 그려줄 값은 mean 값이고 sd 는 error bar를 그리는데에만 사용될 것입니다. 즉, y축에는 평균만 그리므로 sd 값들은 제외하고 ggplot의 aes에서 y=value라는 코드를 사용할 수 있을 것 입니다. 
+위 melt 함수의 파라메터 중 value.name 이라는 인자에는 value 라는 이름 대신 사용하고싶은 이름을 넣을 수 있습니다. 위의 경우 mean과 sd 값이 모두 value라는 변수에 함께 저장되어 있습니다. 그런데 우리가 그려줄 값은 mean 값이고 sd 는 error bar를 그리는데에만 사용될 것입니다. 즉, y축에는 평균만 그리므로 value에서 sd 값들은 제외하고 ggplot의 aes에서 y=value라는 코드로 원하는 그래프를 그릴수 있을 것 입니다. 
 
-정리해 보면 위 melt 를 사용하기 전에 join으로 mean과 sd를 merge 했으나 실제로는 melt를 사용해서 모든 평균 값들을 하나의 변수에 저장하고 그 후 join으로 sd와 합하여 error bar를 그리는데 필요한 정보를 넘겨주는 것이 맞는 방법으로 보입니다. 이러한 일련의 작업들을 ``` %>% ```를 사용하여 아래 코드를 작성하였습니다.  
+정리해 보면 위 예에서는 melt 를 사용하기 전에 join으로 mean과 sd 값들을 하나의 value로 merge 했으나 실제로는 join 전에 먼저 melt를 사용해서 모든 평균값과 sd값들을 별개의 변수에 각각 저장하고 그 후 join으로 mean과 sd를 mean은 bar를 그리는데 사용하고 sd는 error bar를 그리는데 사용하는 것이 맞는 순서로 보입니다. 아래는 이러한 일련의 작업들을 ``` %>% ```를 사용한 코드입니다.   
 
 
 
@@ -105,7 +111,7 @@ iris_join
 
 
 
-위 데이터는 모든 종류의 꽃잎과 꽃받침에 대한 평균과 표준편차를 하나의 테이블로 나타낸 최종 결과입니다. 이제 ggplot을 이용하여 평균을 그리고 각각에 대한 표준편차도 error bar로 표시할 수 있게 되었습니다. 지금까지의 데이터와 위치 조정을 통해서 그려진 bar graph는 다음과 같습니다.  
+위 데이터는 모든 종류의 꽃잎과 꽃받침에 대한 평균과 표준편차를 하나의 테이블로 나타낸 최종 결과입니다. ggplot을 이용하여 평균을 그리고 각각에 대한 표준편차도 error bar로 표시할 수 있게 되었습니다. 지금까지의 데이터와 위치 조정을 통해서 그려진 bar graph는 다음과 같습니다.  
 
 ```{r}
 p1 <- ggplot(iris_join, aes(x=Species, y=mean, fill=variable)) +
@@ -118,7 +124,116 @@ p1
 
 ## scale and theme of ggplot2
 
-이제 ggplot의 scale과 theme에 대해서 알아봅니다. 
+이제 ggplot의 scale과 theme에 대해서 알아봅니다. scale은 aes에서 mapping 된 x, y, 그리고 grouped 데이터들의 detail을 지정해주는 역할을 합니다. 따라서 x축, y축, 그리고 몇몇 groupping 된 그래프의 위치, 색상, 크기, 모양 등을 지정해 줍니다. 명령어의 (함수) 형태는 ```scale_<aesthetic>_<type>``` 형태이며 ```<aesthetic>```과 ```<type>```에 해당하는 (미리 지정된) 단어를 넣어주면 되겠습니다. 예를 들어 연속형 형태의 y축의 라벨링 이름을 바꾸고 싶을 경우 ```scale_y_continuous(name="Label name")```과 같은 형태 입니다. 참고로 이 명령어는 각 축의 label을 바꾸는 명령어는 xlab, ylab와 같은 기능을 합니다.  
 
+아래 예에서는 앞서 p1에  저장된 그래프에 scale 옵션을 더해서 p2로 저장해 보겠습니다. bar graph에 색상을 바꾸고 ylab과 xlab 그리고 전체 title과 subtitle등을 지정했습니다. 색상 지정에 대해 자세한 내용은 ?scale_fill_hue 등을 참고하세요. 
+
+```{r}
+p2 <- p1 + scale_fill_hue(h = c(0, 360)) +
+  ylab("Length/width Mean2") +
+  xlab("Iris species2") +
+  labs(title = "IRIS Comparison", subtitle="Three types of iris", caption="Data source: xxx", fill="Types")
+p2
+```
+
+
+이제 theme을 바꿔보겠습니다. theme은 내용은 그대로 두고 전체적인 그래프의 생김새를 꾸미는 기능으로 보면 되겠습니다. 크게 각 축의 라벨링, 배경 색상이나 모양, 범례의 모양 위치 등이 그 것 입니다. theme의 도움말에 usage를 보시면 파라메터 이름들이 직관적으로 써 있어서 좀 더 이해하기 편하실 수 있습니다. 특히 기존 만들어진 theme들을 사용할 수 있는데 이 예들은  ?theme_bw에서 보실 수 있습니다. 
+
+아래는 theme_bw (black and white) 를 적용하고 거기에 더해서 사용자가 원하는 다른 모양들을 추가로 업데이트 한 예제 입니다. 이를 theme overriding이라고 하는데요 기존 있던 설정의 일부를 바꾸는 작업으로 볼 수 있습니다. p2에 추가작업을 하고 변수에 저장하지 않으므로 바로 화면에 출력 됩니다. 
+
+
+```{r}
+p2 + theme_bw() +
+  theme(
+    text=element_text(size=14),
+    axis.text.y = element_text(size=10),
+    axis.title.y = element_text(size=20),
+    axis.title.x = element_text(size=20), 
+    legend.position = "bottom",
+    #legend.position = c(0.1,0.9),
+    plot.title=element_text(hjust=0.5),
+    plot.subtitle=element_text(hjust=0.5)
+    )
+```
+
+
+## bargraph for 96well dataset
+
+이제 우리가 읽어들인 (비교적) 큰 데이터 (96 well plate 형광)를 가지고 bar graph와 error bar를 그려보도록 하겠습니다. 아래와 같이 먼저 데이터를 읽어 옵니다. 일곱번째 강의 시간에 작성한 코드가 (multiple_plate_excel_reader2 함수) c:\\Rprog\\07\\read_plate.R 위치에 있습니다. 각자 맞는 위치와 파일 이름을 넣어주시면 되겠습니다. 
+
+
+```{r}
+setwd("C:\\Rprog\\07")
+source("read_plate.R")
+
+design_file_name <- "exp_design2.xlsx"
+data_file_names <- c("20171012-phenol-1.xls", 
+                     "20171012-phenol-2.xls", 
+                     "20171227-phenol-1.xls", 
+                     "20171227-phenol-2.xls")
+
+mydata1 <- multiple_plate_excel_reader2(design_file_name, data_file_names[1], sheet4design=1)
+mydata2 <- multiple_plate_excel_reader2(design_file_name, data_file_names[2], sheet4design=2)
+mydata3 <- multiple_plate_excel_reader2(design_file_name, data_file_names[3], sheet4design=3)
+mydata4 <- multiple_plate_excel_reader2(design_file_name, data_file_names[4], sheet4design=4)
+
+mydata <- rbind(mydata1, mydata2, mydata3, mydata4)
+mydata2 <- mydata
+mydata2$concentration <- as.factor(mydata2$concentration)
+str(mydata2)
+```
+
+concentration 을 as.factor로 전환해주는 이유는 x축에 그려질 bar들이 histogram이 아니고 각각 하나씩의 값을 갖는 이산형 데이터이므로 factor 형태로 바꾸어 주어야 합니다. 
+
+```{r echo=FALSE}
+setwd("C:\\mydocs\\2019\\lectures\\Rprog2019")
+```
+
+
+이제 dplyr 패키지를 이용해서 반복 측정값들의 평균 GFP값과 표준편차를 구합니다. 먼저 어떤 변수를 기준으로 groupping을 할지 지정해 줍니다. 이는 replication을 제외한 모든 변수 sample_name, drugname, concentration이 되겠습니다. 그리고 summzarize로 그룹핑된 값들의 평균값을 계산합니다. 
+
+```{r}
+grouped_data <- group_by(mydata2, sample_names, drugname, concentration)
+data_mean <- summarize(grouped_data, gfp_mean=mean(GFP))
+head(data_mean)
+```
+
+또한 에러바를 위한 표준편차 값을 구하고 위에서 학습한바와 같이 평규과 표준편차를 같은 row로 붙여주는 join을 수행합니다. 이 때 sample_name, drugname, concentration이 모두 같은 샘플끼리 평균과 표준편차를 붙여야 하므로 다음과 같이 by 뒤 위 변수들을 모두 명시해 줍니다. 참고로 data_mean과 data_sd에는 위 세개의 변수가 모두 같은 이름으로 저장되어 있습니다.  
+
+```{r}
+data_sd <- summarize(grouped_data, sd=sd(GFP))
+data_join <- inner_join(data_mean, data_sd, by=c("sample_names", "drugname", "concentration"))
+head(data_join)
+```
+
+이제 ggplot으로 그림을 완성하면 되며 scale과 theme을 적절히 활용하여 원하는 그래프를 그리면 되겠습니다. 
+
+```{r}
+ggplot(data_join, aes(x=sample_names, y=gfp_mean, fill=concentration)) +
+  geom_bar(stat="identity", position="dodge", color="black") + 
+  scale_fill_manual(values = heat.colors(11)) +
+  geom_errorbar(aes(min=gfp_mean-sd, max=gfp_mean+sd), width=.2, position=position_dodge(0.9))
+
+p1 <- ggplot(data_join, aes(x=sample_names, y=gfp_mean, fill=concentration)) +
+  geom_bar(stat="identity", position="dodge", color="black") + 
+  geom_errorbar(aes(min=gfp_mean-sd, max=gfp_mean+sd), width=.2, position=position_dodge(0.9))
+
+p1 + scale_fill_hue(h = c(0, 360)) +
+  ylab("GFP") +
+  xlab("Concentration") +
+  labs(title = "GFP profiles for drug xxx", 
+       subtitle="6 samples and 11 concentrations", 
+       caption="Data source: xxx", fill="Conc.") +
+  theme_bw() +
+  theme(
+    text=element_text(size=14),
+    axis.text.y = element_text(size=10),
+    axis.title.y = element_text(size=20),
+    axis.title.x = element_text(size=20), 
+    plot.title=element_text(hjust=0.5),
+    plot.subtitle=element_text(hjust=0.5)
+  )
+
+```
 
 

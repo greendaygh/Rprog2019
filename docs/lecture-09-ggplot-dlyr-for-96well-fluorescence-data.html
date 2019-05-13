@@ -165,6 +165,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.1" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#dplyr-functions"><i class="fa fa-check"></i><b>10.1</b> dplyr functions</a></li>
 <li class="chapter" data-level="10.2" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#data-transformation-using-melt-function"><i class="fa fa-check"></i><b>10.2</b> Data transformation using melt function</a></li>
 <li class="chapter" data-level="10.3" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#scale-and-theme-of-ggplot2"><i class="fa fa-check"></i><b>10.3</b> scale and theme of ggplot2</a></li>
+<li class="chapter" data-level="10.4" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#bargraph-for-96well-dataset"><i class="fa fa-check"></i><b>10.4</b> bargraph for 96well dataset</a></li>
 </ul></li>
 </ul>
 
@@ -192,7 +193,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(reshape2)</code></pre></div>
 <div id="dplyr-functions" class="section level2">
 <h2><span class="header-section-number">10.1</span> dplyr functions</h2>
-<p>지난 시간 학습한바와 같이 dplyr패키지에는 select, filter, group_by, summarize, arrange, join, mutate 등의 함수로 이루어져 있습니다. iris data를 가지고 몇 가지 함수에대한 실습을 하겠습니다. 먼저 select 함수는 특정 data.frame에서 원하는 variable을 뽑아주는 기능을 합니다. 첫번째 인자로 data.frame을 넣고 두 번째부터는 해당 data.frame에 있는 변수들 중 뽑고싶은 변수들의 이름을 넣습니다.</p>
+<p>지난 시간 학습한바와 같이 dplyr패키지에는 select, filter, group_by, summarize, arrange, join, mutate 등의 함수로 이루어져 있습니다. iris data를 가지고 몇 가지 함수에대한 실습을 하겠습니다.</p>
+<p>먼저 select 함수는 특정 data.frame에서 원하는 variable을 뽑아주는 기능을 합니다. 첫번째 인자로 data.frame을 넣고 두 번째부터는 해당 data.frame에 있는 변수들 중 뽑고싶은 변수들의 이름을 넣습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(iris)</code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
@@ -210,7 +212,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 4          4.6         3.1  setosa
 ## 5          5.0         3.6  setosa
 ## 6          5.4         3.9  setosa</code></pre>
-<p>select 함수는 관심있는 변수(column)를 뽑았다면 filter 함수는 관심있는 데이터(row)를 뽑는 함수로 생각하시면 됩니다. iris 데이터 중 Species 가 sentosa 인 데이터만 뽑고싶은 경우 다음과 같이 작성하면 됩니다. 주의할 점은 R의 기본 stats 패키지에도 filter라는 함수가 있어서 library(dplyr)로 dplyr 패키지를 읽지 않아도 실행은 되지만 문법이 달라서 에러가 뜰 수 있습니다.</p>
+<p>select 함수가 관심있는 변수(column)를 뽑았다면 filter 함수는 관심있는 데이터(row)를 뽑는 함수로 생각하면 되겠습니다. iris 데이터 중 Species 가 sentosa 인 데이터만 뽑고싶은 경우 다음과 같이 작성하면 됩니다. 주의할 점은 R의 기본 stats 패키지에도 filter라는 함수가 있어서 library(dplyr)로 dplyr 패키지를 읽지 않아도 실행은 되지만 문법이 달라서 에러가 발생할 수 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(iris)</code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
 ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
@@ -226,7 +228,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
 ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
 ##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<p>다음 group_by 함수는 데이터를 특정 기준으로 나누어주는 기능을 합니다. 예를 들어 iris 데이터에는 Species각 3졸류가 있고 group_by 함수는 이 3가지 species 별로 데이터를 나누어주는 함수입니다. 이 때 기준이 되는 변수는 factor형이어야 합니다.</p>
+<p>다음 group_by 함수는 데이터를 특정 기준으로 나누어주는 기능을 합니다. 예를 들어 iris 데이터에는 Species각 3종류가 있고 group_by 함수는 이 3가지 species 별로 데이터를 나누어주는 함수입니다. 이 때 기준이 되는 변수는 factor형이어야 합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(iris_select)</code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    150 obs. of  3 variables:
 ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
@@ -274,7 +276,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 1 setosa            0.352       0.379
 ## 2 versicolor        0.516       0.314
 ## 3 virginica         0.636       0.322</code></pre>
-<p>ggplot을 이용하여 그래프를 그릴 때 모든 필요한 정보는 ggplot의 첫번째 인자로 들어가는 data.frame 안에 들어있어야 합니다. 즉, barplot을 그릴 때 mean 값과 error bar를 그릴 표준편차 (sd)값이 모두 하나의 data.frame 안에 있어야 하므로 앞에서 구한 iris_mean과 iris_sd를 합해서 하나의 data.frame으로 만들어야 합니다. 이렇게 두 데이터를 merge 할 때 주의할 점은 mean 값을 갖는 샘플과 같의 샘플에 sd 값을 붙여주어야 한다는 것 입니다. 즉, cbind로 mean 과 sd 컬럼을 막연히 가져다 붙이면 안되고 각 샘플이 같은지 확인 후 붙여야 합니다. 여기서 각 샘플이 같은지는 합 할 두 data.frame가 갖는 공통의 ID를 비교해서 알 수 있습니다. join 함수의 by 파라미터로 공통의 ID를 지정할 수 있습니다. inner_join, left_join, right_join 등 두 데이터셋의 ID가 같지 않을 경우에 대해서 다른 기능을 수행하는 몇 가지 함수들이 있습니다. 자세한 내용은 help페이지를 참고하세요. 본 예에서는 Species를 공통의 변수로 가지고 있으므로 <code>by=&quot;Species&quot;</code>로 명시해줍니다. 만약 같은 샘플 정보를 가지고 있으나 각 데이터에서 이름의 변수로 저장되어 있다면 해당 변수들의 이름을 <code>c()</code> 함수를 이용해서 함께 적어주면 되겠습니다.</p>
+<p>마지막으로 join 함수 입니다. ggplot을 이용하여 그래프를 그릴 때 모든 필요한 정보는 ggplot의 첫번째 인자로 들어가는 data.frame 안에 들어있어야 합니다. 즉, barplot을 그릴 때 mean 값과 error bar를 그릴 표준편차 (sd)값이 모두 하나의 data.frame 안에 있어야 하므로 앞에서 구한 iris_mean과 iris_sd를 합해서 하나의 data.frame으로 만들어야 합니다.</p>
+<p>이렇게 두 데이터를 merge 할 때 주의할 점은 mean 값을 갖는 샘플과 같은 샘플에 sd 값을 붙여주어야 한다는 것 입니다. 즉, cbind로 mean 과 sd 컬럼을 막연히 가져다 붙이면 안되고 각 샘플이 같은지 확인 후 붙여야 합니다. 여기서 각 샘플이 같은지는 합 할 두 data.frame가 갖는 공통의 ID를 비교해서 알 수 있습니다. join 함수의 by 파라미터로 공통의 ID를 지정할 수 있습니다. inner_join, left_join, right_join 등 두 데이터셋의 ID가 같지 않을 경우에 대해서 다른 기능을 수행하는 몇 가지 함수들이 있습니다. 자세한 내용은 help페이지를 참고하세요.</p>
+<p>본 예에서는 Species를 공통의 변수로 가지고 있으므로 <code>by=&quot;Species&quot;</code>로 명시해줍니다. 만약 여러 변수를 참조해야 할 경우에는 해당 변수들의 이름을 <code>c()</code> 함수를 이용해서 함께 적어주면 되겠습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_join &lt;-<span class="st"> </span><span class="kw">inner_join</span>(iris_mean, iris_sd, <span class="dt">by=</span><span class="st">&quot;Species&quot;</span>)
 iris_join</code></pre></div>
 <pre><code>## # A tibble: 3 x 5
@@ -286,8 +290,8 @@ iris_join</code></pre></div>
 </div>
 <div id="data-transformation-using-melt-function" class="section level2">
 <h2><span class="header-section-number">10.2</span> Data transformation using melt function</h2>
-<p>지난 몇 번의 강의에서 언급한바와 같이 위 iris_join의 경우 처럼 다수의 변수를 갖는 데이터를 ggplot를 이용한 그래프로 표현하기 위해서는 (간단히 말해) 변수이름을 나타내는 변수 하나와 각 변수들의 값을 갖는 변수 하나, 해서 두 개의 변수로 가지고 있는 데이터를 변환해 주는 것이 필요합니다. 위 iris_join 데이터는 sepal.length.x와 sepal.width.x 평균 값을 갖는 변수 2개를 가지고 있는데, 이 데이터를 ggplot으로 그림을 그린다면 x축에는 species를 y축에는 평균을 그려야 하지만 y축 평균을 <code>y=Sepal.Length.x</code> 로 할지 <code>y=Sepal.Width.x</code> 를 할지 하나만을 골라야 합니다. geom_xxx 함수를 여러번 이용해서 다수의 변수 값들을 표현하는 방법이 있을 수 있으나 한정적인 그래프의 경우만 가능하고 변수가 많아질 경우 코드가 복잡해집니다.</p>
-<p>reshape2 패키지의 melt함수는 위에서 말한 데이터의 변환을 자동으로 수행해주는 함수 입니다. data.frame에 대해서 작동하는 경우만을 생각해 보면 (?melt.data.frame) id.vars 와 measure.vars 두 개의 파라메터를 볼 수 있습니다. id.vars 는 변환 전 관측값 외의 ID 가 될 수 있는 변수의 이름을 명시해 주고 measure.vars는 관측한 값이 저장된 변수를 모두 적어줄 수 있습니다. 각각의 입력 변수 이름은 사용자의 의도에 따라서 다르게 사용할 수 있습니다. iris_join 예에서는 Species를 제외한 모든 값들이 관측값이므로 다음과 같이 실행하면 되겠습니다. 가장 처음 column의 factor형 변수가 default로 id로 인식되므로 <code>id.vars=&quot;Species&quot;</code>를 적지 않아도 동일하게 작동합니다 (Species가 id로 사용된다는 메세지 출력).</p>
+<p>지난 몇 번의 강의에서 언급한바와 같이 위 iris_join의 경우 처럼 다수의 변수를 갖는 데이터를 ggplot를 이용한 그래프로 표현하기 위해서는 변수이름을 나타내는 변수 하나와 각 변수들의 값을 갖는 변수 하나, 해서 두 개의 변수로 가지고 있는 데이터를 변환해 주는 것이 필요합니다. 위 iris_join 데이터는 sepal.length.x와 sepal.width.x 평균 값을 갖는 변수 2개를 가지고 있는데, 이 데이터를 ggplot으로 그림을 그린다면 x축에는 species를 y축에는 평균을 그려야 하지만 y축 평균을 <code>y=Sepal.Length.x</code> 로 할지 <code>y=Sepal.Width.x</code> 를 할지 하나만을 골라야 합니다. geom_xxx 함수를 여러번 이용해서 다수의 변수 값들을 표현하는 방법이 있을 수 있으나 한정적인 그래프의 경우만 가능하고 변수가 많아질 경우 코드가 복잡해집니다.</p>
+<p>reshape2 패키지의 melt함수는 위에서 말한 데이터의 변환을 자동으로 수행해주는 함수 입니다. data.frame에 대해서 작동하는 경우만을 생각해 보면 (?melt.data.frame) id.vars 와 measure.vars 두 개의 파라메터를 볼 수 있습니다. measure.vars는 관측한 값이 저장된 변수를 모두 적어줄 수 있고 id.vars 관측값 외의 변수의 이름을 명시해 주어서 ID가 되도록 합니다. 각각의 입력 변수 이름은 사용자가 어떤 데이터를 만들지에 따라서 다르게 입력될 수 있습니다. iris_join 예에서는 Species를 제외한 모든 값들이 관측값이므로 다음과 같이 실행하면 되겠습니다. 가장 처음 column의 factor형 변수가 default로 id로 인식되므로 <code>id.vars=&quot;Species&quot;</code>를 적지 않아도 동일하게 작동합니다 (Species가 id로 사용된다는 메세지 출력).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">melt</span>(iris_join, <span class="dt">id.vars=</span><span class="st">&quot;Species&quot;</span>)</code></pre></div>
 <pre><code>##       Species       variable     value
 ## 1      setosa Sepal.Length.x 5.0060000
@@ -302,8 +306,8 @@ iris_join</code></pre></div>
 ## 10     setosa  Sepal.Width.y 0.3790644
 ## 11 versicolor  Sepal.Width.y 0.3137983
 ## 12  virginica  Sepal.Width.y 0.3224966</code></pre>
-<p>위 melt 함수의 파라메터 중 value.name 이라는 인자에는 value 라는 이름 대신 사용하고싶은 이름을 넣으면 되겠습니다. 그러나 위의 경우 mean과 sd 값이 모두 섞여있습니다. 그런데 우리가 그려줄 값은 mean 값이고 sd 는 error bar를 그리는데에만 사용될 것입니다. 즉, y축에는 평균만 그리므로 sd 값들은 제외하고 ggplot의 aes에서 y=value라는 코드를 사용할 수 있을 것 입니다.</p>
-<p>정리해 보면 위 melt 를 사용하기 전에 join으로 mean과 sd를 merge 했으나 실제로는 melt를 사용해서 모든 평균 값들을 하나의 변수에 저장하고 그 후 join으로 sd와 합하여 error bar를 그리는데 필요한 정보를 넘겨주는 것이 맞는 방법으로 보입니다. 이러한 일련의 작업들을 <code>%&gt;%</code>를 사용하여 아래 코드를 작성하였습니다.</p>
+<p>위 melt 함수의 파라메터 중 value.name 이라는 인자에는 value 라는 이름 대신 사용하고싶은 이름을 넣을 수 있습니다. 위의 경우 mean과 sd 값이 모두 value라는 변수에 함께 저장되어 있습니다. 그런데 우리가 그려줄 값은 mean 값이고 sd 는 error bar를 그리는데에만 사용될 것입니다. 즉, y축에는 평균만 그리므로 value에서 sd 값들은 제외하고 ggplot의 aes에서 y=value라는 코드로 원하는 그래프를 그릴수 있을 것 입니다.</p>
+<p>정리해 보면 위 예에서는 melt 를 사용하기 전에 join으로 mean과 sd 값들을 하나의 value로 merge 했으나 실제로는 join 전에 먼저 melt를 사용해서 모든 평균값과 sd값들을 별개의 변수에 각각 저장하고 그 후 join으로 mean과 sd를 mean은 bar를 그리는데 사용하고 sd는 error bar를 그리는데 사용하는 것이 맞는 순서로 보입니다. 아래는 이러한 일련의 작업들을 <code>%&gt;%</code>를 사용한 코드입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_mean &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(mean) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">melt</span>(<span class="dt">value.name=</span><span class="st">&quot;mean&quot;</span>)</code></pre></div>
 <pre><code>## Using Species as id variables</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_sd &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(sd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">melt</span>(<span class="dt">value.name=</span><span class="st">&quot;sd&quot;</span>)</code></pre></div>
@@ -323,7 +327,7 @@ iris_join</code></pre></div>
 ## 10     setosa  Petal.Width 0.246 0.1053856
 ## 11 versicolor  Petal.Width 1.326 0.1977527
 ## 12  virginica  Petal.Width 2.026 0.2746501</code></pre>
-<p>위 데이터는 모든 종류의 꽃잎과 꽃받침에 대한 평균과 표준편차를 하나의 테이블로 나타낸 최종 결과입니다. 이제 ggplot을 이용하여 평균을 그리고 각각에 대한 표준편차도 error bar로 표시할 수 있게 되었습니다. 지금까지의 데이터와 위치 조정을 통해서 그려진 bar graph는 다음과 같습니다.</p>
+<p>위 데이터는 모든 종류의 꽃잎과 꽃받침에 대한 평균과 표준편차를 하나의 테이블로 나타낸 최종 결과입니다. ggplot을 이용하여 평균을 그리고 각각에 대한 표준편차도 error bar로 표시할 수 있게 되었습니다. 지금까지의 데이터와 위치 조정을 통해서 그려진 bar graph는 다음과 같습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris_join, <span class="kw">aes</span>(<span class="dt">x=</span>Species, <span class="dt">y=</span>mean, <span class="dt">fill=</span>variable)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>mean<span class="op">-</span>sd, <span class="dt">ymax=</span>mean<span class="op">+</span>sd), 
@@ -333,7 +337,152 @@ p1</code></pre></div>
 </div>
 <div id="scale-and-theme-of-ggplot2" class="section level2">
 <h2><span class="header-section-number">10.3</span> scale and theme of ggplot2</h2>
-<p>이제 ggplot의 scale과 theme에 대해서 알아봅니다.</p>
+<p>이제 ggplot의 scale과 theme에 대해서 알아봅니다. scale은 aes에서 mapping 된 x, y, 그리고 grouped 데이터들의 detail을 지정해주는 역할을 합니다. 따라서 x축, y축, 그리고 몇몇 groupping 된 그래프의 위치, 색상, 크기, 모양 등을 지정해 줍니다. 명령어의 (함수) 형태는 <code>scale_&lt;aesthetic&gt;_&lt;type&gt;</code> 형태이며 <code>&lt;aesthetic&gt;</code>과 <code>&lt;type&gt;</code>에 해당하는 (미리 지정된) 단어를 넣어주면 되겠습니다. 예를 들어 연속형 형태의 y축의 라벨링 이름을 바꾸고 싶을 경우 <code>scale_y_continuous(name=&quot;Label name&quot;)</code>과 같은 형태 입니다. 참고로 이 명령어는 각 축의 label을 바꾸는 명령어는 xlab, ylab와 같은 기능을 합니다.</p>
+<p>아래 예에서는 앞서 p1에 저장된 그래프에 scale 옵션을 더해서 p2로 저장해 보겠습니다. bar graph에 색상을 바꾸고 ylab과 xlab 그리고 전체 title과 subtitle등을 지정했습니다. 색상 지정에 대해 자세한 내용은 ?scale_fill_hue 등을 참고하세요.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 &lt;-<span class="st"> </span>p1 <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_hue</span>(<span class="dt">h =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Length/width Mean2&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Iris species2&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;IRIS Comparison&quot;</span>, <span class="dt">subtitle=</span><span class="st">&quot;Three types of iris&quot;</span>, <span class="dt">caption=</span><span class="st">&quot;Data source: xxx&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;Types&quot;</span>)
+p2</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p>이제 theme을 바꿔보겠습니다. theme은 내용은 그대로 두고 전체적인 그래프의 생김새를 꾸미는 기능으로 보면 되겠습니다. 크게 각 축의 라벨링, 배경 색상이나 모양, 범례의 모양 위치 등이 그 것 입니다. theme의 도움말에 usage를 보시면 파라메터 이름들이 직관적으로 써 있어서 좀 더 이해하기 편하실 수 있습니다. 특히 기존 만들어진 theme들을 사용할 수 있는데 이 예들은 ?theme_bw에서 보실 수 있습니다.</p>
+<p>아래는 theme_bw (black and white) 를 적용하고 거기에 더해서 사용자가 원하는 다른 모양들을 추가로 업데이트 한 예제 입니다. 이를 theme overriding이라고 하는데요 기존 있던 설정의 일부를 바꾸는 작업으로 볼 수 있습니다. p2에 추가작업을 하고 변수에 저장하지 않으므로 바로 화면에 출력 됩니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(
+    <span class="dt">text=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">14</span>),
+    <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">10</span>),
+    <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>),
+    <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>), 
+    <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,
+    <span class="co">#legend.position = c(0.1,0.9),</span>
+    <span class="dt">plot.title=</span><span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>),
+    <span class="dt">plot.subtitle=</span><span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>)
+    )</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
+</div>
+<div id="bargraph-for-96well-dataset" class="section level2">
+<h2><span class="header-section-number">10.4</span> bargraph for 96well dataset</h2>
+<p>이제 우리가 읽어들인 (비교적) 큰 데이터 (96 well plate 형광)를 가지고 bar graph와 error bar를 그려보도록 하겠습니다. 아래와 같이 먼저 데이터를 읽어 옵니다. 일곱번째 강의 시간에 작성한 코드가 (multiple_plate_excel_reader2 함수) c:\Rprog\07\read_plate.R 위치에 있습니다. 각자 맞는 위치와 파일 이름을 넣어주시면 되겠습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Rprog</span><span class="ch">\\</span><span class="st">07&quot;</span>)
+<span class="kw">source</span>(<span class="st">&quot;read_plate.R&quot;</span>)
+
+design_file_name &lt;-<span class="st"> &quot;exp_design2.xlsx&quot;</span>
+data_file_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;20171012-phenol-1.xls&quot;</span>, 
+                     <span class="st">&quot;20171012-phenol-2.xls&quot;</span>, 
+                     <span class="st">&quot;20171227-phenol-1.xls&quot;</span>, 
+                     <span class="st">&quot;20171227-phenol-2.xls&quot;</span>)
+
+mydata1 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">1</span>], <span class="dt">sheet4design=</span><span class="dv">1</span>)</code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ... and 7 more problems</code></pre>
+<pre><code>## New names:
+## * Time -&gt; Time...5
+## * Time -&gt; Time...7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata2 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">2</span>], <span class="dt">sheet4design=</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ... and 7 more problems
+## New names:
+## * Time -&gt; Time...5
+## * Time -&gt; Time...7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata3 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">3</span>], <span class="dt">sheet4design=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ... and 7 more problems
+## New names:
+## * Time -&gt; Time...5
+## * Time -&gt; Time...7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata4 &lt;-<span class="st"> </span><span class="kw">multiple_plate_excel_reader2</span>(design_file_name, data_file_names[<span class="dv">4</span>], <span class="dt">sheet4design=</span><span class="dv">4</span>)</code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ... and 7 more problems
+## New names:
+## * Time -&gt; Time...5
+## * Time -&gt; Time...7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata &lt;-<span class="st"> </span><span class="kw">rbind</span>(mydata1, mydata2, mydata3, mydata4)
+mydata2 &lt;-<span class="st"> </span>mydata
+mydata2<span class="op">$</span>concentration &lt;-<span class="st"> </span><span class="kw">as.factor</span>(mydata2<span class="op">$</span>concentration)
+<span class="kw">str</span>(mydata2)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    304 obs. of  7 variables:
+##  $ well_names   : chr  &quot;B11&quot; &quot;C11&quot; &quot;D11&quot; &quot;E11&quot; ...
+##  $ OD           : num  0.895 0.87 0.875 0.925 0.857 ...
+##  $ GFP          : num  7947 8227 15117 69073 83805 ...
+##  $ sample_names : Factor w/ 6 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 2 2 2 2 ...
+##  $ replication  : Factor w/ 4 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ drugname     : Factor w/ 1 level &quot;phenol&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ concentration: Factor w/ 11 levels &quot;0&quot;,&quot;0.05&quot;,&quot;0.1&quot;,..: 1 2 4 6 8 10 1 1 1 1 ...</code></pre>
+<p>concentration 을 as.factor로 전환해주는 이유는 x축에 그려질 bar들이 histogram이 아니고 각각 하나씩의 값을 갖는 이산형 데이터이므로 factor 형태로 바꾸어 주어야 합니다.</p>
+<p>이제 dplyr 패키지를 이용해서 반복 측정값들의 평균 GFP값과 표준편차를 구합니다. 먼저 어떤 변수를 기준으로 groupping을 할지 지정해 줍니다. 이는 replication을 제외한 모든 변수 sample_name, drugname, concentration이 되겠습니다. 그리고 summzarize로 그룹핑된 값들의 평균값을 계산합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grouped_data &lt;-<span class="st"> </span><span class="kw">group_by</span>(mydata2, sample_names, drugname, concentration)
+data_mean &lt;-<span class="st"> </span><span class="kw">summarize</span>(grouped_data, <span class="dt">gfp_mean=</span><span class="kw">mean</span>(GFP))
+<span class="kw">head</span>(data_mean)</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+## # Groups:   sample_names, drugname [1]
+##   sample_names drugname concentration gfp_mean
+##   &lt;fct&gt;        &lt;fct&gt;    &lt;fct&gt;            &lt;dbl&gt;
+## 1 1            phenol   0                4148.
+## 2 1            phenol   0.05             5648.
+## 3 1            phenol   0.1              3208 
+## 4 1            phenol   0.5              9790.
+## 5 1            phenol   1                3343 
+## 6 1            phenol   5               35226.</code></pre>
+<p>또한 에러바를 위한 표준편차 값을 구하고 위에서 학습한바와 같이 평규과 표준편차를 같은 row로 붙여주는 join을 수행합니다. 이 때 sample_name, drugname, concentration이 모두 같은 샘플끼리 평균과 표준편차를 붙여야 하므로 다음과 같이 by 뒤 위 변수들을 모두 명시해 줍니다. 참고로 data_mean과 data_sd에는 위 세개의 변수가 모두 같은 이름으로 저장되어 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data_sd &lt;-<span class="st"> </span><span class="kw">summarize</span>(grouped_data, <span class="dt">sd=</span><span class="kw">sd</span>(GFP))
+data_join &lt;-<span class="st"> </span><span class="kw">inner_join</span>(data_mean, data_sd, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample_names&quot;</span>, <span class="st">&quot;drugname&quot;</span>, <span class="st">&quot;concentration&quot;</span>))
+<span class="kw">head</span>(data_join)</code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+## # Groups:   sample_names, drugname [1]
+##   sample_names drugname concentration gfp_mean      sd
+##   &lt;fct&gt;        &lt;fct&gt;    &lt;fct&gt;            &lt;dbl&gt;   &lt;dbl&gt;
+## 1 1            phenol   0                4148.  1981. 
+## 2 1            phenol   0.05             5648.  2849. 
+## 3 1            phenol   0.1              3208     84.9
+## 4 1            phenol   0.5              9790.  7520. 
+## 5 1            phenol   1                3343    112. 
+## 6 1            phenol   5               35226. 36730.</code></pre>
+<p>이제 ggplot으로 그림을 완성하면 되며 scale과 theme을 적절히 활용하여 원하는 그래프를 그리면 되겠습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data_join, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>gfp_mean, <span class="dt">fill=</span>concentration)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">heat.colors</span>(<span class="dv">11</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">min=</span>gfp_mean<span class="op">-</span>sd, <span class="dt">max=</span>gfp_mean<span class="op">+</span>sd), <span class="dt">width=</span>.<span class="dv">2</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>))</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data_join, <span class="kw">aes</span>(<span class="dt">x=</span>sample_names, <span class="dt">y=</span>gfp_mean, <span class="dt">fill=</span>concentration)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">min=</span>gfp_mean<span class="op">-</span>sd, <span class="dt">max=</span>gfp_mean<span class="op">+</span>sd), <span class="dt">width=</span>.<span class="dv">2</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>))
+
+p1 <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_hue</span>(<span class="dt">h =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;GFP&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Concentration&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;GFP profiles for drug xxx&quot;</span>, 
+       <span class="dt">subtitle=</span><span class="st">&quot;6 samples and 11 concentrations&quot;</span>, 
+       <span class="dt">caption=</span><span class="st">&quot;Data source: xxx&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;Conc.&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(
+    <span class="dt">text=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">14</span>),
+    <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">10</span>),
+    <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>),
+    <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>), 
+    <span class="dt">plot.title=</span><span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>),
+    <span class="dt">plot.subtitle=</span><span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>)
+  )</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-142-2.png" width="672" /></p>
 
 </div>
 </div>
