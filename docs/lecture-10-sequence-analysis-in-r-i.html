@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>3 Lecture 02 - R basics I | [2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
+  <title>11 Lecture 10 - Sequence analysis in R I | [2019 UST 일반강의] R 프로그래밍과 데이터 분석</title>
   <meta name="description" content="2019년 UST 강의 R 프로그래밍 웹사이트">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="3 Lecture 02 - R basics I | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta property="og:title" content="11 Lecture 10 - Sequence analysis in R I | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="https://greendaygh.github.io/Rprog2019/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Lecture 02 - R basics I | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
+  <meta name="twitter:title" content="11 Lecture 10 - Sequence analysis in R I | [2019 UST 일반강의] R 프로그래밍과 데이터 분석" />
   
   <meta name="twitter:description" content="2019년 UST 강의 R 프로그래밍 웹사이트" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="lecture-01-r-introduction.html">
-<link rel="next" href="lecture-03-r-basics-ii.html">
+<link rel="prev" href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -187,23 +187,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="lecture-02---r-basics-i" class="section level1">
-<h1><span class="header-section-number">3</span> Lecture 02 - R basics I</h1>
-<div id="exercise-2-1-who-function" class="section level2">
-<h2><span class="header-section-number">3.1</span> exercise 2-1: who function</h2>
-<p>함수를 만들고 사용하는 실습입니다. name 함수를 이용하여 벡터 값들에 대한 이름을 할당할 수 있으며 who 라는 이름의 함수를 생성하여 input 파라메터의 값 중 50 이상의 사람들에 대한 인덱스를 얻고 (which), 이들의</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ages &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">21</span>, <span class="dv">55</span>, <span class="dv">23</span>, <span class="dv">53</span>)
-<span class="kw">names</span>(ages) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;James&quot;</span>,<span class="st">&quot;Sara&quot;</span>, <span class="st">&quot;Lilly&quot;</span>)
+<div id="lecture-10---sequence-analysis-in-r-i" class="section level1">
+<h1><span class="header-section-number">11</span> Lecture 10 - Sequence analysis in R I</h1>
+<p>강의 노트 <a href="https://github.com/greendaygh/2019-R-programming/blob/master/10-Rprog.pdf">Lecture note</a></p>
+<p>이번 시간부터는 R을 이용한 서열분석에 대해서 알아보겠습니다. 지난 시간까지 배운 내용은 함수를 만들고 사용하는 법과 ggplot2 패키지를 이용한 그래프 그리는 방법 그리고 dplyr 패키지를 이용한 데이터 재구성 방법 등에 대해서 배웠습니다. R을 이용한 서열 분석도 기본적으로는 패키지를 사용하는 방법에 관한 내용입니다. 서열을 다루기 위한 기본 툴은 Biostrings 입니다. 그리고 NCBI 데이터를 활용하기 위한 reutils와 다음 시간에 배울 서열 분석 툴인 DECIPER를 배우게 되겠습니다.</p>
+<p>수업시간에 설명 드린것 처럼 R로 생물학 데이터를 분석하기 위해서는 Bioconductor라는 사이트를 먼저 이해해야 합니다. R 기반의 생물정보학 툴과 데이터 그리고 분석 방법 등을 공유하고 제공하는 곳으로 대부분의 생물학 관련 패키지도 이 곳에서 얻을 수 있습니다. 강의노트와 수업시간 설명드린 내용을 참고하시면 되겠습니다.</p>
+<div id="biostrings-package-for-sequence-analysis" class="section level2">
+<h2><span class="header-section-number">11.1</span> Biostrings package for sequence analysis</h2>
+<p>먼저 Biostrings는 아래와 같이 Bioconductor에서 제공하는 코드를 이용해서 설치할 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))
+    <span class="kw">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)
 
-who &lt;-<span class="st"> </span><span class="cf">function</span>(input){
-  greater_than_fifty_index &lt;-<span class="st"> </span><span class="kw">which</span>(input <span class="op">&gt;</span><span class="st"> </span><span class="dv">50</span>)
-  greater_numbers &lt;-<span class="st"> </span>input[greater_than_fifty_index]
-  greater_names &lt;-<span class="st"> </span><span class="kw">names</span>(greater_numbers)
-  <span class="kw">return</span>(greater_names)
-}
+BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;Biostrings&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Biostrings)</code></pre></div>
+<pre><code>## Warning: package &#39;Biostrings&#39; was built under R version 3.5.2</code></pre>
+<p>Biostrings 패키지는 기본적으로 <code>XString, XStringSet, XStringViews</code> 3가지의 class를 정의하고 있습니다. XString은 DNA나 RNA, AA 등 생물학적 서열 한 가닥을 다루기위한 클래스이며 XStringSet은 여러 가닥을 다루기위한 클래스 입니다.</p>
+<p>여기서 참고로 class의 개념을 좀 더 확실히 이해하고 가는 것이 좋습니다. 우리가 배운 class는 vector, array, data.frame, matrix, list, factor 정도가 있습니다. 이들은 data type이나 object type 등으로 불리우며 사용자가 임의로 새로운 class를 정의할 수 있습니다 (numeric, logical, character 등은 core data type 또는 mode라고 부릅니다). XString 또한 개발자들이 만들어 놓은 object type들 중 하나로 생각하시면 됩니다.</p>
+<p>다음 predefined constants 들은 Biostrings 패키지를 로드하면 자동으로 저장되는 변수들로 생물학적 서열을 미리 정의해 놓았습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DNA_BASES</code></pre></div>
+<pre><code>## [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DNA_ALPHABET</code></pre></div>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;M&quot; &quot;R&quot; &quot;W&quot; &quot;S&quot; &quot;Y&quot; &quot;K&quot; &quot;V&quot; &quot;H&quot; &quot;D&quot; &quot;B&quot; &quot;N&quot; &quot;-&quot; &quot;+&quot;
+## [18] &quot;.&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">IUPAC_CODE_MAP</code></pre></div>
+<pre><code>##      A      C      G      T      M      R      W      S      Y      K 
+##    &quot;A&quot;    &quot;C&quot;    &quot;G&quot;    &quot;T&quot;   &quot;AC&quot;   &quot;AG&quot;   &quot;AT&quot;   &quot;CG&quot;   &quot;CT&quot;   &quot;GT&quot; 
+##      V      H      D      B      N 
+##  &quot;ACG&quot;  &quot;ACT&quot;  &quot;AGT&quot;  &quot;CGT&quot; &quot;ACGT&quot;</code></pre>
+<p>위 변수들을 이용하면 다음처럼 랜덤하게 DNA 서열을 얻을 수 있습니다. <code>DNA_BASES</code>가 4개 길이를 갖는 벡터인데 이 중 10개를 뽑으려면 <code>replace=T</code>로 해야 합니다. <code>paste</code>함수는 문자열을 붙이는 기능을 하며 서열을 다루는데 필수인 함수로 그 사용법을 정확히 알아두면 좋습니다. help 페이지를 보면 sep과 collapse라는 두 개의 파라메터를 갖는데요 이 두 파라메터의 용도는 sep의 경우 서로 다른 문자열을 붙일 때 (즉 다른 변수에 저장된 여러 문자열) 어떤 문자를 사이에 넣을지를 결정하는 파라메터이고 collapse는 한 변수에 저장된 여러 문자열을 붙일 때 사이에 넣는 문자를 결정하는 파라메터 입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="dt">replace =</span> T)
+x0</code></pre></div>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;A&quot; &quot;C&quot; &quot;C&quot; &quot;G&quot; &quot;C&quot; &quot;A&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1 &lt;-<span class="st"> </span><span class="kw">paste</span>(x0, <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
+x1</code></pre></div>
+<pre><code>## [1] &quot;ACGTACCGCA&quot;</code></pre>
+<p>XString 클래스 특히 DNAString 클래스의 사용법은 다음 코드를 통해 익힐 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="dt">replace =</span> T), <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
+x1 =<span class="st"> </span><span class="kw">DNAString</span>(x0)
+<span class="kw">class</span>(x0)
+<span class="kw">class</span>(x1)
+<span class="kw">length</span>(x1)
+<span class="kw">toString</span>(x1)
+<span class="kw">complement</span>(x1)
+Biostrings<span class="op">::</span><span class="kw">complement</span>(x1)
+<span class="kw">reverseComplement</span>(x1)
 
-<span class="kw">who</span>(ages)</code></pre></div>
-<pre><code>## [1] &quot;James&quot; &quot;Lilly&quot;</code></pre>
+## indexing
+x1[<span class="dv">1</span>]
+x1[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
+<span class="kw">subseq</span>(x1, <span class="dt">start=</span><span class="dv">3</span>, <span class="dt">end=</span><span class="dv">5</span>)
+<span class="kw">subseq</span>(x1, <span class="dv">3</span>, <span class="dv">5</span>)
+
+## letter frequency
+<span class="kw">alphabetFrequency</span>(x1, <span class="dt">baseOnly=</span><span class="ot">TRUE</span>, <span class="dt">as.prob=</span><span class="ot">TRUE</span>)
+<span class="kw">letterFrequency</span>(x1, <span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">as.prob=</span><span class="ot">TRUE</span>)</code></pre></div>
 
 </div>
 </div>
@@ -212,8 +249,8 @@ who &lt;-<span class="st"> </span><span class="cf">function</span>(input){
           </div>
         </div>
       </div>
-<a href="lecture-01-r-introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lecture-03-r-basics-ii.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

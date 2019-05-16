@@ -1,0 +1,92 @@
+---
+title: "10"
+author: "Haseong"
+date: "2019년 5월 15일"
+output: html_document
+---
+
+# Lecture 10 - Sequence analysis in R I
+
+강의 노트 
+[Lecture note](https://github.com/greendaygh/2019-R-programming/blob/master/10-Rprog.pdf)  
+
+이번 시간부터는 R을 이용한 서열분석에 대해서 알아보겠습니다. 지난 시간까지 배운 내용은 함수를 만들고 사용하는 법과 ggplot2 패키지를 이용한 그래프 그리는 방법 그리고 dplyr 패키지를 이용한 데이터 재구성 방법 등에 대해서 배웠습니다. R을 이용한 서열 분석도 기본적으로는 패키지를 사용하는 방법에 관한 내용입니다. 서열을 다루기 위한 기본 툴은 Biostrings 입니다. 그리고 NCBI 데이터를 활용하기 위한 reutils와 다음 시간에 배울 서열 분석 툴인 DECIPER를 배우게 되겠습니다.
+
+수업시간에 설명 드린것 처럼 R로 생물학 데이터를 분석하기 위해서는 Bioconductor라는 사이트를 먼저 이해해야 합니다. R 기반의 생물정보학 툴과 데이터 그리고 분석 방법 등을 공유하고 제공하는 곳으로 대부분의 생물학 관련 패키지도 이 곳에서 얻을 수 있습니다. 강의노트와 수업시간 설명드린 내용을 참고하시면 되겠습니다. 
+
+## Biostrings package for sequence analysis 
+
+먼저 Biostrings는 아래와 같이 Bioconductor에서 제공하는 코드를 이용해서 설치할 수 있습니다.  
+```{r eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Biostrings")
+```
+
+```{r message=F}
+library(Biostrings)
+```
+
+Biostrings 패키지는 기본적으로 ```XString, XStringSet, XStringViews``` 3가지의 class를 정의하고 있습니다. XString은 DNA나 RNA, AA 등 생물학적 서열 한 가닥을 다루기위한 클래스이며 XStringSet은 여러 가닥을 다루기위한 클래스 입니다. 
+
+여기서 참고로 class의 개념을 좀 더 확실히 이해하고 가는 것이 좋습니다. 우리가 배운 class는 vector, array, data.frame, matrix, list, factor 정도가 있습니다. 이들은 data type이나 object type 등으로 불리우며 사용자가 임의로 새로운 class를 정의할 수 있습니다 (numeric, logical, character 등은 core data type 또는 mode라고 부릅니다). XString 또한 개발자들이 만들어 놓은 object type들 중 하나로 생각하시면 됩니다. 
+
+다음 predefined constants 들은 Biostrings 패키지를 로드하면 자동으로 저장되는 변수들로 생물학적 서열을 미리 정의해 놓았습니다. 
+
+```{r}
+DNA_BASES
+DNA_ALPHABET
+IUPAC_CODE_MAP
+```
+
+위 변수들을 이용하면 다음처럼 랜덤하게 DNA 서열을 얻을 수 있습니다. ```DNA_BASES```가 4개 길이를 갖는 벡터인데 이 중 10개를 뽑으려면 ```replace=T```로 해야 합니다. ```paste```함수는 문자열을 붙이는 기능을 하며 서열을 다루는데 필수인 함수로 그 사용법을 정확히 알아두면 좋습니다. help 페이지를 보면 sep과 collapse라는 두 개의 파라메터를 갖는데요 이 두 파라메터의 용도는 sep의 경우 서로 다른 문자열을 붙일 때 (즉 다른 변수에 저장된 여러 문자열) 어떤 문자를 사이에 넣을지를 결정하는 파라메터이고 collapse는 한 변수에 저장된 여러 문자열을 붙일 때 사이에 넣는 문자를 결정하는 파라메터 입니다. 
+
+```{r}
+x0 <- sample(DNA_BASES, 10, replace = T)
+x0
+x1 <- paste(x0, collapse="")
+x1
+```
+
+XString 클래스 특히 DNAString 클래스의 사용법은 다음 코드를 통해 익힐 수 있습니다. 
+
+```{r eval=FALSE}
+x0 <- paste(sample(DNA_BASES, 10, replace = T), collapse="")
+x1 = DNAString(x0)
+class(x0)
+class(x1)
+length(x1)
+toString(x1)
+complement(x1)
+Biostrings::complement(x1)
+reverseComplement(x1)
+
+## indexing
+x1[1]
+x1[1:3]
+subseq(x1, start=3, end=5)
+subseq(x1, 3, 5)
+
+## letter frequency
+alphabetFrequency(x1, baseOnly=TRUE, as.prob=TRUE)
+letterFrequency(x1, c("G", "C"), as.prob=TRUE)
+
+```
+
+
+## Exercise 10-1
+
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
