@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-05-17">
+<meta name="date" content="2019-05-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -168,8 +168,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.4" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#bargraph-for-96well-dataset"><i class="fa fa-check"></i><b>10.4</b> bargraph for 96well dataset</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html"><i class="fa fa-check"></i><b>11</b> Lecture 10 - Sequence analysis in R I</a><ul>
-<li class="chapter" data-level="11.1" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#biostrings-package-for-sequence-analysis"><i class="fa fa-check"></i><b>11.1</b> Biostrings package for sequence analysis</a></li>
+<li class="chapter" data-level="11.1" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#biostrings-package-for-sequence-analysis"><i class="fa fa-check"></i><b>11.1</b> Biostrings package for sequence analysis</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#exercise-10-1"><i class="fa fa-check"></i><b>11.1.1</b> Exercise 10-1</a></li>
+<li class="chapter" data-level="11.1.2" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#exercise-10-2"><i class="fa fa-check"></i><b>11.1.2</b> Exercise 10-2</a></li>
+<li class="chapter" data-level="11.1.3" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#excercise-10-3"><i class="fa fa-check"></i><b>11.1.3</b> Excercise 10-3</a></li>
 </ul></li>
+<li class="chapter" data-level="11.2" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#download-sequence-information-from-ncbi"><i class="fa fa-check"></i><b>11.2</b> Download sequence information from NCBI</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="lecture-11-sequence-analysis-in-r-ii.html"><a href="lecture-11-sequence-analysis-in-r-ii.html"><i class="fa fa-check"></i><b>12</b> Lecture 11 - Sequence analysis in R II</a></li>
 </ul>
 
       </nav>
@@ -286,10 +292,10 @@ maze</code></pre></div>
 ## [1,]    1    1    1    1    1    1    1    1
 ## [2,]    1    0    0    0    0    0    0    1
 ## [3,]    1    0    0    0    0    0    1    1
-## [4,]    1    0    0    0    0    0    0    1
-## [5,]    1    1    0    0    0    0    0    1
-## [6,]    1    0    1    0    0    1    1    1
-## [7,]    1    0    0    0    0    1    0    1
+## [4,]    1    0    0    1    0    0    0    1
+## [5,]    1    0    0    0    0    0    0    1
+## [6,]    1    1    0    0    0    0    0    1
+## [7,]    1    0    1    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 <p>이제 위 코드를 활용해서 maze matrix 맵을 만드는 함수인 generate_maze 를 작성해 봅니다. 입력 파라메터는 n 하나로 가로 또는 세로의 (정사각형) 갯수를 의미합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_maze &lt;-<span class="st"> </span><span class="cf">function</span>(n){
@@ -308,11 +314,11 @@ mymaze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
 ## [2,]    1    0    0    0    0    0    0    1
-## [3,]    1    0    0    0    0    0    0    1
+## [3,]    1    0    0    0    1    0    0    1
 ## [4,]    1    0    0    0    0    0    0    1
-## [5,]    1    0    0    0    1    0    0    1
+## [5,]    1    0    0    0    0    0    0    1
 ## [6,]    1    0    0    0    0    0    0    1
-## [7,]    1    0    0    0    0    0    1    1
+## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 </div>
 <div id="draw-blocks-and-walls" class="section level2">

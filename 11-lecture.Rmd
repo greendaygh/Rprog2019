@@ -1,0 +1,24 @@
+---
+title: "11"
+author: "Haseong"
+date: "2019년 5월 29일"
+output: html_document
+---
+
+# Lecture 11 - Sequence analysis in R II
+
+강의 노트 
+[Lecture note]
+
+R을 이용한 서열분석 두 번째 시간입니다. 지난시간 NCBI 데이터를 활용하기 위한 reutils에 대한 내용에 이어서 서열 데이터를 다루기 위한 방법들을 배우도록 하겠습니다. 
+
+설치 필요 패키지 (사전 설치 필요). 설치는 다음 패키지들을 CRAN (RStudio 패키지 설치) 또는 Bioconductor 사이트에서 검색 후 지시에 따라 설치하시면 되겠습니다.  
+  
+genbankr  
+GenomicRanges  
+ggbio  
+msa  
+seqinr  
+ape  
+
+  

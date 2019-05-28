@@ -25,7 +25,7 @@
 <meta name="author" content="Haseong Kim">
 
 
-<meta name="date" content="2019-05-17">
+<meta name="date" content="2019-05-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html">
-
+<link rel="next" href="lecture-11-sequence-analysis-in-r-ii.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -168,8 +168,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.4" data-path="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html"><a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html#bargraph-for-96well-dataset"><i class="fa fa-check"></i><b>10.4</b> bargraph for 96well dataset</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html"><i class="fa fa-check"></i><b>11</b> Lecture 10 - Sequence analysis in R I</a><ul>
-<li class="chapter" data-level="11.1" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#biostrings-package-for-sequence-analysis"><i class="fa fa-check"></i><b>11.1</b> Biostrings package for sequence analysis</a></li>
+<li class="chapter" data-level="11.1" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#biostrings-package-for-sequence-analysis"><i class="fa fa-check"></i><b>11.1</b> Biostrings package for sequence analysis</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#exercise-10-1"><i class="fa fa-check"></i><b>11.1.1</b> Exercise 10-1</a></li>
+<li class="chapter" data-level="11.1.2" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#exercise-10-2"><i class="fa fa-check"></i><b>11.1.2</b> Exercise 10-2</a></li>
+<li class="chapter" data-level="11.1.3" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#excercise-10-3"><i class="fa fa-check"></i><b>11.1.3</b> Excercise 10-3</a></li>
 </ul></li>
+<li class="chapter" data-level="11.2" data-path="lecture-10-sequence-analysis-in-r-i.html"><a href="lecture-10-sequence-analysis-in-r-i.html#download-sequence-information-from-ncbi"><i class="fa fa-check"></i><b>11.2</b> Download sequence information from NCBI</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="lecture-11-sequence-analysis-in-r-ii.html"><a href="lecture-11-sequence-analysis-in-r-ii.html"><i class="fa fa-check"></i><b>12</b> Lecture 11 - Sequence analysis in R II</a></li>
 </ul>
 
       </nav>
@@ -217,11 +223,11 @@ BiocManager<span class="op">::</span><span class="kw">install</span>(<span class
 <p>위 변수들을 이용하면 다음처럼 랜덤하게 DNA 서열을 얻을 수 있습니다. <code>DNA_BASES</code>가 4개 길이를 갖는 벡터인데 이 중 10개를 뽑으려면 <code>replace=T</code>로 해야 합니다. <code>paste</code>함수는 문자열을 붙이는 기능을 하며 서열을 다루는데 필수인 함수로 그 사용법을 정확히 알아두면 좋습니다. help 페이지를 보면 sep과 collapse라는 두 개의 파라메터를 갖는데요 이 두 파라메터의 용도는 sep의 경우 서로 다른 문자열을 붙일 때 (즉 다른 변수에 저장된 여러 문자열) 어떤 문자를 사이에 넣을지를 결정하는 파라메터이고 collapse는 한 변수에 저장된 여러 문자열을 붙일 때 사이에 넣는 문자를 결정하는 파라메터 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="dt">replace =</span> T)
 x0</code></pre></div>
-<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;A&quot; &quot;C&quot; &quot;C&quot; &quot;G&quot; &quot;C&quot; &quot;A&quot;</code></pre>
+<pre><code>##  [1] &quot;G&quot; &quot;T&quot; &quot;C&quot; &quot;A&quot; &quot;A&quot; &quot;G&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;T&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1 &lt;-<span class="st"> </span><span class="kw">paste</span>(x0, <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
 x1</code></pre></div>
-<pre><code>## [1] &quot;ACGTACCGCA&quot;</code></pre>
-<p>XString 클래스 특히 DNAString 클래스의 사용법은 다음 코드를 통해 익힐 수 있습니다.</p>
+<pre><code>## [1] &quot;GTCAAGCGTT&quot;</code></pre>
+<p>XString 클래스 특히 DNAString 클래스의 사용법은 다음 코드를 통해 익힐 수 있습니다. <code>length</code> 함수는 핵산의 갯수를 (DNAStringSet 타입의 변수에서 length는 DNA 가닥의 갯수이며 핵산의 갯수는 <code>nchar</code>함수로 얻어낼 수 있습니다. <code>toString</code>은 DNAString 타입을 단순 문자열로 변환해주는 함수이며 상보서열, 역상보서열 등의 정보도 <code>complement</code>, <code>reverseComplement</code> 등을 사용하여 찾아낼 수 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="dt">replace =</span> T), <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
 x1 =<span class="st"> </span><span class="kw">DNAString</span>(x0)
 <span class="kw">class</span>(x0)
@@ -230,9 +236,9 @@ x1 =<span class="st"> </span><span class="kw">DNAString</span>(x0)
 <span class="kw">toString</span>(x1)
 <span class="kw">complement</span>(x1)
 Biostrings<span class="op">::</span><span class="kw">complement</span>(x1)
-<span class="kw">reverseComplement</span>(x1)
-
-## indexing
+<span class="kw">reverseComplement</span>(x1)</code></pre></div>
+<p>DNAString의 인덱싱은 vector (string)과 같으며 DNAStringSet은 list의 인덱싱과 같습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## indexing
 x1[<span class="dv">1</span>]
 x1[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
 <span class="kw">subseq</span>(x1, <span class="dt">start=</span><span class="dv">3</span>, <span class="dt">end=</span><span class="dv">5</span>)
@@ -241,6 +247,174 @@ x1[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
 ## letter frequency
 <span class="kw">alphabetFrequency</span>(x1, <span class="dt">baseOnly=</span><span class="ot">TRUE</span>, <span class="dt">as.prob=</span><span class="ot">TRUE</span>)
 <span class="kw">letterFrequency</span>(x1, <span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">as.prob=</span><span class="ot">TRUE</span>)</code></pre></div>
+<div id="exercise-10-1" class="section level3">
+<h3><span class="header-section-number">11.1.1</span> Exercise 10-1</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">sample</span>(DNA_BASES, <span class="dv">30</span>, <span class="dt">replace =</span> T), <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
+x0
+x1 &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;ATG&quot;</span>, x0, <span class="st">&quot;TAG&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+x1
+x1 &lt;-<span class="st"> </span><span class="kw">DNAString</span>(x1)
+x1
+<span class="kw">class</span>(x1)
+<span class="kw">complement</span>(x1)
+<span class="kw">translate</span>(x1)</code></pre></div>
+<p>DNAStringSet class는 여러개의 DNAString 을 모아 놓은 집합이라고 보면 됩니다. <code>length</code> 함수는 DNA string의 갯수이며 <code>width</code> 또는 <code>nchar</code> 함수로 각 string의 길이를 구할 수 있으며 이 외 대부분의 DNAString 에서 사용되는 함수가 동일하게 사용될 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CTC-NACCAGTAT&quot;</span>, <span class="st">&quot;TTGA&quot;</span>, <span class="st">&quot;TACCTAGAG&quot;</span>)
+x1 &lt;-<span class="st"> </span><span class="kw">DNAStringSet</span>(x0)
+<span class="kw">class</span>(x0)
+<span class="kw">class</span>(x1)
+<span class="kw">names</span>(x1)
+<span class="kw">names</span>(x1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)
+<span class="kw">length</span>(x1)
+<span class="kw">width</span>(x1)
+<span class="kw">subseq</span>(x1, <span class="dv">2</span>, <span class="dv">4</span>)
+x1[[<span class="dv">1</span>]]
+x1[<span class="dv">1</span>]
+<span class="kw">alphabetFrequency</span>(x1, <span class="dt">baseOnly=</span><span class="ot">TRUE</span>, <span class="dt">as.prob=</span><span class="ot">TRUE</span>)
+<span class="kw">letterFrequency</span>(x1, <span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">as.prob=</span><span class="ot">TRUE</span>)</code></pre></div>
+</div>
+<div id="exercise-10-2" class="section level3">
+<h3><span class="header-section-number">11.1.2</span> Exercise 10-2</h3>
+<p>이번 예제는 앞서 10-1과 같은 방법으로 10개의 서열을 만드는 것입니다. 아래는 가장 직관적으로 생각할 수 있는 <code>for</code>를 이용한 방법입니다. 즉, 10개 저장소를 갖는 x0 변수를 미리 생성해 두고 for 문을 돌면서 앞서 10-1예제와 같은 방법으로 서열을 하나씩 만들어 저장하는 방법입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;&quot;</span>, <span class="dv">10</span>)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x0)){
+  tmp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">sample</span>(DNA_BASES, <span class="dv">30</span>, <span class="dt">replace =</span> T), <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
+  x0[i] &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;ATG&quot;</span>, tmp, <span class="st">&quot;TAG&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+}
+x0</code></pre></div>
+<pre><code>##  [1] &quot;ATGAGCCGGTGCCGACCGGAAGGTCCCCATCGCTAG&quot;
+##  [2] &quot;ATGTGTCAATTTCATCTTCAATTTTCATCTAATTAG&quot;
+##  [3] &quot;ATGGGTATAGGCCGGGACTGGAAGTACATTTAATAG&quot;
+##  [4] &quot;ATGGTGAGCTCCTACCCCACAGGGAAGGAAGAGTAG&quot;
+##  [5] &quot;ATGTAGCCCCTATTCAGAGCAATCGGATGCCATTAG&quot;
+##  [6] &quot;ATGGTCGAGTATAACGTCCTGCTTAGTCACCCATAG&quot;
+##  [7] &quot;ATGGTCAGCACGCGCAGGAGCTATTGCGCTTATTAG&quot;
+##  [8] &quot;ATGGCGCAGTTATTATAAGTAGTGTCGAACACGTAG&quot;
+##  [9] &quot;ATGCTTGACACGCTTCTGTTTTACATATCTAGCTAG&quot;
+## [10] &quot;ATGAAAGTTCCTTACCAACTATAATCTATATCATAG&quot;</code></pre>
+<p>위 코드를 지금까지 배운 내용들에 있는 편리한 기능을 사용해서 만들어 보겠습니다. 위 코드는 random dna를 만들 때 길이만 다를뿐 같은 코드를 반복해서 사용하고 있습니다. 이럴 경우 DNA 길이를 사용자가 정해주도록 input parameter로 하고 해당 파라메터를 받아 DNA를 만들어 주는 함수를 만들어 사용하면 편리합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_dna &lt;-<span class="st"> </span><span class="cf">function</span>(len){
+  tmp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">sample</span>(DNA_BASES, len, <span class="dt">replace =</span> T), <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
+  x0[i] &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;ATG&quot;</span>, tmp, <span class="st">&quot;TAG&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+  <span class="kw">return</span>(x0)
+}</code></pre></div>
+<p>파라메터로 넘겨진 len 값이 sample 함수의 len에 사용된 것을 참고하세요. 또한 다음처럼 파이프오퍼레이터 <code>%&gt;%</code>를 사용해서 함수 내부 코드를 한 줄로 바꿀수도 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_dna &lt;-<span class="st"> </span><span class="cf">function</span>(len){
+  DNA_BASES <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample</span>(len, <span class="dt">replace=</span>T) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;ATG&quot;</span>, ., <span class="st">&quot;TAG&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+}</code></pre></div>
+<p>이제 길이 30bp짜리 10개의 서열을 반복해서 만들 때 위 함수를 앞서와 같이 for문을 이용하여 10번 반복해서 실행해 주면 같은 결과를 얻습니다. 위와 같이 함수를 만들어 두면 언제든 DNA 서열을 만들 때 재사용 할 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;&quot;</span>, <span class="dv">10</span>)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x0)){
+  x0[i] &lt;-<span class="st"> </span><span class="kw">random_dna</span>(<span class="dv">30</span>)
+}
+x0</code></pre></div>
+<pre><code>##  [1] &quot;ATGAATAGCGACATCTTTCCTAGAGCTAACAGATAG&quot;
+##  [2] &quot;ATGGTACCACGGCCTGTAATATGGTTTTCACAATAG&quot;
+##  [3] &quot;ATGAGTCCCTGTTGTACATTGCCACTAGGGCAGTAG&quot;
+##  [4] &quot;ATGTTGCGGCCTACCAACAACTCAACCCTATGGTAG&quot;
+##  [5] &quot;ATGGAAAGCTGGCCGAGGGAGAAATGGTGGTCGTAG&quot;
+##  [6] &quot;ATGTCGCGAGCATAGCGCTCCTTCGTCGAGATGTAG&quot;
+##  [7] &quot;ATGTGATAGGTACAAAAAGAACAGAGCAGCTTTTAG&quot;
+##  [8] &quot;ATGACTGCGCCAATCTTGGGCGCCCGTTCTTATTAG&quot;
+##  [9] &quot;ATGGCGGCGTCAAACCCGGGACGGAGGGTGTCGTAG&quot;
+## [10] &quot;ATGGATAGTACTTGGACATGCTGGAAAACCTCGTAG&quot;</code></pre>
+<p>그런데 R에는 apply 와 같은 행렬연산 함수가 있어서 for문을 사용하지 않고 편리하게 반복문을 실행할 수 있습니다. <code>replicate</code> 함수는 apply와 같은 기능으로 list나 vector 변수에 대해서 사용할 수 있습니다. 즉, 다음과 같이 사용자가 원하는 함수를 반복해서 실행하고 반복 수 만큼의 길이를 갖는 결과를 반환합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10</span>, <span class="kw">random_dna</span>(<span class="dv">30</span>))
+x0</code></pre></div>
+<pre><code>##  [1] &quot;ATGTGGGCGGGCTGTCCTAGGTCTACGGTCATCTAG&quot;
+##  [2] &quot;ATGCTCGCAACCGCCATAATATTTTCGTATTTATAG&quot;
+##  [3] &quot;ATGAGAACGCAGTGTGGACCCTCTTTTCTTTTGTAG&quot;
+##  [4] &quot;ATGACTCAGCAGGTCTAGACGGCTTTAGCCATATAG&quot;
+##  [5] &quot;ATGTTGTTCCACTCGCGGATTCGAACGTGCGGTTAG&quot;
+##  [6] &quot;ATGGATTATCTTTGCCCCTTTTGAAAGCATCGTTAG&quot;
+##  [7] &quot;ATGCTCTGCTGTGACTGTTCTCCTGGCTCGTCGTAG&quot;
+##  [8] &quot;ATGGGCGTTATTGAAACTGACATTTCAACATGATAG&quot;
+##  [9] &quot;ATGCTAGTGGACGTATGTCTTAAGCCACTCGCATAG&quot;
+## [10] &quot;ATGACAACTGTTGGCTCCCTAAGGGATGATGGCTAG&quot;</code></pre>
+<p>위 x0 스트링들을 XStringSet으로 바꾸고 GC 비율을 구한 후 ggplot을 이용하여 bargraph를 그리는 코드는 다음과 같습니다. gc_ratio가 G와 C의 비율값을 저장한 10x2 테이블이므로 x축에 10개의 서열과 각 서열의 GC비율을 나타내고 y축에 비율 값을 그리는 것으로 생각한 후 ggplot의 aes와 파라메터를 적절히 지정해 줍니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1 &lt;-<span class="st"> </span><span class="kw">DNAStringSet</span>(x0)
+gc_ratio &lt;-<span class="st"> </span><span class="kw">letterFrequency</span>(x1, <span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">as.prob=</span><span class="ot">TRUE</span>)
+gc_ratio_melt &lt;-<span class="st"> </span><span class="kw">melt</span>(gc_ratio)
+<span class="kw">print</span>(gc_ratio_melt)</code></pre></div>
+<pre><code>##    Var1 Var2     value
+## 1     1    G 0.3611111
+## 2     2    G 0.1388889
+## 3     3    G 0.2500000
+## 4     4    G 0.2500000
+## 5     5    G 0.3055556
+## 6     6    G 0.1944444
+## 7     7    G 0.2777778
+## 8     8    G 0.2222222
+## 9     9    G 0.2500000
+## 10   10    G 0.3055556
+## 11    1    C 0.2222222
+## 12    2    C 0.2222222
+## 13    3    C 0.1944444
+## 14    4    C 0.2222222
+## 15    5    C 0.2222222
+## 16    6    C 0.1944444
+## 17    7    C 0.2777778
+## 18    8    C 0.1388889
+## 19    9    C 0.2222222
+## 20   10    C 0.1944444</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(gc_ratio_melt, <span class="kw">aes</span>(<span class="dt">x=</span>Var1, <span class="dt">y=</span>value, <span class="dt">fill=</span>Var2)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)</code></pre></div>
+<p><img src="Rprog_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
+<p>Biostrings의 마지막 class인 XStringView는 XString class의 DNA서열을 사용자가 원하는대로 볼 수 있는 인터페이스를 제공합니다. 사용법은 다음과 같습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x2 &lt;-<span class="st"> </span>x1[[<span class="dv">1</span>]]
+<span class="kw">Views</span>(x2, <span class="dt">start=</span><span class="dv">1</span>, <span class="dt">width=</span><span class="dv">20</span>)
+<span class="kw">Views</span>(x2, <span class="dt">start=</span><span class="dv">1</span>, <span class="dt">end=</span><span class="dv">4</span>)
+<span class="kw">Views</span>(x2, <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">end=</span><span class="dv">4</span>)
+<span class="kw">Views</span>(x2, <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="dt">width=</span><span class="dv">20</span>)
+<span class="kw">Views</span>(x2, <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="dt">width=</span><span class="dv">20</span>)</code></pre></div>
+<p>다음과 같이 한 서열에 대한 여러 부분의 서열 조각도 볼 수 있으며 <code>gaps</code> 함수는 매개변수로 주어진 서열 view의 구간을 제외한 나머지 구간의 서열을 보여주는 함수입니다. <code>successiveviews</code> 함수는 처음 서열부터 매개변수 width에 주어진 갯수 만큼의 서열을 보여주며 <code>rep()</code> 함수를 이용해서 서열의 처음부터 끝까지 보여주는 기능을 합니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v &lt;-<span class="st"> </span><span class="kw">Views</span>(x2, <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">10</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">15</span>))
+<span class="kw">gaps</span>(v)
+
+<span class="kw">successiveViews</span>(x2, <span class="dt">width=</span><span class="dv">20</span>)
+<span class="kw">successiveViews</span>(x2, <span class="dt">width=</span><span class="kw">rep</span>(<span class="dv">20</span>, <span class="dv">2</span>))
+<span class="kw">successiveViews</span>(x2, <span class="dt">width=</span><span class="kw">rep</span>(<span class="dv">20</span>, <span class="dv">3</span>))</code></pre></div>
+</div>
+<div id="excercise-10-3" class="section level3">
+<h3><span class="header-section-number">11.1.3</span> Excercise 10-3</h3>
+<p>1000bp 길이의 랜덤 DNA 서열을 만들고 40bp 단위의 길이로 보는 코드 입니다. 앞서 만들어둔 <code>random_dna()</code> 함수를 사용하면 되겠습니다. <code>successiveview</code> 함수를 사용해야 하므로 DNAString으로 변환이 필요하며 서열의 길이에 따라서 <code>rep()</code> 를 이용한 반복 횟수를 자동으로 계산하기 위해서 다음처럼 코딩할 수 있습니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">random_dna</span>(<span class="dv">1000</span>)
+x1 &lt;-<span class="st"> </span><span class="kw">DNAString</span>(x0)
+<span class="kw">successiveViews</span>(x1, <span class="dt">width=</span><span class="kw">rep</span>(<span class="dv">40</span>, (<span class="kw">nchar</span>(x1)<span class="op">/</span><span class="dv">40</span>)<span class="op">+</span><span class="dv">1</span>))</code></pre></div>
+<pre><code>##   Views on a 1006-letter DNAString subject
+## subject: ATGGTGTAGAAATCAGAGCGTAACGAATTCGT...AAGCCGGTCGAGACCCTACACATTTCGATAG
+## views:
+##      start  end width
+##  [1]     1   40    40 [ATGGTGTAGAAATCAGAGCGTAACGAATTCGTATCTTATA]
+##  [2]    41   80    40 [CACCAGTGTGCGATACAAGTGTTTGCGTGCATATGCACGG]
+##  [3]    81  120    40 [GTCGTTTTTCGTCGCAGAGCCTCCAATCCAAATACGATAA]
+##  [4]   121  160    40 [CGACGGAAAGAGAGTTTGCTTAGGTCCAAGGACCCCCATA]
+##  [5]   161  200    40 [ATATGCTGGTCCGGAGCTTAAGCGAAGAAGCATGGATGCG]
+##  ...   ...  ...   ... ...
+## [22]   841  880    40 [AGCGTCCCAGAGTGACGGTTCACACTTAACCAAATTCATT]
+## [23]   881  920    40 [ACGAACCCACGGGGATACGGGAAGCAATTCGAATGCACAA]
+## [24]   921  960    40 [CTGCAACAGAGTCTACATTCACGTGTGAAGCTACTTCAGT]
+## [25]   961 1000    40 [GCTACGAGCTGGCGCAAGCCGGTCGAGACCCTACACATTT]
+## [26]  1001 1040    40 [CGATAG                                  ]</code></pre>
+</div>
+</div>
+<div id="download-sequence-information-from-ncbi" class="section level2">
+<h2><span class="header-section-number">11.2</span> Download sequence information from NCBI</h2>
+<p>전세계 연구자들이 서열 데이터를 분석하는데 가장 많이 이용하는 사이트 중 하나가 NCBI 이며 따라서 NCBI에서는 연구자들이 데이터베이스에 접근하기위한 편리한 방법을 제공하고 있고 그 중 하나가 Entrez 입니다. R에서도 Entrez 기능을 도입한 package들이 제공되고 있으며 그 중 하나가 <code>reutils</code> 입니다. <a href="https://www.ncbi.nlm.nih.gov/books/NBK25500/" class="uri">https://www.ncbi.nlm.nih.gov/books/NBK25500/</a> 이 곳의 Downloading Full Records 를 참고하시면 좋습니다. Entrez는 대략적으로 다음 9개의 유틸리티를 제공합니다.</p>
+<p>EInfo (database statistics)<br />
+ESearch (text searches)<br />
+EPost (UID uploads)<br />
+ESummary (document summary downloads)<br />
+EFetch (data record downloads)<br />
+ELink (Entrez links)<br />
+EGQuery (global query)<br />
+ESpell (spelling suggestions)<br />
+ECitMatch (batch citation searching in PubMed)</p>
+<p>이 중 ESerach, EPost, ESummary, EFetch 등이 많이 사용하는 유틸이며 정보를 다운로드 받을 경우는 EFetch 를 주로 사용하게 됩니다. 예제로 뎅기바이러스 서열 4종을 다운로드 하겠습니다. NCBI의 accession 번호를 알 경우이며 각각에 대한 accession no.는 NC_001477, NC_001474, NC_001475 and NC_002640 입니다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">acc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NC_001477&quot;</span>, <span class="st">&quot;NC_001474&quot;</span>, <span class="st">&quot;NC_001475&quot;</span>, <span class="st">&quot;NC_002640&quot;</span>)
+ep &lt;-<span class="st"> </span><span class="kw">epost</span>(acc, <span class="st">&quot;nuccore&quot;</span>)
+ef &lt;-<span class="st"> </span><span class="kw">efetch</span>(ep, <span class="dt">retmode =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">rettype =</span> <span class="st">&quot;fasta&quot;</span>)
+nc &lt;-<span class="st"> </span><span class="kw">content</span>(ef)</code></pre></div>
 
 </div>
 </div>
@@ -249,8 +423,8 @@ x1[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
           </div>
         </div>
       </div>
-<a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="lecture-09-ggplot-dlyr-for-96well-fluorescence-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lecture-11-sequence-analysis-in-r-ii.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
