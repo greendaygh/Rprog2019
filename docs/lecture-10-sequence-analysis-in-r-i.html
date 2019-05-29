@@ -223,10 +223,10 @@ BiocManager<span class="op">::</span><span class="kw">install</span>(<span class
 <p>위 변수들을 이용하면 다음처럼 랜덤하게 DNA 서열을 얻을 수 있습니다. <code>DNA_BASES</code>가 4개 길이를 갖는 벡터인데 이 중 10개를 뽑으려면 <code>replace=T</code>로 해야 합니다. <code>paste</code>함수는 문자열을 붙이는 기능을 하며 서열을 다루는데 필수인 함수로 그 사용법을 정확히 알아두면 좋습니다. help 페이지를 보면 sep과 collapse라는 두 개의 파라메터를 갖는데요 이 두 파라메터의 용도는 sep의 경우 서로 다른 문자열을 붙일 때 (즉 다른 변수에 저장된 여러 문자열) 어떤 문자를 사이에 넣을지를 결정하는 파라메터이고 collapse는 한 변수에 저장된 여러 문자열을 붙일 때 사이에 넣는 문자를 결정하는 파라메터 입니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="dt">replace =</span> T)
 x0</code></pre></div>
-<pre><code>##  [1] &quot;G&quot; &quot;T&quot; &quot;C&quot; &quot;A&quot; &quot;A&quot; &quot;G&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;T&quot;</code></pre>
+<pre><code>##  [1] &quot;G&quot; &quot;C&quot; &quot;C&quot; &quot;G&quot; &quot;A&quot; &quot;T&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1 &lt;-<span class="st"> </span><span class="kw">paste</span>(x0, <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
 x1</code></pre></div>
-<pre><code>## [1] &quot;GTCAAGCGTT&quot;</code></pre>
+<pre><code>## [1] &quot;GCCGATAAAA&quot;</code></pre>
 <p>XString 클래스 특히 DNAString 클래스의 사용법은 다음 코드를 통해 익힐 수 있습니다. <code>length</code> 함수는 핵산의 갯수를 (DNAStringSet 타입의 변수에서 length는 DNA 가닥의 갯수이며 핵산의 갯수는 <code>nchar</code>함수로 얻어낼 수 있습니다. <code>toString</code>은 DNAString 타입을 단순 문자열로 변환해주는 함수이며 상보서열, 역상보서열 등의 정보도 <code>complement</code>, <code>reverseComplement</code> 등을 사용하여 찾아낼 수 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="dt">replace =</span> T), <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
 x1 =<span class="st"> </span><span class="kw">DNAString</span>(x0)
@@ -282,16 +282,16 @@ x1[<span class="dv">1</span>]
   x0[i] &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;ATG&quot;</span>, tmp, <span class="st">&quot;TAG&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
 }
 x0</code></pre></div>
-<pre><code>##  [1] &quot;ATGAGCCGGTGCCGACCGGAAGGTCCCCATCGCTAG&quot;
-##  [2] &quot;ATGTGTCAATTTCATCTTCAATTTTCATCTAATTAG&quot;
-##  [3] &quot;ATGGGTATAGGCCGGGACTGGAAGTACATTTAATAG&quot;
-##  [4] &quot;ATGGTGAGCTCCTACCCCACAGGGAAGGAAGAGTAG&quot;
-##  [5] &quot;ATGTAGCCCCTATTCAGAGCAATCGGATGCCATTAG&quot;
-##  [6] &quot;ATGGTCGAGTATAACGTCCTGCTTAGTCACCCATAG&quot;
-##  [7] &quot;ATGGTCAGCACGCGCAGGAGCTATTGCGCTTATTAG&quot;
-##  [8] &quot;ATGGCGCAGTTATTATAAGTAGTGTCGAACACGTAG&quot;
-##  [9] &quot;ATGCTTGACACGCTTCTGTTTTACATATCTAGCTAG&quot;
-## [10] &quot;ATGAAAGTTCCTTACCAACTATAATCTATATCATAG&quot;</code></pre>
+<pre><code>##  [1] &quot;ATGATATTTAGTCGGTTGAGAAGGCGCACGAACTAG&quot;
+##  [2] &quot;ATGTTTGCACCCTGTGGCCCAGAGGCCTTTAGATAG&quot;
+##  [3] &quot;ATGTAAACAACAGAGCTTATATACCGACTAAATTAG&quot;
+##  [4] &quot;ATGTCTAAGATGGGGCGGTCGTGAAAATCTAATTAG&quot;
+##  [5] &quot;ATGTCCAGTATGTTTGTTGTAACTGTTGCCCGGTAG&quot;
+##  [6] &quot;ATGCACTTCACATCTGCTAAGCTGAAGACGCAGTAG&quot;
+##  [7] &quot;ATGTCAGTACCGCTTACCCGACATGCCCGGCCCTAG&quot;
+##  [8] &quot;ATGTCCTTCCCGGTGTCCGTACAGAAGCGGGATTAG&quot;
+##  [9] &quot;ATGAGACAGCTTTTACATCAAATACCAGGTTTTTAG&quot;
+## [10] &quot;ATGACCTCAAAAGCACGATGTGAGTCGATTTCATAG&quot;</code></pre>
 <p>위 코드를 지금까지 배운 내용들에 있는 편리한 기능을 사용해서 만들어 보겠습니다. 위 코드는 random dna를 만들 때 길이만 다를뿐 같은 코드를 반복해서 사용하고 있습니다. 이럴 경우 DNA 길이를 사용자가 정해주도록 input parameter로 하고 해당 파라메터를 받아 DNA를 만들어 주는 함수를 만들어 사용하면 편리합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_dna &lt;-<span class="st"> </span><span class="cf">function</span>(len){
   tmp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">sample</span>(DNA_BASES, len, <span class="dt">replace =</span> T), <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)
@@ -308,55 +308,55 @@ x0</code></pre></div>
   x0[i] &lt;-<span class="st"> </span><span class="kw">random_dna</span>(<span class="dv">30</span>)
 }
 x0</code></pre></div>
-<pre><code>##  [1] &quot;ATGAATAGCGACATCTTTCCTAGAGCTAACAGATAG&quot;
-##  [2] &quot;ATGGTACCACGGCCTGTAATATGGTTTTCACAATAG&quot;
-##  [3] &quot;ATGAGTCCCTGTTGTACATTGCCACTAGGGCAGTAG&quot;
-##  [4] &quot;ATGTTGCGGCCTACCAACAACTCAACCCTATGGTAG&quot;
-##  [5] &quot;ATGGAAAGCTGGCCGAGGGAGAAATGGTGGTCGTAG&quot;
-##  [6] &quot;ATGTCGCGAGCATAGCGCTCCTTCGTCGAGATGTAG&quot;
-##  [7] &quot;ATGTGATAGGTACAAAAAGAACAGAGCAGCTTTTAG&quot;
-##  [8] &quot;ATGACTGCGCCAATCTTGGGCGCCCGTTCTTATTAG&quot;
-##  [9] &quot;ATGGCGGCGTCAAACCCGGGACGGAGGGTGTCGTAG&quot;
-## [10] &quot;ATGGATAGTACTTGGACATGCTGGAAAACCTCGTAG&quot;</code></pre>
+<pre><code>##  [1] &quot;ATGAGGAAGAATGCGTTAGAGACCCCCGACGACTAG&quot;
+##  [2] &quot;ATGCTTGGGCGACGCTTCTCGATTGCGAAGTCCTAG&quot;
+##  [3] &quot;ATGGCCCCACGCCAGTTGGAAACATTGTTTTGATAG&quot;
+##  [4] &quot;ATGTGAGGGAAGAGTATGAGATCCCTACGGATTTAG&quot;
+##  [5] &quot;ATGGACATAGGCCCCTGAGGCATAACTGGGCAGTAG&quot;
+##  [6] &quot;ATGCAGGGTTACCTGATACCTTACAAGGGCTCTTAG&quot;
+##  [7] &quot;ATGACTACTAGAAGTGCAACCACTAGGCGAGATTAG&quot;
+##  [8] &quot;ATGTCGCATCTCTCGCGGTTTGTTTATGCTCGTTAG&quot;
+##  [9] &quot;ATGTGTCGAATAGATAAATCTTAGAACGTGGTGTAG&quot;
+## [10] &quot;ATGTGTACATCGCACATCCTACGGGCAGACGCCTAG&quot;</code></pre>
 <p>그런데 R에는 apply 와 같은 행렬연산 함수가 있어서 for문을 사용하지 않고 편리하게 반복문을 실행할 수 있습니다. <code>replicate</code> 함수는 apply와 같은 기능으로 list나 vector 변수에 대해서 사용할 수 있습니다. 즉, 다음과 같이 사용자가 원하는 함수를 반복해서 실행하고 반복 수 만큼의 길이를 갖는 결과를 반환합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10</span>, <span class="kw">random_dna</span>(<span class="dv">30</span>))
 x0</code></pre></div>
-<pre><code>##  [1] &quot;ATGTGGGCGGGCTGTCCTAGGTCTACGGTCATCTAG&quot;
-##  [2] &quot;ATGCTCGCAACCGCCATAATATTTTCGTATTTATAG&quot;
-##  [3] &quot;ATGAGAACGCAGTGTGGACCCTCTTTTCTTTTGTAG&quot;
-##  [4] &quot;ATGACTCAGCAGGTCTAGACGGCTTTAGCCATATAG&quot;
-##  [5] &quot;ATGTTGTTCCACTCGCGGATTCGAACGTGCGGTTAG&quot;
-##  [6] &quot;ATGGATTATCTTTGCCCCTTTTGAAAGCATCGTTAG&quot;
-##  [7] &quot;ATGCTCTGCTGTGACTGTTCTCCTGGCTCGTCGTAG&quot;
-##  [8] &quot;ATGGGCGTTATTGAAACTGACATTTCAACATGATAG&quot;
-##  [9] &quot;ATGCTAGTGGACGTATGTCTTAAGCCACTCGCATAG&quot;
-## [10] &quot;ATGACAACTGTTGGCTCCCTAAGGGATGATGGCTAG&quot;</code></pre>
+<pre><code>##  [1] &quot;ATGAGACCTCTGGGGAAATGGACACGCAGGCACTAG&quot;
+##  [2] &quot;ATGTGGCTGCAGCGCATGTAGCGCTGCAACGCCTAG&quot;
+##  [3] &quot;ATGAATAGATAACAGTTAGGATCGCCTGACAAATAG&quot;
+##  [4] &quot;ATGAACAAGTGCATCGTCTTGACTAGTGATACCTAG&quot;
+##  [5] &quot;ATGGAGCCCAAAGCAGCATATATCCCCTCTCCCTAG&quot;
+##  [6] &quot;ATGGGTCCGCGATGTCAATGCTTAGTAGCTGTCTAG&quot;
+##  [7] &quot;ATGGTTGAGGCTTTTGAGGCGGGGAGCGCTTGGTAG&quot;
+##  [8] &quot;ATGACGGTTCCTGGGATACTCGCGACCCCACGTTAG&quot;
+##  [9] &quot;ATGATGACAACCGTGCTAACTAGTATTGCCGAATAG&quot;
+## [10] &quot;ATGACCGTCGGGGGAAGCTCGGTGCCTCGTAAATAG&quot;</code></pre>
 <p>위 x0 스트링들을 XStringSet으로 바꾸고 GC 비율을 구한 후 ggplot을 이용하여 bargraph를 그리는 코드는 다음과 같습니다. gc_ratio가 G와 C의 비율값을 저장한 10x2 테이블이므로 x축에 10개의 서열과 각 서열의 GC비율을 나타내고 y축에 비율 값을 그리는 것으로 생각한 후 ggplot의 aes와 파라메터를 적절히 지정해 줍니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1 &lt;-<span class="st"> </span><span class="kw">DNAStringSet</span>(x0)
 gc_ratio &lt;-<span class="st"> </span><span class="kw">letterFrequency</span>(x1, <span class="kw">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">as.prob=</span><span class="ot">TRUE</span>)
 gc_ratio_melt &lt;-<span class="st"> </span><span class="kw">melt</span>(gc_ratio)
 <span class="kw">print</span>(gc_ratio_melt)</code></pre></div>
 <pre><code>##    Var1 Var2     value
-## 1     1    G 0.3611111
-## 2     2    G 0.1388889
-## 3     3    G 0.2500000
-## 4     4    G 0.2500000
-## 5     5    G 0.3055556
-## 6     6    G 0.1944444
-## 7     7    G 0.2777778
-## 8     8    G 0.2222222
-## 9     9    G 0.2500000
-## 10   10    G 0.3055556
+## 1     1    G 0.3333333
+## 2     2    G 0.3333333
+## 3     3    G 0.2222222
+## 4     4    G 0.2222222
+## 5     5    G 0.1666667
+## 6     6    G 0.3055556
+## 7     7    G 0.4722222
+## 8     8    G 0.2777778
+## 9     9    G 0.2222222
+## 10   10    G 0.3611111
 ## 11    1    C 0.2222222
-## 12    2    C 0.2222222
-## 13    3    C 0.1944444
-## 14    4    C 0.2222222
-## 15    5    C 0.2222222
+## 12    2    C 0.2777778
+## 13    3    C 0.1388889
+## 14    4    C 0.1944444
+## 15    5    C 0.3611111
 ## 16    6    C 0.1944444
-## 17    7    C 0.2777778
-## 18    8    C 0.1388889
-## 19    9    C 0.2222222
-## 20   10    C 0.1944444</code></pre>
+## 17    7    C 0.1111111
+## 18    8    C 0.3055556
+## 19    9    C 0.1944444
+## 20   10    C 0.2222222</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(gc_ratio_melt, <span class="kw">aes</span>(<span class="dt">x=</span>Var1, <span class="dt">y=</span>value, <span class="dt">fill=</span>Var2)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)</code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
@@ -382,20 +382,20 @@ gc_ratio_melt &lt;-<span class="st"> </span><span class="kw">melt</span>(gc_rati
 x1 &lt;-<span class="st"> </span><span class="kw">DNAString</span>(x0)
 <span class="kw">successiveViews</span>(x1, <span class="dt">width=</span><span class="kw">rep</span>(<span class="dv">40</span>, (<span class="kw">nchar</span>(x1)<span class="op">/</span><span class="dv">40</span>)<span class="op">+</span><span class="dv">1</span>))</code></pre></div>
 <pre><code>##   Views on a 1006-letter DNAString subject
-## subject: ATGGTGTAGAAATCAGAGCGTAACGAATTCGT...AAGCCGGTCGAGACCCTACACATTTCGATAG
+## subject: ATGGCCGCTCCAGCCACTTTCTCACTGCACCG...AATCAAGTGAGATCCCTTAGGTCGGAAATAG
 ## views:
 ##      start  end width
-##  [1]     1   40    40 [ATGGTGTAGAAATCAGAGCGTAACGAATTCGTATCTTATA]
-##  [2]    41   80    40 [CACCAGTGTGCGATACAAGTGTTTGCGTGCATATGCACGG]
-##  [3]    81  120    40 [GTCGTTTTTCGTCGCAGAGCCTCCAATCCAAATACGATAA]
-##  [4]   121  160    40 [CGACGGAAAGAGAGTTTGCTTAGGTCCAAGGACCCCCATA]
-##  [5]   161  200    40 [ATATGCTGGTCCGGAGCTTAAGCGAAGAAGCATGGATGCG]
+##  [1]     1   40    40 [ATGGCCGCTCCAGCCACTTTCTCACTGCACCGGGAGTTGC]
+##  [2]    41   80    40 [AAGGACCCTTCATCTCTCGACCAGTTGGTTTGCGCTACCT]
+##  [3]    81  120    40 [CCTATGAATCTCCTGCTGCGCAGGGGGGTCTACTAAGATG]
+##  [4]   121  160    40 [TCCCCAGTTGACGTAAGTTTACGATTGTAATTTATTAGCC]
+##  [5]   161  200    40 [AATACACAATTTAGCCAGAAAAGCTGTAGGTGCGAATCCT]
 ##  ...   ...  ...   ... ...
-## [22]   841  880    40 [AGCGTCCCAGAGTGACGGTTCACACTTAACCAAATTCATT]
-## [23]   881  920    40 [ACGAACCCACGGGGATACGGGAAGCAATTCGAATGCACAA]
-## [24]   921  960    40 [CTGCAACAGAGTCTACATTCACGTGTGAAGCTACTTCAGT]
-## [25]   961 1000    40 [GCTACGAGCTGGCGCAAGCCGGTCGAGACCCTACACATTT]
-## [26]  1001 1040    40 [CGATAG                                  ]</code></pre>
+## [22]   841  880    40 [ATGAAATAGTAGTGCAGGGGCCAAGCAAAACTATTCCGAG]
+## [23]   881  920    40 [CCCCAGAGACGCCTCGCTACTGATAAGTCACATACGAATC]
+## [24]   921  960    40 [ATTACCAGCTCCAATGAGGTTGAGTCGCAAGATTCCACTT]
+## [25]   961 1000    40 [CGATCCGGCTACTAAAATCAAGTGAGATCCCTTAGGTCGG]
+## [26]  1001 1040    40 [AAATAG                                  ]</code></pre>
 </div>
 </div>
 <div id="download-sequence-information-from-ncbi" class="section level2">

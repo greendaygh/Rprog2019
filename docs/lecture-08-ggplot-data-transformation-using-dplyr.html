@@ -214,45 +214,45 @@ std_y &lt;-<span class="st"> </span>(df<span class="op">$</span>y<span class="op
 std_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(std_x, std_y)
 <span class="kw">head</span>(std_df)</code></pre></div>
 <pre><code>##         std_x       std_y
-## 1  0.51660366  0.36315426
-## 2 -0.66023867 -0.06320482
-## 3  0.04544158  1.30280432
-## 4 -0.22331092 -2.58970004
-## 5  0.21116285 -1.11381983
-## 6 -0.11723771 -2.27420461</code></pre>
+## 1  1.62719860 -0.88130545
+## 2 -0.68850436 -1.03973993
+## 3  0.81670834  0.08187813
+## 4 -0.32916070  1.35469788
+## 5  0.09654319  0.36309288
+## 6 -0.10966055 -0.08291817</code></pre>
 <p>위와같은 코드를 사용해도 되겠지만 ‘’’df$’’’ 의 반복적인 사용이 불편합니다. data.frame 만들어주는 라인도 std_x와 std_y 같은 새로운 변수 오브젝트를 생성한 후 std_df를 만들어내므로 메모리적으로도 낭비가 있습니다. 이제 위 코드를 mutate 함수를 사용해서 만들어 봅니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmpdf &lt;-<span class="st"> </span><span class="kw">mutate</span>(df, <span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y)) 
 <span class="kw">head</span>(tmpdf)</code></pre></div>
-<pre><code>##           x         y       std_x       std_y
-## 1 1.3413072 3.3187608  0.51660366  0.36315426
-## 2 0.2192167 2.9209420 -0.66023867 -0.06320482
-## 3 0.8920656 4.1955110  0.04544158  1.30280432
-## 4 0.6358167 0.5635696 -0.22331092 -2.58970004
-## 5 1.0500768 1.9406548  0.21116285 -1.11381983
-## 6 0.7369549 0.8579458 -0.11723771 -2.27420461</code></pre>
+<pre><code>##           x        y       std_x       std_y
+## 1 2.5734499 2.200434  1.62719860 -0.88130545
+## 2 0.1942474 2.034222 -0.68850436 -1.03973993
+## 3 1.7407349 3.210902  0.81670834  0.08187813
+## 4 0.5634447 4.546207 -0.32916070  1.35469788
+## 5 1.0008219 3.505922  0.09654319  0.36309288
+## 6 0.7889638 3.038016 -0.10966055 -0.08291817</code></pre>
 <p>위와 같이 사용하면 std_x나 std_y 변수를 따로 만들지도 않고 data.frame으로 따로 묶지 않아도 새로운 변수를 추가해 줍니다. 그러나 우리가 목적한 std_df는 std_x와 std_y만을 필요로 하므로 아래와 같이 select 함수를 연동하면 됩니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmpdf &lt;-<span class="st"> </span><span class="kw">mutate</span>(df, <span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y))
 std_df &lt;-<span class="st"> </span><span class="kw">select</span>(tmpdf, std_x, std_y)
 <span class="kw">head</span>(std_df)</code></pre></div>
 <pre><code>##         std_x       std_y
-## 1  0.51660366  0.36315426
-## 2 -0.66023867 -0.06320482
-## 3  0.04544158  1.30280432
-## 4 -0.22331092 -2.58970004
-## 5  0.21116285 -1.11381983
-## 6 -0.11723771 -2.27420461</code></pre>
+## 1  1.62719860 -0.88130545
+## 2 -0.68850436 -1.03973993
+## 3  0.81670834  0.08187813
+## 4 -0.32916070  1.35469788
+## 5  0.09654319  0.36309288
+## 6 -0.10966055 -0.08291817</code></pre>
 <p>위와 같은 코드가 일반적인 함수를 사용하는 방법입니다. 그런데 tmpdf라는 임의의 변수를 중간에 생성 후 std_df를 만드는 과정이 메모리 관리 측면에서는 비효율적입니다. 이 때 파이프오퍼레이터 <code>%&gt;%</code>를 이용하면 tmpdf 없이 바로 std_df를 만들어 쓸 수 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">std_df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">std_x=</span>(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), <span class="dt">std_y=</span>(y<span class="op">-</span><span class="kw">mean</span>(y))<span class="op">/</span><span class="kw">sd</span>(y)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(std_x, std_y)
 <span class="kw">head</span>(std_df)</code></pre></div>
 <pre><code>##         std_x       std_y
-## 1  0.51660366  0.36315426
-## 2 -0.66023867 -0.06320482
-## 3  0.04544158  1.30280432
-## 4 -0.22331092 -2.58970004
-## 5  0.21116285 -1.11381983
-## 6 -0.11723771 -2.27420461</code></pre>
+## 1  1.62719860 -0.88130545
+## 2 -0.68850436 -1.03973993
+## 3  0.81670834  0.08187813
+## 4 -0.32916070  1.35469788
+## 5  0.09654319  0.36309288
+## 6 -0.10966055 -0.08291817</code></pre>
 <p>참고로 R은 한 line 별로 명령을 실행하는 스크립트 언어 입니다. 그러나 <code>%&gt;%</code>를 사용한 후 enter를 눌러 라인을 바꾸어도 두 라인으로 인식하지 않고 여전히 한 라인이 계속 이어지는 것으로 인식하여 라인을 실행하지 않습니다. 이는 괄호<code>(</code>를 열어준 후 <code>)</code>로 닫기 전까지는 계속 한 라인으로 인식하는 것과 같습니다. R에서는 한 라인의 명령이 길어질 경우 위와 같은 조건에서 라인을 바꾸어 가독성을 높여주는 코드를 작성합니다. 실행하는 중으로 mutate와 select의 자세한 내용은 help 페이지를 참고하세요.</p>
 </div>
 <div id="ggplot2----bar-graph--" class="section level2">
