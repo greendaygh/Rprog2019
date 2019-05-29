@@ -3,7 +3,7 @@ library(reutils)
 
 acc <- c("NC_001477", "NC_001474", "NC_001475", "NC_002640")
 for(i in 1:length(acc)){
-  ef <- efetch(acc, "nuccore", retmode = "text", rettype = "gb")  
+  ef <- efetch(acc[i], "nuccore", retmode = "text", rettype = "gb")  
   write(content(ef),file=paste(acc[i], ".gb", sep=""))
   Sys.sleep(1)
   cat(i, "/", length(acc), "\n");flush.console()
