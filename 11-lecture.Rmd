@@ -31,7 +31,7 @@ R을 이용한 서열분석 두 번째 시간입니다. 지난시간 NCBI 데이
 
 지난시간에는 reutils 패키지를 이용해 fasta format의 뎅기바이러스 데이터를 다운로드 받았습니다. 이번에는 gb (genbank) format의 데이터를 받아보도록 하겠습니다. genbank 포맷의 데이터는 서열 정보 뿐만 아니라 서열에 위치한 CDS 등 유전자 및 전사된 단백질 정보를 포함하고 있습니다. 
 
-다음 코드로 뎅기바이러스 4종에 대한 genbank 포맷의 데이터를 다운로드 할 수 있습니다. 앞서와 같이 4종에 대한 accession 번호를 알고 있다고 가정합니다.  
+다음 코드로 뎅기바이러스 4종에 대한 genbank 포맷의 데이터를 다운로드 할 수 있습니다. 앞서와 같이 4종에 대한 accession 번호를 알고 있다고 가정합니다. 중요한 부분은 ```efetch``` 입니다. 앞서 9개의 주요 함수들 중 특정 정보를 찾을때는 ```esearch```를 사용하고 데이터를 다운로드 받을 때는 ```efetch```를 사용한다고 말씀 드렸습니다. 지난시간 보았던 fasta format 다운로드 예제와 같이  ```efetch```의 첫 번째와 두 번째 파라메터는 ```epost``` 함수를 사용하여 그 리턴값으로 대신할 수도 있습니다. 
 
 
 ```{r eval=FALSE}
@@ -50,7 +50,7 @@ for(i in 1:length(acc)){
 
 ## Genbank data parsing 
 
-Genbank 포맷의 데이터를 보면 다음과 같이 Locus, Definition 에서부터 시작하여 FEATURES 까지 다양한 서열에 관한 정보들이 같이 들어 있습니다. 그러나 이러한 정보는 단지 text에 나열된 문자열에 불과합니다. 필요한 정보를 특정 변수에 넣고 이를 필요할 때 언제든 참조해서 사용할 수 있도록 해 두는 것이 좋으며 이러한 작업을 parsing이라고 합니다. 
+다운로드 받은 파일을 열어 Genbank 포맷의 데이터를 보면 다음과 같이 Locus, Definition 에서부터 시작하여 Feature 까지 다양한 서열에 관한 정보들이 같이 들어 있습니다. 그러나 이러한 정보는 단지 text 파일에 나열된 문자열에 불과합니다. 필요한 정보를 특정 변수에 넣고 이를 필요할 때 언제든 참조해서 사용할 수 있도록 해 두는 것이 좋으며 이러한 작업을 parsing이라고 합니다. 
 
 ![genbank](genbankview.png)
 
@@ -65,9 +65,10 @@ acc_files <- paste(acc, ".gb", sep="")
 
 dg_list <- vector("list", length(acc_files))
 dg_list[[1]] <- parseGenBank(file = acc_files[1])
-
+str(dg_list[[1]])
 ```
 
+위 파싱된 파일의 구조를 보면 37개의 feature가 있고 각 feature에 대해서 7 또는 8개의 variable로 이루어진 것을 알 수 있습니다. 즉, dg_list가 4개 길이를 갖는 list형태의 변수이고 4개 각각의 저장된 변수가 다시 또 list 형태의 변수이고 그 안에 여러개의 feature가 data.frame 형식의 변수로 저장이 되어 있는 형태 입니다. 예를 들어 37번째 feature의 start position을 알고 싶을 때 ```dg_list[[1]]$FEATURES[[37]]$start``` 이와 같이 실행하면 원하는 값이 출력됩니다. 
 
 
 ### Exercise 11-1
@@ -88,7 +89,7 @@ for(i in 1:length(acc)){
 
 ## IRanges for genome view
 
-앞서 genbank 데이터의 내용 중 대부분을 차지하는 정보는 전체 지놈 서열 중 어디서 어디까지가 유전자 또는 coding sequence 이고 그 번역된 정보가 무엇인지 설명하는 정보 입니다. 즉, feature 정보가 genbank 데이터의 대부분을 차지한다고 해도 과언이 아니며 이러한 feature 정보를 보는 것이 곧 지놈을 분석하기 위한 필수 조건이라고 해도 과언이 아닙니다. 따라서 genbank의 feature 정보를 효율적으로 가시화 하기위한 방법들이 다양하게 개발되어 왔으며 R에서는 IRanges와 GenomicRanges 라는 패키지를 사용할 수 있습니다. 
+앞서 보여드린 바와 같이 genbank 데이터의 내용 중 대부분을 차지하는 정보는 전체 지놈 서열 중 어디서 어디까지가 유전자 또는 coding sequence 이고 그 번역된 정보가 무엇인지 설명하는 정보 입니다. 즉, feature 정보가 genbank 데이터의 대부분을 차지한다고 해도 과언이 아니며 이러한 feature 정보를 보는 것이 곧 지놈을 분석하기 위한 필수 조건이라고 해도 과언이 아닙니다. 따라서 genbank의 feature 정보를 효율적으로 가시화 하기위한 방법들이 다양하게 개발되어 왔으며 R에서는 IRanges와 GenomicRanges 라는 패키지를 사용할 수 있습니다. 
 
 ### Exercise 11-2
 
@@ -161,7 +162,7 @@ ggplot(df, aes(xmax = xright, xmin = xleft, ymax = ytop, ymin = ybottom)) +
 
 ### Exercise 11-3 
 
-위와 같이 ir 변수의 정보를 그리기 위해서는 df 라는 각 사각형의 위치 정보를 갖는 데이터프레임을 생성하고 ggplot을 이용해서 적절히 그려주는 (크게) 두 가지 일을 수행해야 합니다. 그런데 새로운 ir 만들 때마다 위 두 가지를 수행하는 코드를 작성하기 보다는 하나의 함수로 만들어서 사용하면 효율을 높일 수 있습니다. 다음 코드에 위 두 가지 일을 수행하는 ```plotRanges```라는 함수를 만들었습니다.  
+위와 같이 생성한 IRanges 타입 변수의 정보를 그리기 위해서는 1) df 라는 각 사각형의 위치 정보를 갖는 데이터프레임을 생성하고 2) ggplot을 이용해서 적절히 그려주는 (크게) 두 가지 일을 수행해야 합니다. 그런데 새로운 ir 만들 때마다 위 두 가지를 수행하는 코드를 작성하기 보다는 하나의 함수로 만들어서 사용하면 효율을 높일 수 있습니다. 다음 코드에 위 두 가지 일을 수행하는 ```plotRanges```라는 함수를 만들었습니다.  
 
 
 
@@ -195,11 +196,11 @@ plotRanges(ir)
 ```{r}
 sel_dg <- dg_list[[1]]
 
-sel_dg$FEATURES[[1]]$type
-sel_dg$FEATURES[[1]]$start
-sel_dg$FEATURES[[1]]$end
-sel_dg$FEATURES[[1]]$strand
-sel_dg$FEATURES[[1]]$product
+#sel_dg$FEATURES[[1]]$type
+#sel_dg$FEATURES[[1]]$start
+#sel_dg$FEATURES[[1]]$end
+#sel_dg$FEATURES[[1]]$strand
+#sel_dg$FEATURES[[1]]$product
 
 n <- length(sel_dg$FEATURES)
 start.pos <- rep(0, n)
@@ -222,7 +223,7 @@ plotRanges(ir)
 
 그런데 위 그림에서는 feature 정보들이 눈에 띄게 들어오지 않습니다. 이는 두 가지 문제가 원인으로 볼 수 있습니다. 하나는 feature들이 같은 색이기 때문에 구분되지 않는 상황과 또 하나는 다양한 type의 feature가 있기 때문에 우리가 보고싶은 feature만 따로 빼내기 전에는 많은 정보들이 혼재되어 보일 수 있다는 점 입니다. 
 
-이를 위해 우리는 feature type이 "mat_peptide" (즉, 성숙한 팹타이드?) 만을 골라서 그림을 그려보도록 하겠습니다. 이를 위해 우리는 ```if```를 사용할 수 있습니다. 또한 앞서 코드와는 다르게 ```for```문을 반복하면서 vector를 하나씩 늘려가는 방법으로 값을 저장하겠습니다. 
+이를 위해 우리는 feature type이 "mat_peptide" (즉, 성숙한 팹타이드?) 만을 골라서 그림을 그려보도록 하겠습니다. 조건문을 실행하기 위해서는 ```if```를 사용할 수 있습니다. 또한 앞서 코드와는 다르게 ```for```문을 반복하면서 vector를 하나씩 늘려가는 방법으로 값을 저장하겠습니다. 
 
 ```{r}
 sel_dg <- dg_list[[1]]
@@ -261,4 +262,9 @@ ggplot(df, aes(xmax = xright,
                fill = group_no)) + 
   geom_rect()
 ```
+
+IRanges는 특정 CDS 구간에 대한  범위 정보만을 가지고 있는 데이터 타입입니다. 그러나 해당 위치의 locus 또는 유전자 이름이나 단백질 정보 등 해당 서열에 해당하는 많은 유전학적 정보들이 있을 수 있습니다. GenomicRanges는 IRanges를 포함하여 위 정보들을 모두 다룰 수 있는 패키지 입니다. 
+
+다음 시간에는 위 GenomicRanges를 간단히만 설명하고 서열 비교 등에 관한 내용을 학습하도록 하겠습니다. 
+
 

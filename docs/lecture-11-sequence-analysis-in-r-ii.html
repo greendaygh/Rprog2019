@@ -228,7 +228,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a href="https://github.com/greendaygh/2019-R-programming/blob/master/NC_001475.gb">NC_001475</a><br />
 <a href="https://github.com/greendaygh/2019-R-programming/blob/master/NC_002640.gb">NC_002640</a></p>
 <p>지난시간에는 reutils 패키지를 이용해 fasta format의 뎅기바이러스 데이터를 다운로드 받았습니다. 이번에는 gb (genbank) format의 데이터를 받아보도록 하겠습니다. genbank 포맷의 데이터는 서열 정보 뿐만 아니라 서열에 위치한 CDS 등 유전자 및 전사된 단백질 정보를 포함하고 있습니다.</p>
-<p>다음 코드로 뎅기바이러스 4종에 대한 genbank 포맷의 데이터를 다운로드 할 수 있습니다. 앞서와 같이 4종에 대한 accession 번호를 알고 있다고 가정합니다.</p>
+<p>다음 코드로 뎅기바이러스 4종에 대한 genbank 포맷의 데이터를 다운로드 할 수 있습니다. 앞서와 같이 4종에 대한 accession 번호를 알고 있다고 가정합니다. 중요한 부분은 <code>efetch</code> 입니다. 앞서 9개의 주요 함수들 중 특정 정보를 찾을때는 <code>esearch</code>를 사용하고 데이터를 다운로드 받을 때는 <code>efetch</code>를 사용한다고 말씀 드렸습니다. 지난시간 보았던 fasta format 다운로드 예제와 같이 <code>efetch</code>의 첫 번째와 두 번째 파라메터는 <code>epost</code> 함수를 사용하여 그 리턴값으로 대신할 수도 있습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reutils)
 
 acc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NC_001477&quot;</span>, <span class="st">&quot;NC_001474&quot;</span>, <span class="st">&quot;NC_001475&quot;</span>, <span class="st">&quot;NC_002640&quot;</span>)
@@ -240,7 +240,7 @@ acc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&qu
 }</code></pre></div>
 <div id="genbank-data-parsing" class="section level2">
 <h2><span class="header-section-number">12.1</span> Genbank data parsing</h2>
-<p>Genbank 포맷의 데이터를 보면 다음과 같이 Locus, Definition 에서부터 시작하여 FEATURES 까지 다양한 서열에 관한 정보들이 같이 들어 있습니다. 그러나 이러한 정보는 단지 text에 나열된 문자열에 불과합니다. 필요한 정보를 특정 변수에 넣고 이를 필요할 때 언제든 참조해서 사용할 수 있도록 해 두는 것이 좋으며 이러한 작업을 parsing이라고 합니다.</p>
+<p>다운로드 받은 파일을 열어 Genbank 포맷의 데이터를 보면 다음과 같이 Locus, Definition 에서부터 시작하여 Feature 까지 다양한 서열에 관한 정보들이 같이 들어 있습니다. 그러나 이러한 정보는 단지 text 파일에 나열된 문자열에 불과합니다. 필요한 정보를 특정 변수에 넣고 이를 필요할 때 언제든 참조해서 사용할 수 있도록 해 두는 것이 좋으며 이러한 작업을 parsing이라고 합니다.</p>
 <div class="figure">
 <img src="genbankview.png" alt="genbank" />
 <p class="caption">genbank</p>
@@ -258,6 +258,433 @@ dg_list[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="
 ## be of class CharacterList, rather than vector(s). Please contact the
 ## maintainer if multi-valuedness is expected/meaningful for the listed
 ## field(s).</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(dg_list[[<span class="dv">1</span>]])</code></pre></div>
+<pre><code>## List of 11
+##  $ LOCUS     : chr &quot;LOCUS       NC_001477              10735 bp ss-RNA     linear   VRL 03-MAY-2019&quot;
+##  $ FEATURES  :List of 37
+##   ..$ 1 :&#39;data.frame&#39;:   1 obs. of  11 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 1
+##   .. ..$ end     : int 10735
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;source&quot;
+##   .. ..$ organism: chr &quot;Dengue virus 1&quot;
+##   .. ..$ mol_type: chr &quot;genomic RNA&quot;
+##   .. ..$ db_xref : chr &quot;taxon:11053&quot;
+##   .. ..$ clone   : chr &quot;45AZ5&quot;
+##   .. ..$ type.1  : chr &quot;1&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 2 :&#39;data.frame&#39;:   1 obs. of  6 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 1
+##   .. ..$ end     : int 94
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;5&#39;UTR&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 3 :&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 2
+##   .. ..$ end     : int 69
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;stem-loop A (SLA)&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 4 :&#39;data.frame&#39;:   1 obs. of  8 variables:
+##   .. ..$ seqnames        : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start           : int 70
+##   .. ..$ end             : int 78
+##   .. ..$ strand          : chr &quot;+&quot;
+##   .. ..$ type            : chr &quot;regulatory&quot;
+##   .. ..$ regulatory_class: chr &quot;other&quot;
+##   .. ..$ note            : chr &quot;oligo U track spacer&quot;
+##   .. ..$ loctype         : chr &quot;normal&quot;
+##   ..$ 5 :&#39;data.frame&#39;:   1 obs. of  8 variables:
+##   .. ..$ seqnames        : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start           : int 79
+##   .. ..$ end             : int 94
+##   .. ..$ strand          : chr &quot;+&quot;
+##   .. ..$ type            : chr &quot;regulatory&quot;
+##   .. ..$ regulatory_class: chr &quot;promoter&quot;
+##   .. ..$ note            : chr &quot;5&#39; upstream AUG region (UAR)&quot;
+##   .. ..$ loctype         : chr &quot;normal&quot;
+##   ..$ 6 :&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 79
+##   .. ..$ end     : int 93
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;stem-loop B (SLB)&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 7 :&#39;data.frame&#39;:   1 obs. of  10 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 95
+##   .. ..$ end         : int 10273
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;gene&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ db_xref     : chr &quot;GeneID:5075725&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 8 :&#39;data.frame&#39;:   1 obs. of  14 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 95
+##   .. ..$ end         : int 10273
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;CDS&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ codon_start : num 1
+##   .. ..$ product     : chr &quot;polyprotein&quot;
+##   .. ..$ protein_id  : chr &quot;NP_059433.1&quot;
+##   .. ..$ db_xref     : chr &quot;GeneID:5075725&quot;
+##   .. ..$ translation : chr &quot;MNNQRKKTGRPSFNMLKRARNRVSTVSQLAKRFSKGLLSGQGPMKLVMAFIAFLRFLAIPPTAGILARWGSFKKNGAIKVLRGFKKEISNMLNIMNRRKRSVTMLLMLLPT&quot;| __truncated__
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 9 :&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 95
+##   .. ..$ end         : int 436
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;anchored capsid protein ancC&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722457.2&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35735&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 10:&#39;data.frame&#39;:   1 obs. of  13 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 95
+##   .. ..$ end         : int 394
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;capsid protein C&quot;
+##   .. ..$ note        : chr &quot;added by NCBI staff following more recentannotations of this virus sequence&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722466.2&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:67793&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 11:&#39;data.frame&#39;:   1 obs. of  11 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 437
+##   .. ..$ end         : int 934
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;membrane glycoprotein precursor prM&quot;
+##   .. ..$ protein_id  : chr &quot;NP_733807.2&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 12:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 437
+##   .. ..$ end         : int 709
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;protein pr&quot;
+##   .. ..$ note        : chr &quot;peptide pr&quot;
+##   .. ..$ protein_id  : chr &quot;YP_009164956.1&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 13:&#39;data.frame&#39;:   1 obs. of  11 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 710
+##   .. ..$ end         : int 934
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;membrane glycoprotein M&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722459.2&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 14:&#39;data.frame&#39;:   1 obs. of  11 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 935
+##   .. ..$ end         : int 2419
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;envelope protein E&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722460.2&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 15:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 2420
+##   .. ..$ end         : int 3475
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;nonstructural protein NS1&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722461.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35739&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 16:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 3476
+##   .. ..$ end         : int 4129
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;nonstructural protein NS2A&quot;
+##   .. ..$ protein_id  : chr &quot;NP_733808.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35740&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 17:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 4130
+##   .. ..$ end         : int 4519
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;nonstructural protein NS2B&quot;
+##   .. ..$ protein_id  : chr &quot;NP_733809.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35741&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 18:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 4520
+##   .. ..$ end         : int 6376
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;nonstructural protein NS3&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722463.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35742&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 19:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 6377
+##   .. ..$ end         : int 6757
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;nonstructural protein NS4A&quot;
+##   .. ..$ protein_id  : chr &quot;NP_733810.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35743&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 20:&#39;data.frame&#39;:   1 obs. of  13 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 6758
+##   .. ..$ end         : int 6826
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;protein 2K&quot;
+##   .. ..$ note        : chr &quot;added by NCBI staff following more recentannotations of this virus sequence&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722467.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:67794&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 21:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 6827
+##   .. ..$ end         : int 7573
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;nonstructural protein NS4B&quot;
+##   .. ..$ protein_id  : chr &quot;NP_733811.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35744&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 22:&#39;data.frame&#39;:   1 obs. of  12 variables:
+##   .. ..$ seqnames    : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start       : int 7574
+##   .. ..$ end         : int 10270
+##   .. ..$ strand      : chr &quot;+&quot;
+##   .. ..$ type        : chr &quot;mat_peptide&quot;
+##   .. ..$ gene        : chr &quot;POLY&quot;
+##   .. ..$ locus_tag   : chr &quot;DV1_gp1&quot;
+##   .. ..$ gene_synonym: chr &quot;polyprotein gene&quot;
+##   .. ..$ product     : chr &quot;RNA-dependent RNA polymerase NS5&quot;
+##   .. ..$ protein_id  : chr &quot;NP_722465.1&quot;
+##   .. ..$ db_xref     : chr &quot;VBRC:35745&quot;
+##   .. ..$ loctype     : chr &quot;normal&quot;
+##   ..$ 23:&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 114
+##   .. ..$ end     : int 130
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;capsid region hairpin (cHP)&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 24:&#39;data.frame&#39;:   1 obs. of  8 variables:
+##   .. ..$ seqnames        : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start           : int 132
+##   .. ..$ end             : int 142
+##   .. ..$ strand          : chr &quot;+&quot;
+##   .. ..$ type            : chr &quot;regulatory&quot;
+##   .. ..$ regulatory_class: chr &quot;other&quot;
+##   .. ..$ note            : chr &quot;5&#39; conserved sequence (CS); also called cyclizationsequence&quot;
+##   .. ..$ loctype         : chr &quot;normal&quot;
+##   ..$ 25:&#39;data.frame&#39;:   1 obs. of  6 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 10274
+##   .. ..$ end     : int 10735
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;3&#39;UTR&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 26:&#39;data.frame&#39;:   1 obs. of  9 variables:
+##   .. ..$ seqnames   : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start      : int 10320
+##   .. ..$ end        : int 10735
+##   .. ..$ strand     : chr &quot;+&quot;
+##   .. ..$ type       : chr &quot;ncRNA&quot;
+##   .. ..$ ncRNA_class: chr &quot;lncRNA&quot;
+##   .. ..$ product    : chr &quot;sfRNA1&quot;
+##   .. ..$ note       : chr &quot;subgenomic flavivirus RNA&quot;
+##   .. ..$ loctype    : chr &quot;normal&quot;
+##   ..$ 27:&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 10324
+##   .. ..$ end     : int 10389
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;flaviviral nuclease-resistant RNA 1 (fNR1); alsocalled stem-loop 1 or xrRNA1&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 28:&#39;data.frame&#39;:   1 obs. of  9 variables:
+##   .. ..$ seqnames   : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start      : int 10393
+##   .. ..$ end        : int 10735
+##   .. ..$ strand     : chr &quot;+&quot;
+##   .. ..$ type       : chr &quot;ncRNA&quot;
+##   .. ..$ ncRNA_class: chr &quot;lncRNA&quot;
+##   .. ..$ product    : chr &quot;sfRNA2&quot;
+##   .. ..$ note       : chr &quot;subgenomic flavivirus RNA&quot;
+##   .. ..$ loctype    : chr &quot;normal&quot;
+##   ..$ 29:&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 10397
+##   .. ..$ end     : int 10458
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;flaviviral nuclease-resistant RNA 2 (fNR2); alsocalled stem-loop 2 or xrRNA2&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 30:&#39;data.frame&#39;:   1 obs. of  9 variables:
+##   .. ..$ seqnames   : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start      : int 10463
+##   .. ..$ end        : int 10735
+##   .. ..$ strand     : chr &quot;+&quot;
+##   .. ..$ type       : chr &quot;ncRNA&quot;
+##   .. ..$ ncRNA_class: chr &quot;lncRNA&quot;
+##   .. ..$ product    : chr &quot;sfRNA3&quot;
+##   .. ..$ note       : chr &quot;subgenomic flavivirus RNA&quot;
+##   .. ..$ loctype    : chr &quot;normal&quot;
+##   ..$ 31:&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 10467
+##   .. ..$ end     : int 10549
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;dumbbell 1 (DBI); also called xrRNA3&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 32:&#39;data.frame&#39;:   1 obs. of  9 variables:
+##   .. ..$ seqnames   : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start      : int 10551
+##   .. ..$ end        : int 10735
+##   .. ..$ strand     : chr &quot;+&quot;
+##   .. ..$ type       : chr &quot;ncRNA&quot;
+##   .. ..$ ncRNA_class: chr &quot;lncRNA&quot;
+##   .. ..$ product    : chr &quot;sfRNA4&quot;
+##   .. ..$ note       : chr &quot;subgenomic flavivirus RNA&quot;
+##   .. ..$ loctype    : chr &quot;normal&quot;
+##   ..$ 33:&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 10551
+##   .. ..$ end     : int 10633
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;dumbbell 2 (DBII); also called xrRNA4&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 34:&#39;data.frame&#39;:   1 obs. of  8 variables:
+##   .. ..$ seqnames        : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start           : int 10630
+##   .. ..$ end             : int 10640
+##   .. ..$ strand          : chr &quot;+&quot;
+##   .. ..$ type            : chr &quot;regulatory&quot;
+##   .. ..$ regulatory_class: chr &quot;other&quot;
+##   .. ..$ note            : chr &quot;3&#39; conserved sequence (CS); also called cyclizationsequence&quot;
+##   .. ..$ loctype         : chr &quot;normal&quot;
+##   ..$ 35:&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 10643
+##   .. ..$ end     : int 10656
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;short hairpin (sHP)&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..$ 36:&#39;data.frame&#39;:   1 obs. of  8 variables:
+##   .. ..$ seqnames        : chr &quot;Dengue virus 1&quot;
+##   .. ..$ start           : int 10654
+##   .. ..$ end             : int 10670
+##   .. ..$ strand          : chr &quot;+&quot;
+##   .. ..$ type            : chr &quot;regulatory&quot;
+##   .. ..$ regulatory_class: chr &quot;promoter&quot;
+##   .. ..$ note            : chr &quot;3&#39; upstream AUG region (UAR)&quot;
+##   .. ..$ loctype         : chr &quot;normal&quot;
+##   ..$ 37:&#39;data.frame&#39;:   1 obs. of  7 variables:
+##   .. ..$ seqnames: chr &quot;Dengue virus 1&quot;
+##   .. ..$ start   : int 10657
+##   .. ..$ end     : int 10735
+##   .. ..$ strand  : chr &quot;+&quot;
+##   .. ..$ type    : chr &quot;stem_loop&quot;
+##   .. ..$ note    : chr &quot;3&#39; stem-loop (3&#39;SL)&quot;
+##   .. ..$ loctype : chr &quot;normal&quot;
+##   ..- attr(*, &quot;dim&quot;)= int 37
+##   ..- attr(*, &quot;dimnames&quot;)=List of 1
+##   .. ..$ : chr [1:37] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##  $ ORIGIN    :Formal class &#39;DNAStringSet&#39; [package &quot;Biostrings&quot;] with 5 slots
+##   .. ..@ pool           :Formal class &#39;SharedRaw_Pool&#39; [package &quot;XVector&quot;] with 2 slots
+##   .. .. .. ..@ xp_list                    :List of 1
+##   .. .. .. .. ..$ :&lt;externalptr&gt; 
+##   .. .. .. ..@ .link_to_cached_object_list:List of 1
+##   .. .. .. .. ..$ :&lt;environment: 0x000000001f77c820&gt; 
+##   .. ..@ ranges         :Formal class &#39;GroupedIRanges&#39; [package &quot;XVector&quot;] with 7 slots
+##   .. .. .. ..@ group          : int 1
+##   .. .. .. ..@ start          : int 1
+##   .. .. .. ..@ width          : int 10735
+##   .. .. .. ..@ NAMES          : chr &quot;Dengue virus 1&quot;
+##   .. .. .. ..@ elementType    : chr &quot;ANY&quot;
+##   .. .. .. ..@ elementMetadata: NULL
+##   .. .. .. ..@ metadata       : list()
+##   .. ..@ elementType    : chr &quot;DNAString&quot;
+##   .. ..@ elementMetadata: NULL
+##   .. ..@ metadata       : list()
+##  $ ACCESSION : chr &quot;NC_001477&quot;
+##  $ COMMENT   : NULL
+##  $ DBLINK    : NULL
+##  $ DEFINITION: chr &quot;Dengue virus 1, complete genome.&quot;
+##  $ KEYWORDS  : chr &quot;RefSeq.&quot;
+##  $ REFERENCE : NULL
+##  $ SOURCE    :List of 3
+##   ..$ source  : chr &quot;Dengue virus 1&quot;
+##   ..$ organism: chr &quot;Dengue virus 1&quot;
+##   ..$ lineage : chr [1:4] &quot;            Viruses&quot; &quot;Riboviria&quot; &quot;Flaviviridae&quot; &quot;Flavivirus.&quot;
+##  $ VERSION   : Named chr [1:2] &quot;NC_001477.1&quot; NA
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;accession.version&quot; &quot;GenInfoID&quot;</code></pre>
+<p>위 파싱된 파일의 구조를 보면 37개의 feature가 있고 각 feature에 대해서 7 또는 8개의 variable로 이루어진 것을 알 수 있습니다. 즉, dg_list가 4개 길이를 갖는 list형태의 변수이고 4개 각각의 저장된 변수가 다시 또 list 형태의 변수이고 그 안에 여러개의 feature가 data.frame 형식의 변수로 저장이 되어 있는 형태 입니다. 예를 들어 37번째 feature의 start position을 알고 싶을 때 <code>dg_list[[1]]$FEATURES[[37]]$start</code> 이와 같이 실행하면 원하는 값이 출력됩니다.</p>
 <div id="exercise-11-1" class="section level3">
 <h3><span class="header-section-number">12.1.1</span> Exercise 11-1</h3>
 <p>앞서 파싱 코드는 첫 번째 파일에 대해서만 수행되었습니다. 이를 <code>for</code>문을 이용하여 4개 파일 모두에 대해서 파싱 작업을 수행합니다. 프로그램밍에서 <code>for</code>문의 사용은 R 언어뿐만 아니라 다른 여러 언어에서도 기본이 되는 문법으로 그 사용법은 필수로 숙지하고 있어야 합니다. for 문과 i 인덱스를 사용하는 부분을 특히 참고하시기 바랍니다.</p>
@@ -272,7 +699,7 @@ dg_list &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class
 </div>
 <div id="iranges-for-genome-view" class="section level2">
 <h2><span class="header-section-number">12.2</span> IRanges for genome view</h2>
-<p>앞서 genbank 데이터의 내용 중 대부분을 차지하는 정보는 전체 지놈 서열 중 어디서 어디까지가 유전자 또는 coding sequence 이고 그 번역된 정보가 무엇인지 설명하는 정보 입니다. 즉, feature 정보가 genbank 데이터의 대부분을 차지한다고 해도 과언이 아니며 이러한 feature 정보를 보는 것이 곧 지놈을 분석하기 위한 필수 조건이라고 해도 과언이 아닙니다. 따라서 genbank의 feature 정보를 효율적으로 가시화 하기위한 방법들이 다양하게 개발되어 왔으며 R에서는 IRanges와 GenomicRanges 라는 패키지를 사용할 수 있습니다.</p>
+<p>앞서 보여드린 바와 같이 genbank 데이터의 내용 중 대부분을 차지하는 정보는 전체 지놈 서열 중 어디서 어디까지가 유전자 또는 coding sequence 이고 그 번역된 정보가 무엇인지 설명하는 정보 입니다. 즉, feature 정보가 genbank 데이터의 대부분을 차지한다고 해도 과언이 아니며 이러한 feature 정보를 보는 것이 곧 지놈을 분석하기 위한 필수 조건이라고 해도 과언이 아닙니다. 따라서 genbank의 feature 정보를 효율적으로 가시화 하기위한 방법들이 다양하게 개발되어 왔으며 R에서는 IRanges와 GenomicRanges 라는 패키지를 사용할 수 있습니다.</p>
 <div id="exercise-11-2" class="section level3">
 <h3><span class="header-section-number">12.2.1</span> Exercise 11-2</h3>
 <p>지놈 가시화에서 각 구간(Feature)에 해당하는 CDS 는 사각형으로 그리는 것이 보통입니다. 따라서 IRanges 를 사용하기 전에 사각형을 그리는 예제를 수행하면서 feature를 어떻게 표현할 수 있는이 먼저 이해해 보도록 하겠습니다. 사각형은 기본적으로 4개의 좌표가 있으면 그릴 수 있는 도형입니다.</p>
@@ -326,7 +753,7 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class=
 </div>
 <div id="exercise-11-3" class="section level3">
 <h3><span class="header-section-number">12.2.2</span> Exercise 11-3</h3>
-<p>위와 같이 ir 변수의 정보를 그리기 위해서는 df 라는 각 사각형의 위치 정보를 갖는 데이터프레임을 생성하고 ggplot을 이용해서 적절히 그려주는 (크게) 두 가지 일을 수행해야 합니다. 그런데 새로운 ir 만들 때마다 위 두 가지를 수행하는 코드를 작성하기 보다는 하나의 함수로 만들어서 사용하면 효율을 높일 수 있습니다. 다음 코드에 위 두 가지 일을 수행하는 <code>plotRanges</code>라는 함수를 만들었습니다.</p>
+<p>위와 같이 생성한 IRanges 타입 변수의 정보를 그리기 위해서는 1) df 라는 각 사각형의 위치 정보를 갖는 데이터프레임을 생성하고 2) ggplot을 이용해서 적절히 그려주는 (크게) 두 가지 일을 수행해야 합니다. 그런데 새로운 ir 만들 때마다 위 두 가지를 수행하는 코드를 작성하기 보다는 하나의 함수로 만들어서 사용하면 효율을 높일 수 있습니다. 다음 코드에 위 두 가지 일을 수행하는 <code>plotRanges</code>라는 함수를 만들었습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plotRanges &lt;-<span class="st"> </span><span class="cf">function</span>(ir, <span class="dt">height=</span><span class="dv">1</span>, <span class="dt">sep=</span><span class="fl">0.5</span>){
   xm &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">min</span>(<span class="kw">start</span>(ir))<span class="op">-</span>sep, <span class="kw">max</span>(<span class="kw">end</span>(ir))<span class="op">+</span>sep)
   bins &lt;-<span class="st"> </span><span class="kw">disjointBins</span>(ir)  
@@ -349,17 +776,13 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class=
 <p>이제 앞서 읽어온 실제 뎅기바이러스 지놈 데이터로부터 feature를 읽고 이를 visualization 하는 실습을 하겠습니다. 먼저 리스트에 저장된 네 개의 뎅기 바이러스 genbank 정보를 하나의 변수 (sel_dg)에 옮기고 각 정보들을 확인해 봅니다. 이 후 <code>for</code>문을 이용해서 모든 feature 들에 대해 start와 end 정보를 읽어 옵니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel_dg &lt;-<span class="st"> </span>dg_list[[<span class="dv">1</span>]]
 
-sel_dg<span class="op">$</span>FEATURES[[<span class="dv">1</span>]]<span class="op">$</span>type</code></pre></div>
-<pre><code>## [1] &quot;source&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel_dg<span class="op">$</span>FEATURES[[<span class="dv">1</span>]]<span class="op">$</span>start</code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel_dg<span class="op">$</span>FEATURES[[<span class="dv">1</span>]]<span class="op">$</span>end</code></pre></div>
-<pre><code>## [1] 10735</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel_dg<span class="op">$</span>FEATURES[[<span class="dv">1</span>]]<span class="op">$</span>strand</code></pre></div>
-<pre><code>## [1] &quot;+&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel_dg<span class="op">$</span>FEATURES[[<span class="dv">1</span>]]<span class="op">$</span>product</code></pre></div>
-<pre><code>## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">length</span>(sel_dg<span class="op">$</span>FEATURES)
+<span class="co">#sel_dg$FEATURES[[1]]$type</span>
+<span class="co">#sel_dg$FEATURES[[1]]$start</span>
+<span class="co">#sel_dg$FEATURES[[1]]$end</span>
+<span class="co">#sel_dg$FEATURES[[1]]$strand</span>
+<span class="co">#sel_dg$FEATURES[[1]]$product</span>
+
+n &lt;-<span class="st"> </span><span class="kw">length</span>(sel_dg<span class="op">$</span>FEATURES)
 start.pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)
 end.pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)
 
@@ -374,7 +797,7 @@ end.pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="d
 <div id="exercise-11-4" class="section level3">
 <h3><span class="header-section-number">12.3.1</span> Exercise 11-4</h3>
 <p>그런데 위 그림에서는 feature 정보들이 눈에 띄게 들어오지 않습니다. 이는 두 가지 문제가 원인으로 볼 수 있습니다. 하나는 feature들이 같은 색이기 때문에 구분되지 않는 상황과 또 하나는 다양한 type의 feature가 있기 때문에 우리가 보고싶은 feature만 따로 빼내기 전에는 많은 정보들이 혼재되어 보일 수 있다는 점 입니다.</p>
-<p>이를 위해 우리는 feature type이 “mat_peptide” (즉, 성숙한 팹타이드?) 만을 골라서 그림을 그려보도록 하겠습니다. 이를 위해 우리는 <code>if</code>를 사용할 수 있습니다. 또한 앞서 코드와는 다르게 <code>for</code>문을 반복하면서 vector를 하나씩 늘려가는 방법으로 값을 저장하겠습니다.</p>
+<p>이를 위해 우리는 feature type이 “mat_peptide” (즉, 성숙한 팹타이드?) 만을 골라서 그림을 그려보도록 하겠습니다. 조건문을 실행하기 위해서는 <code>if</code>를 사용할 수 있습니다. 또한 앞서 코드와는 다르게 <code>for</code>문을 반복하면서 vector를 하나씩 늘려가는 방법으로 값을 저장하겠습니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel_dg &lt;-<span class="st"> </span>dg_list[[<span class="dv">1</span>]]
 n &lt;-<span class="st"> </span><span class="kw">length</span>(sel_dg<span class="op">$</span>FEATURES)
 start_pos &lt;-<span class="st"> </span><span class="kw">c</span>()
@@ -405,6 +828,8 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class=
                <span class="dt">fill =</span> group_no)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_rect</span>()</code></pre></div>
 <p><img src="Rprog_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
+<p>IRanges는 특정 CDS 구간에 대한 범위 정보만을 가지고 있는 데이터 타입입니다. 그러나 해당 위치의 locus 또는 유전자 이름이나 단백질 정보 등 해당 서열에 해당하는 많은 유전학적 정보들이 있을 수 있습니다. GenomicRanges는 IRanges를 포함하여 위 정보들을 모두 다룰 수 있는 패키지 입니다.</p>
+<p>다음 시간에는 위 GenomicRanges를 간단히만 설명하고 서열 비교 등에 관한 내용을 학습하도록 하겠습니다.</p>
 
 </div>
 </div>
