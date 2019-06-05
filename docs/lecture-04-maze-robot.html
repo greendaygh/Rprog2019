@@ -303,11 +303,11 @@ maze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
 ## [2,]    1    0    0    0    0    1    0    1
-## [3,]    1    0    1    0    0    0    0    1
-## [4,]    1    0    0    0    1    0    0    1
-## [5,]    1    0    1    1    0    0    1    1
-## [6,]    1    0    0    0    0    0    0    1
-## [7,]    1    0    0    0    1    0    0    1
+## [3,]    1    0    0    0    0    0    1    1
+## [4,]    1    0    0    0    0    0    1    1
+## [5,]    1    0    0    0    0    0    0    1
+## [6,]    1    0    0    1    0    1    0    1
+## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 <p>이제 위 코드를 활용해서 maze matrix 맵을 만드는 함수인 generate_maze 를 작성해 봅니다. 입력 파라메터는 n 하나로 가로 또는 세로의 (정사각형) 갯수를 의미합니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_maze &lt;-<span class="st"> </span><span class="cf">function</span>(n){
@@ -325,11 +325,11 @@ mymaze &lt;-<span class="st"> </span><span class="kw">generate_maze</span>(<span
 mymaze</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]    1    1    1    1    1    1    1    1
-## [2,]    1    0    0    0    0    0    1    1
-## [3,]    1    0    0    0    0    0    1    1
-## [4,]    1    0    0    0    0    1    0    1
+## [2,]    1    1    0    0    0    0    0    1
+## [3,]    1    0    0    0    0    0    0    1
+## [4,]    1    0    0    0    0    0    0    1
 ## [5,]    1    0    0    0    0    0    0    1
-## [6,]    1    0    0    0    0    0    0    1
+## [6,]    1    0    0    1    0    0    0    1
 ## [7,]    1    0    0    0    0    0    0    1
 ## [8,]    1    1    1    1    1    1    1    1</code></pre>
 </div>
@@ -442,7 +442,6 @@ one_step_direction &lt;-<span class="st"> </span><span class="kw">sample</span>(
 <span class="cf">if</span>(mymaze[next_x, next_y]<span class="op">==</span><span class="dv">0</span>){
   <span class="kw">draw_world</span>(mymaze, next_x, next_y)
 }</code></pre></div>
-<p><img src="Rprog_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p>
 </div>
 <div id="move-50-steps" class="section level2">
 <h2><span class="header-section-number">5.9</span> Move 50 steps</h2>
