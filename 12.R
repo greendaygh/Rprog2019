@@ -16,7 +16,8 @@ eldata_filtered <- eldata %>%
 
 head(eldata_filtered, 10)
 
-acc <- eldata_filtered$genomic_nucleotide_accession.version[1:20]
+eldata_filtered2 <- eldata_filtered[1:20,]
+acc <- eldata_filtered2$genomic_nucleotide_accession.version
 acc2 <- as.character(acc)
 acc2down <- acc2[!duplicated(acc2)]
 acc_path_names <- paste("sequences/", acc2down, ".fasta", sep="")
@@ -31,9 +32,10 @@ for(i in 1:length(acc2down)){
   flush.console()
 }
 
-
-den.seqs <- readDNAStringSet("den.fasta")
-
+head(eldata_filtered2)
 
 
+for(i in 1:nrow(eldata_filtered2)){
+  
+}
 
